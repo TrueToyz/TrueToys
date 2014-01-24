@@ -1,1 +1,0 @@
-Our entry for the GlobalGameJam 2014 !
