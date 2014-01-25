@@ -112,6 +112,7 @@ public class ChildBehaviour : MonoBehaviour {
 		toyBody.isKinematic = true;
 
 		m_ToyInHand = true;
+
 	}
 
 	/*
@@ -131,6 +132,33 @@ public class ChildBehaviour : MonoBehaviour {
 
 		// Toy is not in hand
 		m_ToyInHand = false;
+
+		// Could be a solution ?
+		/* Manually move the object above teh ground immediatly */
+		//Vector3 groundPos = RayCastToGround();
+		//m_ChildToy.transform.position = groundPos;
+
+	}
+
+	/*
+	 * Raycast toward the ground to know where to place the toy
+	 * */
+	Vector3 RayCastToGround ()
+	{
+		Ray myRay = new Ray(m_ChildHand.transform.position, Vector3.down);
+		RaycastHit hit;
+
+		if(Physics.Raycast(myRay, out hit, 1000))
+		{
+			if(hit.collider.tag == "Ground")
+			{
+				return hit.point;
+			}
+		}
+
+		/* Surely a bad idea for a behavior */
+		return Vector3.zero;
+
 	}
 
 	/* ------------------------------------------ VR interaction ---------------------------------- */
@@ -142,6 +170,7 @@ public class ChildBehaviour : MonoBehaviour {
 	{
 		if (Time.time > timeBeforeNextIteration + 0.8f)
 		{
+			/* Grasp or drop */
 			if (m_HandRazer.IsButtonPressed(0))
 			{
 				if(!m_ToyInHand)
@@ -154,7 +183,8 @@ public class ChildBehaviour : MonoBehaviour {
 
 				timeBeforeNextIteration = Time.time;
 			}
-			else if (m_HandRazer.IsButtonPressed(6))
+			/* Can control toy only if child has dropped toy */
+			else if (!m_ToyInHand && m_HandRazer.IsButtonPressed(6))
 			{
 				Debug.Log ("Child to Toy");
 				Drop ();
@@ -166,6 +196,13 @@ public class ChildBehaviour : MonoBehaviour {
 				timeBeforeNextIteration = Time.time;
 			}
 		}
+
+		// Display help on the ground
+		if (m_ToyInHand)
+		{
+
+
+		}
 	}
 
 	/* ------------------------------------------ World modification functions ---------------------------------- */
@@ -175,7 +212,7 @@ public class ChildBehaviour : MonoBehaviour {
 	 * */
 	void BiggerWorld ()
 	{
-		Environment.transform.localScale = new Vector3(10.0f,10.0f, 10.0f);
+		Environment.transform.localScale = new Vector3(5.0f,5.0f, 5.0f);
 	}
 
 	void SmallerWorld ()

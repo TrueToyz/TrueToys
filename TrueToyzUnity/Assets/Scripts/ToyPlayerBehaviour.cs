@@ -11,6 +11,9 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 	/* Weapon prefab */
 	public GameObject m_WeaponPrefab;
 	private GameObject m_Weapon;
+	
+	/* Graphical components of toy */
+	private Renderer[] ml_GraphicComponents;
 
 	/* Vr inputs */
 	private vrJoystick m_HandRazer;
@@ -21,6 +24,9 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		// Retrieve inputs
 		// Note: Might be not the good index
 		m_HandRazer = MiddleVR.VRDeviceMgr.GetJoystickByIndex(0);
+
+		// Retrieve renderer components
+		ml_GraphicComponents = GetComponentsInChildren<Renderer>() as Renderer[]; 
 	}
 	
 	// Update is called once per frame
@@ -31,7 +37,20 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 			MonitorInputs();
 		}
 	}
-	
+
+	/* ------------------------------------ Effects functions --------------------------- */
+
+	/*
+	 * Show or Hides graphical aspects of soldier during control
+	 * */
+	void ShowSoldier (bool bState)
+	{
+		foreach(Renderer graphic_comp in ml_GraphicComponents)
+		{
+			graphic_comp.enabled = bState;
+		}
+	}
+
 	
 	/* ------------------------------------ Control functions --------------------------- */
 	
@@ -55,6 +74,9 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 			m_Weapon.transform.parent = transform;
 		}
 
+		// Hide character
+		ShowSoldier(false);
+
 		// Avoid immediate swap
 		timeBeforeNextIteration = Time.time;
 
@@ -71,6 +93,9 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 
 		if (m_Weapon)
 			Destroy(m_Weapon);
+
+		// Show character
+		ShowSoldier(true);
 	}
 
 	/* ------------------------------------------ VR interaction ---------------------------------- */
