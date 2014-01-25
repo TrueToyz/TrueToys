@@ -3315,6 +3315,33 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1096836694}
   m_GameObject: {fileID: 341707495}
   m_Mesh: {fileID: 4300208, guid: 69b0de78961e8aa49b5837dbe86b6e51, type: 3}
+--- !u!1 &354027683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 354027684}
+  m_Layer: 0
+  m_Name: LegoBrick
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &354027684
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 354027683}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.06426954, z: -3.45981956}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 818229351}
+  m_Father: {fileID: 905377244}
 --- !u!1 &356316473
 GameObject:
   m_ObjectHideFlags: 0
@@ -6054,7 +6081,7 @@ GameObject:
   - 64: {fileID: 618097299}
   - 23: {fileID: 618097298}
   m_Layer: 0
-  m_Name: HowToLeft
+  m_Name: HowTo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7862,6 +7889,75 @@ Prefab:
   m_RootGameObject: {fileID: 994893128}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!1 &818229350
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 818229351}
+  - 33: {fileID: 818229354}
+  - 65: {fileID: 818229353}
+  - 23: {fileID: 818229352}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &818229351
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 818229350}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 354027684}
+--- !u!23 &818229352
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 818229350}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+--- !u!65 &818229353
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 818229350}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &818229354
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 818229350}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &820262886
 GameObject:
   m_ObjectHideFlags: 0
@@ -8627,6 +8723,7 @@ Transform:
   m_LocalPosition: {x: .525732517, y: .14276731, z: 5.72062969}
   m_LocalScale: {x: .800000012, y: .800000012, z: .800000012}
   m_Children:
+  - {fileID: 354027684}
   - {fileID: 195775177}
   - {fileID: 1274666061}
   - {fileID: 816427966}
@@ -16464,6 +16561,7 @@ GameObject:
   - 4: {fileID: 1962114484}
   - 114: {fileID: 1962114485}
   - 114: {fileID: 1962114486}
+  - 114: {fileID: 1962114487}
   m_Layer: 0
   m_Name: Level
   m_TagString: GameController
@@ -16512,6 +16610,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 1000, y: 1000, z: 1000}
   resetPosition: {x: 1000, y: 1000, z: 1000}
+--- !u!114 &1962114487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1962114483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19b31abd880d8c54082f47f3409a56b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPosition: {x: 0, y: 0, z: 0}
+  spawnWaitTime: 2
 --- !u!1 &1974535308
 GameObject:
   m_ObjectHideFlags: 0
@@ -16748,8 +16859,6 @@ MonoBehaviour:
   chaseSpeed: .200000003
   chaseWaitTime: 15
   m_AttackRange: .0500000007
-  spawnPosition: {x: 0, y: 0, z: 0}
-  spawnWaitTime: 2
   m_LifePoints: 2
 --- !u!65 &1992560545
 BoxCollider:
