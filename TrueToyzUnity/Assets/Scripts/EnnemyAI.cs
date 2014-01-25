@@ -41,16 +41,14 @@ public class EnnemyAI : MonoBehaviour {
 	void Update () {
 
 		if (ennemySight.playerInSight && !isFrozen) {
-			Chasing ();
+			StartCoroutine(Chase(gameObject,player));
+			//Chasing ();
 		}
 
 		else if (!ennemySight.playerInSight && !isFrozen ){
 			Patrolling ();
 		}
-		else {
-			Animator enemyAnimator = gameObject.GetComponent<Animator>();
-			enemyAnimator.SetBool("IsRunning", false);
-		}
+
 	}
 
 	void Chasing () {
@@ -88,6 +86,25 @@ public class EnnemyAI : MonoBehaviour {
 
 
 	}
+
+
+	IEnumerator Chase (GameObject soldier, GameObject player)
+	{
+
+		Animator enemyAnimator = gameObject.GetComponent<Animator>();
+		enemyAnimator.SetBool("IsRunning", true);
+
+		while(Vector3.Distance(soldier.transform.position, player.transform.position) > m_AttackRange)
+		{
+			soldier.transform.position = Vector3.Lerp(soldier.transform.position, player.transform.position, chaseSpeed * Time.deltaTime);
+			yield return null;
+		}
+
+
+		enemyAnimator.SetBool("IsRunning", false);
+	}
+
+	
 
 	void Patrolling () {
 		Debug.Log("Patrolling");

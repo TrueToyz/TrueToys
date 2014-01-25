@@ -7,6 +7,7 @@ public class EnnemySight : MonoBehaviour {
 	public bool playerInSight;
 	public Vector3 personalLastSighting;
 
+	public float m_SightRadius = 0.5f;
 	private SphereCollider col;
 	private GameObject player;
 	private LastPlayerSighting lastPlayerSighting;
@@ -18,7 +19,7 @@ public class EnnemySight : MonoBehaviour {
 		{
 			gameObject.AddComponent<SphereCollider>();
 			col = GetComponent<SphereCollider>();
-			col.radius = 0.5f;
+			col.radius = m_SightRadius;
 			col.isTrigger = true;
 		}
 
@@ -32,14 +33,15 @@ public class EnnemySight : MonoBehaviour {
 
 	void Update () {
 
+		playerInSight = true;
+
 		if(lastPlayerSighting.position != previousSighting)
 			personalLastSighting = lastPlayerSighting.position;
 
 		previousSighting = lastPlayerSighting.position;
 	}
 
-
-	void OnTriggerEnter (Collider other) {
+	void OnTriggerStay (Collider other) {
 		// If the player enter the trigger zone
 		if (other.gameObject.tag == "ChildToy"){
 
