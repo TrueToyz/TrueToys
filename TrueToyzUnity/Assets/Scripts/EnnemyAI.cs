@@ -10,16 +10,20 @@ public class EnnemyAI : MonoBehaviour {
 	private LastPlayerSighting lastPlayerSighting;
 	private GameObject player;
 	private float chaseTimer;
+	private bool isFrozen = false;
 	
 	void Awake () {
 
 		player = GameObject.FindGameObjectWithTag("ChildToy");
 		ennemySight = GetComponent<EnnemySight>();
 		lastPlayerSighting = GameObject.FindGameObjectWithTag("GameController").GetComponent<LastPlayerSighting>();
+
+		ChildBehaviour.toyToChild += Freeze;
+		ChildBehaviour.childToToy += Unfreeze;
 	}
 
 	void Update () {
-		if (ennemySight.playerInSight) {
+		if (ennemySight.playerInSight && !isFrozen) {
 			Chasing ();
 		}
 	}
@@ -48,6 +52,14 @@ public class EnnemyAI : MonoBehaviour {
 		}
 
 
+	}
+
+	void Freeze () {
+		isFrozen = true;
+	}
+
+	void Unfreeze () {
+		isFrozen = false;
 	}
 
 }
