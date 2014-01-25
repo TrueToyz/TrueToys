@@ -17,7 +17,7 @@ public class MenuController : MonoBehaviour {
 
 		RaycastHit hit;
 
-		if (Physics.Raycast(camera.transform.position, transform.forward.normalized, out hit, radius)){
+		if (Physics.Raycast(AvatarManager.vrHeadNode.transform.position, transform.forward.normalized, out hit, radius)){
 		
 			if ( hit.collider.gameObject == quitButton) {
 
