@@ -22,7 +22,11 @@ public class ChildBehaviour : MonoBehaviour {
 	/* Vr inputs */
 	private vrJoystick m_HandRazer;
 	private float timeBeforeNextIteration = 0.0f;
-	
+
+	/*Audio*/
+	private AudioSource war;
+	private AudioSource calm;
+
 	// Use this for initialization
 	public void Start () {
 
@@ -41,6 +45,10 @@ public class ChildBehaviour : MonoBehaviour {
 		// Handlers // Callbacks to transition
 		childToToy += BiggerWorld;
 		toyToChild += SmallerWorld;
+
+		//Find the audio files
+		calm = transform.Find("ggjpuppetambchild").audio;
+		war = transform.Find("ggjpuppetwar").audio;
 
 	}
 	
@@ -69,6 +77,11 @@ public class ChildBehaviour : MonoBehaviour {
 
 		// Avoid immediate re-swap
 		timeBeforeNextIteration = Time.time;
+
+		//Play the audio
+		if (calm.isPlaying)
+			calm.Stop();
+		war.Play();
 	}
 
 	/*
@@ -84,6 +97,11 @@ public class ChildBehaviour : MonoBehaviour {
 
 		// Unlink the hand and the VR hierarchy, relink with child
 		m_ChildHand.transform.parent = transform;
+
+		//Play the audio
+		if (war.isPlaying)
+			war.Stop();
+		calm.Play();
 	}
 
 	/* --------------------------------------- Interaction functions --------------------------- */
