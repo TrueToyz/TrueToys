@@ -15,6 +15,9 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 	/* Graphical components of toy */
 	private Renderer[] ml_GraphicComponents;
 
+	/* Combat attributes */
+	public float m_FireRate = 0.1f;
+
 	/* Vr inputs */
 	private vrJoystick m_HandRazer;
 	private float timeBeforeNextIteration = 0.0f;
@@ -70,8 +73,10 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		// Instantiate weapon
 		if (m_WeaponPrefab)
 		{
-			m_Weapon = Instantiate(m_WeaponPrefab,Vector3.zero, Quaternion.identity) as GameObject;
-			m_Weapon.transform.parent = transform;
+			m_Weapon = Instantiate(m_WeaponPrefab) as GameObject;
+
+			// Attach the gun to the VR hand
+			AvatarManager.AttachNodeToHand(m_Weapon);
 		}
 
 		// Hide character
@@ -98,6 +103,17 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		ShowSoldier(true);
 	}
 
+	/* ------------------------------------------ Actions ---------------------------------- */
+
+	/*
+	 * Shoot'em while they're on fire !
+	 * Throw a projectile
+	 * */
+	void Shoot ()
+	{
+		// Do stuff
+	}
+
 	/* ------------------------------------------ VR interaction ---------------------------------- */
 	
 	/*
@@ -107,7 +123,13 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 	{
 		if (Time.time > timeBeforeNextIteration + 0.8f)
 		{
-			if (m_HandRazer.IsButtonPressed(6))
+			/* Shoot behavior */
+			if (m_HandRazer.IsButtonPressed(0))
+			{
+				Shoot ();
+			}
+			/* Swap behavior */
+			else if (m_HandRazer.IsButtonPressed(6))
 			{
 				Debug.Log ("Toy to Child");
 				m_OwnerChild.SendMessage("TakeControl",gameObject);

@@ -10309,7 +10309,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IsControlled: 0
   m_OwnerChild: {fileID: 0}
-  m_WeaponPrefab: {fileID: 0}
+  m_WeaponPrefab: {fileID: 100010, guid: 1c3e619e9b0dc1146a43ec01cfb1e7a2, type: 2}
+  m_FireRate: .100000001
 --- !u!95 &1519387881
 Animator:
   serializedVersion: 2

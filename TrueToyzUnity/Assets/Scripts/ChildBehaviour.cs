@@ -105,17 +105,10 @@ public class ChildBehaviour : MonoBehaviour {
 	 * */
 	void Grab ()
 	{
+
 		m_ChildToy.transform.parent = m_ChildHand.transform; // Change toy parent in hierarchy by the hand transform
 		m_ChildToy.transform.localPosition = Vector3.zero; // Optional : put the object in hand
-
-		// Make it kinematic
-		//Rigidbody toyBody = m_ChildToy.GetComponent<Rigidbody>();
-		//toyBody.isKinematic = true;
-
 		m_ToyInHand = true;
-
-		// Stop any coroutine
-		StopCoroutine("FallSoldier");
 
 	}
 
@@ -127,6 +120,7 @@ public class ChildBehaviour : MonoBehaviour {
 		m_ChildToy.transform.parent = null; // Toy is not in hierarchy
 		m_ChildToy.transform.rotation = Quaternion.identity;
 
+		/* Obsolete code */
 		// Make it physic
 		//Rigidbody toyBody = m_ChildToy.GetComponent<Rigidbody>();
 		//toyBody.isKinematic = false;
@@ -150,18 +144,21 @@ public class ChildBehaviour : MonoBehaviour {
 	 * */
 	IEnumerator FallSoldier (GameObject soldier, Vector3 targetPos)
 	{
+		// Lock the switch ability
 		m_CanSwitch = false;
 		while(Vector3.Distance(soldier.transform.position, targetPos) > 0.05f)
 		{
+			if(m_ToyInHand)
+				yield break;
 			soldier.transform.position = Vector3.Lerp(soldier.transform.position, targetPos, 1.0f * Time.deltaTime);
 			yield return null;
 		}
 		
 		Debug.Log("Reached the target.");
-		
 		yield return new WaitForSeconds(1f);
-		
 		Debug.Log("Fall has ended.");
+
+		// Unlock the switch ability
 		m_CanSwitch = true;
 
 	}
