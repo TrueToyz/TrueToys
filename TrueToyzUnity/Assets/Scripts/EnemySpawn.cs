@@ -23,7 +23,7 @@ public class EnemySpawn : MonoBehaviour {
 		
 		if(spawnTimer >= spawnWaitTime && enemies.Length < 10){
 			Debug.Log("New Enemy");
-			Instantiate(enemy, spawnPosition, Quaternion.identity);
+			Instantiate(enemy, spawnPosition, Quaternion.AngleAxis(-90, Vector3.left));
 			spawnTimer = 0f;
 		}
 	}
