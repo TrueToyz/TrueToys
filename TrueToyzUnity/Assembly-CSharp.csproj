@@ -70,6 +70,7 @@
      <Compile Include="Assets\MiddleVR\Scripts\Samples\VRShareFloat.cs" />
      <Compile Include="Assets\MiddleVR\Scripts\Samples\VRVirtualTrackerMapping.cs" />
      <Compile Include="Assets\MiddleVR\Scripts\Samples\VRVirtualTrackerSimulation.cs" />
+     <Compile Include="Assets\Scripts\AvatarManager.cs" />
      <Compile Include="Assets\Scripts\ChildBehaviour.cs" />
      <Compile Include="Assets\Scripts\ToyPlayerBehaviour.cs" />
      <None Include="Assets\MiddleVR\Assets\Materials\OVRLensCorrection.shader" />

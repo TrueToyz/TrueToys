@@ -482,6 +482,7 @@ GameObject:
   - 135: {fileID: 1197398853}
   - 23: {fileID: 1197398852}
   - 54: {fileID: 1197398856}
+  - 114: {fileID: 1197398857}
   m_Layer: 0
   m_Name: PlayerToy
   m_TagString: ChildToy
@@ -555,6 +556,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1197398857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1197398851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cbf9715da76c5d4abfe024b46fe352a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsControlled: 0
+  m_OwnerChild: {fileID: 0}
 --- !u!1 &1348505813
 GameObject:
   m_ObjectHideFlags: 0
@@ -779,6 +793,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ToyInHand: {fileID: 0}
   Environment: {fileID: 1962114483}
+  m_IsControlled: 1
 --- !u!4 &1997705285
 Transform:
   m_ObjectHideFlags: 0
