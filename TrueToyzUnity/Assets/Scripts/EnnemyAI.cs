@@ -80,7 +80,8 @@ public class EnnemyAI : MonoBehaviour {
 			//Compute a new destination
 			float discFactor = 50;
 			float i = Random.Range(1, discFactor);
-			Vector3 randomPosition = transform.position + Vector3( radius*Mathf.Cos(2*i*Mathf.PI / discFactor ), radius*Mathf.Sin(2*i*Mathf.PI / discFactor, 0));
+			Vector3 circle = new Vector3 ( radius*Mathf.Cos(2*i*Mathf.PI / discFactor ), radius*Mathf.Sin(2*i*Mathf.PI / discFactor), 0);
+			Vector3 randomPosition = transform.position + circle;
 			nextMovePosition = randomPosition;
 
 			destination = nextMovePosition - transform.position;
