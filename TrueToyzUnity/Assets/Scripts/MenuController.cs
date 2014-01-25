@@ -4,6 +4,7 @@ using System.Collections;
 public class MenuController : MonoBehaviour {
 
 	public int radius = 10;
+	public float quitWaitTime = 2.0f;
 
 	private float quitTimer;
 	private GameObject quitButton;
@@ -16,7 +17,7 @@ public class MenuController : MonoBehaviour {
 
 		RaycastHit hit;
 
-		if (Physics.Raycast(camera.transform.position, transform.forward.normalized, out hit, radius)){
+		if (Physics.Raycast(AvatarManager.vrHeadNode.transform.position, transform.forward.normalized, out hit, radius)){
 		
 			if ( hit.collider.gameObject == quitButton) {
 
