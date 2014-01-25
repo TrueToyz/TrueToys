@@ -8,6 +8,7 @@ public class ChildBehaviour : MonoBehaviour {
 	public GameObject m_ChildToy; // Toy actually hold in hand
 	private GameObject m_ChildHand; // The child left hand, recognizable by his tag
 	private bool m_ToyInHand = false; // the toy is in hand
+	private bool m_CanSwitch = true; // the child cannot switch whiel the toy falls
 
 	/* Environment related variables */
 	public GameObject Environment;
@@ -108,10 +109,13 @@ public class ChildBehaviour : MonoBehaviour {
 		m_ChildToy.transform.localPosition = Vector3.zero; // Optional : put the object in hand
 
 		// Make it kinematic
-		Rigidbody toyBody = m_ChildToy.GetComponent<Rigidbody>();
-		toyBody.isKinematic = true;
+		//Rigidbody toyBody = m_ChildToy.GetComponent<Rigidbody>();
+		//toyBody.isKinematic = true;
 
 		m_ToyInHand = true;
+
+		// Stop any coroutine
+		StopCoroutine("FallSoldier");
 
 	}
 
@@ -124,23 +128,45 @@ public class ChildBehaviour : MonoBehaviour {
 		m_ChildToy.transform.rotation = Quaternion.identity;
 
 		// Make it physic
-		Rigidbody toyBody = m_ChildToy.GetComponent<Rigidbody>();
-		toyBody.isKinematic = false;
+		//Rigidbody toyBody = m_ChildToy.GetComponent<Rigidbody>();
+		//toyBody.isKinematic = false;
 
 		// Special: Stop the toy from rotating over itself when it falls
-		toyBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+		//toyBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
 		// Toy is not in hand
 		m_ToyInHand = false;
 
-		// Could be a solution ?
-		/* Manually move the object above teh ground immediatly */
+		/* Manually move the object above the ground */
 		Vector3 groundPos = ToyUtilities.RayCastToGround(m_ChildToy);
-		m_ChildToy.transform.position = groundPos;
+		groundPos.y += 0.2f; // offset to be hovering over the ground
+		StartCoroutine(FallSoldier(m_ChildToy,groundPos)); // Launch coroutine
 
 	}
 	
 
+	/*
+	 * Note: you should interrupt this coroutine when a new grab has been sent
+	 * */
+	IEnumerator FallSoldier (GameObject soldier, Vector3 targetPos)
+	{
+		m_CanSwitch = false;
+		while(Vector3.Distance(soldier.transform.position, targetPos) > 0.05f)
+		{
+			soldier.transform.position = Vector3.Lerp(soldier.transform.position, targetPos, 1.0f * Time.deltaTime);
+			yield return null;
+		}
+		
+		Debug.Log("Reached the target.");
+		
+		yield return new WaitForSeconds(1f);
+		
+		Debug.Log("Fall has ended.");
+		m_CanSwitch = true;
+
+	}
+	
+	
 	/* ------------------------------------------ VR interaction ---------------------------------- */
 
 	/*
@@ -164,7 +190,7 @@ public class ChildBehaviour : MonoBehaviour {
 				timeBeforeNextIteration = Time.time;
 			}
 			/* Can control toy only if child has dropped toy */
-			else if (!m_ToyInHand && m_HandRazer.IsButtonPressed(6))
+			else if (!m_ToyInHand && m_HandRazer.IsButtonPressed(6) && m_CanSwitch)
 			{
 				Debug.Log ("Child to Toy");
 				Drop ();
