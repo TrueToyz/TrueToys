@@ -14,7 +14,11 @@ public class EnnemyAI : MonoBehaviour {
 	private GameObject player;
 	private float chaseTimer;
 	private bool isFrozen = true;
-	
+
+	void Start () {
+
+	}
+
 	void Awake () {
 
 		player = GameObject.FindGameObjectWithTag("ChildToy");
