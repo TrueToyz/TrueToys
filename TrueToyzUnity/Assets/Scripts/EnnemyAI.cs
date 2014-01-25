@@ -3,14 +3,15 @@ using System.Collections;
 
 public class EnnemyAI : MonoBehaviour {
 
-	public float chaseSpeed = 2.0f;
+	public float chaseSpeed = 0.05f;
 	public float chaseWaitTime = 2f;
+	public float m_AttackRange = 0.05f;
 
 	private EnnemySight ennemySight;
 	private LastPlayerSighting lastPlayerSighting;
 	private GameObject player;
 	private float chaseTimer;
-	private bool isFrozen = false;
+	private bool isFrozen = true;
 	
 	void Awake () {
 
@@ -33,7 +34,7 @@ public class EnnemyAI : MonoBehaviour {
 		Vector3 sightingDeltaPos = ennemySight.personalLastSighting - transform.position;
 
 		// If the the last personal sighting of the player is not close...
-		if(sightingDeltaPos.sqrMagnitude > 4f) {
+		if(sightingDeltaPos.sqrMagnitude > m_AttackRange) {
 			Debug.Log("Chasing !");
 
 			Vector3 destination = player.transform.position - transform.position ;

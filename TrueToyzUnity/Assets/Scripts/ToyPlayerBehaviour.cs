@@ -68,7 +68,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		m_OwnerChild = child;
 
 		// Move VR root to child, relink hand with VR node
-		AvatarManager.MoveRootTo(gameObject);
+		AvatarManager.MoveRootTo(gameObject, -AvatarManager.GetHeadTrackingOffset() / AvatarManager.swapScale);
 
 		// Instantiate weapon
 		if (m_WeaponPrefab)

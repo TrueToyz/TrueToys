@@ -3,7 +3,7 @@ using System.Collections;
 
 public class EnnemySight : MonoBehaviour {
 
-	public float fieldOfViewAngle = 110f ;
+	public float fieldOfViewAngle = 180f ;
 	public bool playerInSight;
 	public Vector3 personalLastSighting;
 
@@ -14,8 +14,17 @@ public class EnnemySight : MonoBehaviour {
 
 	void Awake () {
 		col = GetComponent<SphereCollider>();
+		if(!col)
+		{
+			gameObject.AddComponent<SphereCollider>();
+			col = GetComponent<SphereCollider>();
+			col.radius = 0.5f;
+			col.isTrigger = true;
+		}
+
 		player = GameObject.FindGameObjectWithTag("ChildToy");
 		lastPlayerSighting = GameObject.FindGameObjectWithTag("GameController").GetComponent<LastPlayerSighting>();
+
 
 		// Set the personal sighting and the previous sighting to the reset position.
 		personalLastSighting = lastPlayerSighting.resetPosition;
@@ -29,8 +38,9 @@ public class EnnemySight : MonoBehaviour {
 
 		previousSighting = lastPlayerSighting.position;
 	}
+	
 
-	void OnTriggerStay ( Collider other) {
+	void OnTriggerEnter (Collider other) {
 		// If the player enter the trigger zone
 		if (other.gameObject == player ){
 
