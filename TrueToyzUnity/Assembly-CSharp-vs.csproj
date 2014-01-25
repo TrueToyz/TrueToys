@@ -76,6 +76,7 @@
      <Compile Include="Assets\Scripts\EnnemySight.cs" />
      <Compile Include="Assets\Scripts\LastPlayerSighting.cs" />
      <Compile Include="Assets\Scripts\ToyPlayerBehaviour.cs" />
+     <Compile Include="Assets\Scripts\ToyUtilities.cs" />
      <None Include="Assets\MiddleVR\Assets\Materials\OVRLensCorrection.shader" />
  <Reference Include="MiddleVR_dotNet">
  <HintPath>Assets\MiddleVR\MiddleVR_dotNet.dll</HintPath>

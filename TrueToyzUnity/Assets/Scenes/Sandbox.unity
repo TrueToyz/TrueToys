@@ -1095,7 +1095,7 @@ Renderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 178695078}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_LightmapIndex: 255
@@ -10289,7 +10289,7 @@ Rigidbody:
   m_GameObject: {fileID: 1519387876}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: .100000001
   m_AngularDrag: .0500000007
   m_UseGravity: 1
   m_IsKinematic: 0

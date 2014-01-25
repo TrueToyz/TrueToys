@@ -135,31 +135,11 @@ public class ChildBehaviour : MonoBehaviour {
 
 		// Could be a solution ?
 		/* Manually move the object above teh ground immediatly */
-		//Vector3 groundPos = RayCastToGround();
-		//m_ChildToy.transform.position = groundPos;
+		Vector3 groundPos = ToyUtilities.RayCastToGround(m_ChildToy);
+		m_ChildToy.transform.position = groundPos;
 
 	}
-
-	/*
-	 * Raycast toward the ground to know where to place the toy
-	 * */
-	Vector3 RayCastToGround ()
-	{
-		Ray myRay = new Ray(m_ChildHand.transform.position, Vector3.down);
-		RaycastHit hit;
-
-		if(Physics.Raycast(myRay, out hit, 1000))
-		{
-			if(hit.collider.tag == "Ground")
-			{
-				return hit.point;
-			}
-		}
-
-		/* Surely a bad idea for a behavior */
-		return Vector3.zero;
-
-	}
+	
 
 	/* ------------------------------------------ VR interaction ---------------------------------- */
 
