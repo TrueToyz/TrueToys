@@ -16,7 +16,8 @@ public class EnnemyAI : MonoBehaviour {
 	private bool isFrozen = true;
 
 	void Start () {
-
+		//Spawn
+		//TODO
 	}
 
 	void Awake () {
