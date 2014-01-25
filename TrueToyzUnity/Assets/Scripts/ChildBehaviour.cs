@@ -117,7 +117,7 @@ public class ChildBehaviour : MonoBehaviour {
 	 * */
 	void Drop ()
 	{
-		m_ChildToy.transform.parent = null; // Toy is not in hierarchy
+		m_ChildToy.transform.parent = Environment.transform; // Toy is not in hierarchy
 		m_ChildToy.transform.rotation = Quaternion.identity;
 
 		/* Obsolete code */
@@ -133,7 +133,7 @@ public class ChildBehaviour : MonoBehaviour {
 
 		/* Manually move the object above the ground */
 		Vector3 groundPos = ToyUtilities.RayCastToGround(m_ChildToy);
-		groundPos.y += 0.2f; // offset to be hovering over the ground
+		groundPos.y = -0.05f; // offset to be hovering over the ground...
 		StartCoroutine(FallSoldier(m_ChildToy,groundPos)); // Launch coroutine
 
 	}
@@ -190,7 +190,6 @@ public class ChildBehaviour : MonoBehaviour {
 			else if (!m_ToyInHand && m_HandRazer.IsButtonPressed(6) && m_CanSwitch)
 			{
 				Debug.Log ("Child to Toy");
-				Drop ();
 				Debug.Log ("Child has dropped");
 				ReleaseControl();
 				m_ChildToy.SendMessage("TakeControl",gameObject);
@@ -216,11 +215,13 @@ public class ChildBehaviour : MonoBehaviour {
 	void BiggerWorld ()
 	{
 		Environment.transform.localScale = new Vector3(5.0f,5.0f, 5.0f);
+		AvatarManager.ResetScale();
 	}
 
 	void SmallerWorld ()
 	{
 		Environment.transform.localScale = new Vector3(1.0f,1.0f, 1.0f);
+		AvatarManager.ResetScale();
 	}
 
 	/* ------------------------------------------ Menu functions ---------------------------------- */

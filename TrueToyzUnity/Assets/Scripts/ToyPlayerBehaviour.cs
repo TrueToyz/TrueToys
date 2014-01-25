@@ -68,7 +68,9 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		m_OwnerChild = child;
 
 		// Move VR root to child, relink hand with VR node
-		AvatarManager.MoveRootTo(gameObject);
+		Vector3 offset = -AvatarManager.GetHeadTrackingOffset() ;
+		offset.y = 0; // I want to keep the height of the head
+		AvatarManager.MoveRootTo(gameObject, offset/AvatarManager.swapScale);
 
 		// Instantiate weapon
 		if (m_WeaponPrefab)
