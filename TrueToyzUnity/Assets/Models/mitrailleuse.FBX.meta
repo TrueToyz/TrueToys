@@ -16,7 +16,7 @@ ModelImporter:
     400008: root_rifle
     400010: Soldier_Rifle
     4300000: Soldier_Rifle
-    7400000: Take 001
+    7400000: Shoot
     9500000: //RootNode
     13700000: Soldier_Rifle
   materials:
@@ -33,7 +33,45 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Shoot
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 8
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: root_rifle
+        weight: 1
+      - path: root_rifle/canon
+        weight: 1
+      - path: root_rifle/gun
+        weight: 1
+      - path: root_rifle/loader
+        weight: 1
+      - path: Soldier_Rifle
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []

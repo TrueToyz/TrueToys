@@ -40,6 +40,10 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		{
 			//TestInteraction();
 			MonitorInputs();
+
+			// Debug
+			if (m_Aim)
+				Debug.DrawRay(m_Aim.transform.position, m_Aim.transform.forward*1000,Color.red);
 		}
 	}
 
@@ -128,6 +132,9 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 
 		Ray myAim = new Ray(m_Aim.transform.position, m_Aim.transform.forward);
 		RaycastHit gunHit;
+
+		Animator gunAnimator = m_Weapon.GetComponent<Animator>();
+		gunAnimator.SetTrigger("Shoots");
 
 
 		// Damage opponents in destructive cone !
