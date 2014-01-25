@@ -14,7 +14,9 @@ public class EnnemyAI : MonoBehaviour {
 	private LastPlayerSighting lastPlayerSighting;
 	private GameObject player;
 	private float chaseTimer;
-
+	private Vector3 nextMovePosition;
+	private bool isBlocked; //Means by a collision
+	private int radius = 2; // Radius of anticipitation for collisions in patrolling case
 	private bool isFrozen = true;
 
 	void Awake () {
@@ -31,6 +33,10 @@ public class EnnemyAI : MonoBehaviour {
 
 		if (ennemySight.playerInSight && !isFrozen) {
 			Chasing ();
+		}
+
+		else if (!ennemySight.playerInSight && !isFrozen ){
+			Patrolling ();
 		}
 	}
 
@@ -60,13 +66,39 @@ public class EnnemyAI : MonoBehaviour {
 
 	}
 
-	/* --------------------------------------------- Fight behaviour ------------------------------ */
+	void Patrolling () {
+		Debug.Log("Patrolling");
+		//Update the futur position
+		nextMovePosition = nextMovePosition + transform.forward * Time.deltaTime;
+		Vector3 destination = nextMovePosition - transform.position ;
 
+		//Test the collision of the next move
+		RaycastHit hit;
+
+		if (Physics.Raycast(transform.position, destination.normalized, out hit, radius)) {
+			Debug.Log("COLLISION : CHANGE DIRECTION");
+			//Compute a new destination
+			float discFactor = 50;
+			float i = Random.Range(1, discFactor);
+			Vector3 randomPosition = transform.position + Vector3( radius*Mathf.Cos(2*i*Mathf.PI / discFactor ), radius*Mathf.Sin(2*i*Mathf.PI / discFactor, 0));
+			nextMovePosition = randomPosition;
+
+			destination = nextMovePosition - transform.position;
+		}
+
+		//Move the enemy
+		transform.Translate(destination.normalized * chaseSpeed * Time.deltaTime);
+
+	}
+
+	
+	/* --------------------------------------------- Fight behaviour ------------------------------ */
+	
 	void ReceiveDamage ()
 	{
 		Debug.Log ("Oh, it hurts !");
 		m_LifePoints--;
-
+		
 		if (m_LifePoints < 2)
 		{
 			Injured();
