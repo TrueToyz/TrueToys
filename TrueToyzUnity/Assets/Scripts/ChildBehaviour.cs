@@ -110,6 +110,9 @@ public class ChildBehaviour : MonoBehaviour {
 		m_ChildToy.transform.localPosition = Vector3.zero; // Optional : put the object in hand
 		m_ToyInHand = true;
 
+		// If it's not the case, the toy must returns to normal state
+		m_ChildToy.rigidbody.isKinematic = true;
+		
 	}
 
 	/*
@@ -133,8 +136,11 @@ public class ChildBehaviour : MonoBehaviour {
 
 		/* Manually move the object above the ground */
 		Vector3 groundPos = ToyUtilities.RayCastToGround(m_ChildToy);
-		groundPos.y = -0.05f; // offset to be hovering over the ground...
-		StartCoroutine(FallSoldier(m_ChildToy,groundPos)); // Launch coroutine
+		//groundPos.y -= 0.2f; // offset to be hovering over the ground...
+		Debug.Log (groundPos.y);
+
+		// Launch coroutine
+		StartCoroutine(FallSoldier(m_ChildToy,groundPos)); 
 
 	}
 	
@@ -146,11 +152,15 @@ public class ChildBehaviour : MonoBehaviour {
 	{
 		// Lock the switch ability
 		m_CanSwitch = false;
-		while(Vector3.Distance(soldier.transform.position, targetPos) > 0.05f)
+
+		// Only keep the Z component
+		Vector3 newTarget = new Vector3(soldier.transform.position.x, targetPos.y, soldier.transform.position.z);
+
+		while(Vector3.Distance(soldier.transform.position, newTarget) > 0.01f)
 		{
 			if(m_ToyInHand)
 				yield break;
-			soldier.transform.position = Vector3.Lerp(soldier.transform.position, targetPos, 1.0f * Time.deltaTime);
+			soldier.transform.position = Vector3.Lerp(soldier.transform.position, newTarget, 1.0f * Time.deltaTime);
 			yield return null;
 		}
 		
@@ -158,6 +168,10 @@ public class ChildBehaviour : MonoBehaviour {
 		yield return new WaitForSeconds(1f);
 		Debug.Log("Fall has ended.");
 
+		// the toy must returns to normal state
+		m_ChildToy.rigidbody.isKinematic = false;
+		m_ChildToy.rigidbody.AddForce(-m_ChildToy.transform.up *50);
+		
 		// Unlock the switch ability
 		m_CanSwitch = true;
 
@@ -189,8 +203,7 @@ public class ChildBehaviour : MonoBehaviour {
 			/* Can control toy only if child has dropped toy */
 			else if (!m_ToyInHand && m_HandRazer.IsButtonPressed(6) && m_CanSwitch)
 			{
-				Debug.Log ("Child to Toy");
-				Debug.Log ("Child has dropped");
+				Debug.Log ("SWAP: Child to Toy");
 				ReleaseControl();
 				m_ChildToy.SendMessage("TakeControl",gameObject);
 
@@ -202,7 +215,7 @@ public class ChildBehaviour : MonoBehaviour {
 		// Display help on the ground
 		if (m_ToyInHand)
 		{
-
+			// TODO : particles ? 
 
 		}
 	}

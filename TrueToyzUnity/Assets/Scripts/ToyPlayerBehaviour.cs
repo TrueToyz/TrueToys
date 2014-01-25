@@ -11,6 +11,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 	/* Weapon prefab */
 	public GameObject m_WeaponPrefab;
 	private GameObject m_Weapon;
+	private GameObject m_Aim;
 	
 	/* Graphical components of toy */
 	private Renderer[] ml_GraphicComponents;
@@ -67,6 +68,9 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		m_IsControlled = true;
 		m_OwnerChild = child;
 
+		// If it's not the case, the toy must be kinematic
+		rigidbody.isKinematic = true;
+
 		// Move VR root to child, relink hand with VR node
 		Vector3 offset = -AvatarManager.GetHeadTrackingOffset() ;
 		offset.y = 0; // I want to keep the height of the head
@@ -79,6 +83,8 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 
 			// Attach the gun to the VR hand
 			AvatarManager.AttachNodeToHand(m_Weapon);
+			m_Aim = m_Weapon.transform.Find("Aim").gameObject;
+
 		}
 
 		// Hide character
@@ -98,6 +104,9 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		m_IsControlled = false;
 		m_OwnerChild = null;
 
+		// If it's not the case, the toy must returns to normal state
+		rigidbody.isKinematic = false;
+		
 		if (m_Weapon)
 			Destroy(m_Weapon);
 
@@ -114,6 +123,14 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 	void Shoot ()
 	{
 		// Do stuff
+		Debug.Log ("Shoot someone!");
+
+		Ray myAim = new Ray(m_Aim.transform.position, m_Aim.transform.forward);
+
+
+		// Damage opponents in destructive cone !
+		//if (Physics.Raycast(
+
 	}
 
 	/* ------------------------------------------ VR interaction ---------------------------------- */
