@@ -1,25 +1,13 @@
 ﻿<Properties>
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\EnnemyAI.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MenuController.cs">
     <Files>
-      <File FileName="Assets\Scripts\ToyPlayerBehaviour.cs" Line="11" Column="21" />
-      <File FileName="Assets\Scripts\EnnemyAI.cs" Line="60" Column="2" />
-=======
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ToyPlayerBehaviour.cs">
-    <Files>
-      <File FileName="Assets\Scripts\ToyPlayerBehaviour.cs" Line="129" Column="1" />
-      <File FileName="Assets\Scripts\EnnemySight.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\ChildBehaviour.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\ToyPlayerBehaviour.cs" Line="129" Column="3" />
-      <File FileName="Assets\Scripts\ToyUtilities.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AvatarManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\MiddleVR\Scripts\Internal\VRManagerScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\EnnemyAI.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\SniperBehaviour.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\LastPlayerSighting.cs" Line="1" Column="1" />
->>>>>>> b544a3e6b46d67530c07503ea17bb159979d6019
+      <File FileName="Assets\Scripts\ToyPlayerBehaviour.cs" Line="9" Column="33" />
+      <File FileName="Assets\Scripts\EnnemyAI.cs" Line="21" Column="20" />
+      <File FileName="Assets\Scripts\MenuController.cs" Line="21" Column="43" />
+      <File FileName="Assets\Scripts\EnnemySight.cs" Line="50" Column="48" />
+      <File FileName="Assets\Scripts\ToyUtilities.cs" Line="11" Column="61" />
+      <File FileName="Assets\Scripts\AvatarManager.cs" Line="8" Column="52" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
