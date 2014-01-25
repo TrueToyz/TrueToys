@@ -55,7 +55,7 @@ public class ChildBehaviour : MonoBehaviour {
 		war =  Resources.Load("Audio/ggjpuppetwar") as AudioClip;
 
 		cameraVR = GameObject.Find("CameraStereo0");
-		cameraVR.AddComponent<AudioListener>();
+		//cameraVR.AddComponent<AudioListener>();
 		cameraVR.AddComponent<AudioSource>();
 
 
