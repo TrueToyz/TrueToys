@@ -1704,6 +1704,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 10
+  quitWaitTime: 2
 --- !u!1 &198654930
 GameObject:
   m_ObjectHideFlags: 0
@@ -8629,8 +8630,8 @@ Transform:
   - {fileID: 195775177}
   - {fileID: 1274666061}
   - {fileID: 816427966}
-  - {fileID: 560531022}
   - {fileID: 700781563}
+  - {fileID: 560531022}
   m_Father: {fileID: 0}
 --- !u!1 &918399327
 GameObject:
@@ -10264,7 +10265,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!132 &1165002465
 GUIText:
   m_ObjectHideFlags: 0
@@ -16139,8 +16140,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1947077411}
-  m_LocalRotation: {x: .157415524, y: .689362288, z: -.157415569, w: .689362288}
-  m_LocalPosition: {x: -2.45594265e-08, y: -5.6135832e-08, z: -.941802979}
+  m_LocalRotation: {x: .0738113075, y: -.0543117896, z: -.00923273619, w: .995749414}
+  m_LocalPosition: {x: .330253661, y: .977051556, z: -2.02270794}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2143308743}
@@ -16747,6 +16748,8 @@ MonoBehaviour:
   chaseSpeed: .200000003
   chaseWaitTime: 15
   m_AttackRange: .0500000007
+  spawnPosition: {x: 0, y: 0, z: 0}
+  spawnWaitTime: 2
   m_LifePoints: 2
 --- !u!65 &1992560545
 BoxCollider:
