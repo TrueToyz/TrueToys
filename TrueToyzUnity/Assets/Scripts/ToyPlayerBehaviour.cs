@@ -75,6 +75,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 
 		// If it's not the case, the toy must be kinematic
 		rigidbody.isKinematic = true;
+		collider.enabled = false;
 
 		// Move VR root to child, relink hand with VR node
 		Vector3 offset = -AvatarManager.GetHeadTrackingOffset() ;
@@ -111,6 +112,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 
 		// If it's not the case, the toy must returns to normal state
 		rigidbody.isKinematic = false;
+		collider.enabled = true;
 		
 		if (m_Weapon)
 			Destroy(m_Weapon);

@@ -121,7 +121,13 @@ public class ChildBehaviour : MonoBehaviour {
 	void Drop ()
 	{
 		m_ChildToy.transform.parent = Environment.transform; // Toy is not in hierarchy
-		m_ChildToy.transform.rotation = Quaternion.identity;
+
+		// Orient the toy
+		Vector3 newRot = m_ChildToy.transform.rotation.eulerAngles;
+		newRot.x = 0; 
+		newRot.z = 0;
+
+		m_ChildToy.transform.rotation = Quaternion.Euler(newRot);
 
 		/* Obsolete code */
 		// Make it physic
@@ -160,17 +166,17 @@ public class ChildBehaviour : MonoBehaviour {
 		{
 			if(m_ToyInHand)
 				yield break;
-			soldier.transform.position = Vector3.Lerp(soldier.transform.position, newTarget, 1.0f * Time.deltaTime);
+			soldier.transform.position = Vector3.Lerp(soldier.transform.position, newTarget, 2.0f * Time.deltaTime);
 			yield return null;
 		}
 		
 		Debug.Log("Reached the target.");
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(0.5f);
 		Debug.Log("Fall has ended.");
 
 		// the toy must returns to normal state
 		m_ChildToy.rigidbody.isKinematic = false;
-		m_ChildToy.rigidbody.AddForce(-m_ChildToy.transform.up *50);
+		m_ChildToy.rigidbody.AddForce(-m_ChildToy.transform.up *50); // One of the worst hack ever
 		
 		// Unlock the switch ability
 		m_CanSwitch = true;

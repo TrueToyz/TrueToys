@@ -47,8 +47,10 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Editor\VRCustomEditor.cs" />
-     <None Include="Assets\MiddleVR\Assets\Materials\OVRLensCorrection.shader" />
      <None Include="Assets\WWII P47 Thunderbolt\aeroplanes.shader" />
+     <None Include="Assets\MiddleVR\Assets\Materials\OVRLensCorrection.shader" />
+     <None Include="Assets\Models\WWII P47 Thunderbolt\aeroplanes.shader" />
+     <None Include="Assets\Shaders\SpecialCulling.shader" />
  <Reference Include="MiddleVR_dotNet">
  <HintPath>Assets\MiddleVR\MiddleVR_dotNet.dll</HintPath>
  </Reference>

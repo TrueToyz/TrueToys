@@ -7,6 +7,7 @@ public class MenuController : MonoBehaviour {
 	public float quitWaitTime = 2f;
 
 	private float quitTimer;
+	private float quitWaitTime = 5.0f;
 	private GameObject quitButton;
 
 	void Awake () {
