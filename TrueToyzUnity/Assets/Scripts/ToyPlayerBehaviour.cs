@@ -21,6 +21,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 
 	/* Combat attributes */
 	public float m_FireRate = 3f;
+	public float m_FireRange = 200f;
 	private float timeBeforeNextShot = 0.0f;
 
 	/* Vr inputs */
@@ -78,7 +79,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 
 		// If it's not the case, the toy must be kinematic
 		rigidbody.isKinematic = true;
-		collider.enabled = false;
+		//collider.enabled = false;
 
 		// Move VR root to child, relink hand with VR node
 		Vector3 offset = -AvatarManager.GetHeadTrackingOffset() ;
@@ -120,7 +121,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 
 		// If it's not the case, the toy must returns to normal state
 		rigidbody.isKinematic = false;
-		collider.enabled = true;
+		//collider.enabled = true;
 		
 		if (m_Weapon)
 			Destroy(m_Weapon);
@@ -146,13 +147,24 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		Animator gunAnimator = m_Weapon.GetComponent<Animator>();
 		gunAnimator.SetTrigger("Shoots");
 
+		int layer1 = LayerMask.NameToLayer("Enemies");
+		int layer2 = LayerMask.NameToLayer("Default");
 
-		// Damage opponents in destructive cone !
-		if (Physics.Raycast(myAim, out gunHit, 100.0f))
+		int layermask1  = 1 << layer1;
+		int layermask2 = 1 << layer2;
+		int layermask = layermask1 | layermask2;
+
+
+		// Physical hardcoded raycast
+		if (Physics.Raycast(myAim, out gunHit, m_FireRange,layermask))
 		{
 			if (gunHit.collider.gameObject.tag == "Enemy")
 			{
 				gunHit.collider.gameObject.SendMessage("ReceiveDamage");
+			}
+			else
+			{
+				Debug.Log ("Touché ! :" +gunHit.collider.name);
 			}
 		}
 

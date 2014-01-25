@@ -128,8 +128,7 @@ public class EnnemyAI : MonoBehaviour {
 	{
 		Debug.Log ("Oh, it hurts !");
 		m_LifePoints--;
-
-
+		
 		Injured();
 
 		/* Death Behaviour */

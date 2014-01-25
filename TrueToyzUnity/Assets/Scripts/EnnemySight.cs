@@ -24,8 +24,7 @@ public class EnnemySight : MonoBehaviour {
 
 		player = GameObject.FindGameObjectWithTag("ChildToy");
 		lastPlayerSighting = GameObject.FindGameObjectWithTag("GameController").GetComponent<LastPlayerSighting>();
-
-
+		
 		// Set the personal sighting and the previous sighting to the reset position.
 		personalLastSighting = lastPlayerSighting.resetPosition;
 		previousSighting = lastPlayerSighting.resetPosition;
@@ -42,7 +41,7 @@ public class EnnemySight : MonoBehaviour {
 
 	void OnTriggerEnter (Collider other) {
 		// If the player enter the trigger zone
-		if (other.gameObject == player ){
+		if (other.gameObject.tag == "ChildToy"){
 
 			playerInSight = false;
 
