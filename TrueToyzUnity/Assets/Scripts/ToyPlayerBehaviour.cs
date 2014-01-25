@@ -5,6 +5,9 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 
 	public bool m_IsControlled = false;
 
+	/* Hard coded informations */
+	public static Vector3 ms_Forward = new Vector3(-1f,0f,0.0f);
+
 	/* Reference toward the owner-child */
 	public GameObject m_OwnerChild;
 
@@ -80,18 +83,23 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		// Move VR root to child, relink hand with VR node
 		Vector3 offset = -AvatarManager.GetHeadTrackingOffset() ;
 		offset.y = 0; // I want to keep the height of the head
-		AvatarManager.MoveRootTo(gameObject, offset/AvatarManager.swapScale);
 
 		// Instantiate weapon
 		if (m_WeaponPrefab)
 		{
 			m_Weapon = Instantiate(m_WeaponPrefab) as GameObject;
-
+			
 			// Attach the gun to the VR hand
 			AvatarManager.AttachNodeToHand(m_Weapon);
 			m_Aim = m_Weapon.transform.Find("Aim").gameObject;
-
+			
 		}
+
+		// Rotate to face the front of the toy. This information is given HARD-CODED in static ms_Forward
+		Quaternion rotOffset = Quaternion.FromToRotation(AvatarManager.vrRootNode.transform.forward, ms_Forward); 
+
+		// Apply offset
+		AvatarManager.MoveRootTo(gameObject, offset/AvatarManager.swapScale, rotOffset);
 
 		// Hide character
 		ShowSoldier(false);

@@ -64,7 +64,7 @@ public class ChildBehaviour : MonoBehaviour {
 		if(toyToChild != null)
 			toyToChild(); // Launch all callbacks
 
-		AvatarManager.MoveRootTo(gameObject); // Replace Vr hierarchy in child
+		AvatarManager.MoveRootTo(gameObject,Vector3.zero,Quaternion.identity); // Replace Vr hierarchy in child
 		AvatarManager.AttachNodeToHand(m_ChildHand); // Relink hand with VR object
 
 		// Avoid immediate re-swap

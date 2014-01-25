@@ -23,7 +23,6 @@ public class AvatarManager : MonoBehaviour {
 	{
 		Debug.Log ("Change Root toward " + avatar.name);
 		AvatarManager.vrRootNode.transform.parent = avatar.transform;
-		AvatarManager.vrRootNode.transform.localPosition = Vector3.zero;
 	}
 
 	public static void MoveRootTo (GameObject avatar, Vector3 offset)
@@ -33,6 +32,13 @@ public class AvatarManager : MonoBehaviour {
 		AvatarManager.vrRootNode.transform.localPosition = offset;
 	}
 
+	public static void MoveRootTo (GameObject avatar, Vector3 offset, Quaternion rotation)
+	{
+		Debug.Log ("Change Root toward " + avatar.name);
+		AvatarManager.vrRootNode.transform.parent = avatar.transform;
+		AvatarManager.vrRootNode.transform.localPosition = offset;
+		AvatarManager.vrRootNode.transform.localRotation = rotation;
+	}
 
 	public static void AttachNodeToHand (GameObject hand)
 	{
