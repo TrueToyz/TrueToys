@@ -1,8 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\EnnemyAI.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\EnemySpawn.cs">
     <Files>
-      <File FileName="Assets\Scripts\EnnemyAI.cs" Line="35" Column="1" />
+      <File FileName="Assets\Scripts\EnnemyAI.cs" Line="22" Column="1" />
+      <File FileName="Assets\Scripts\EnemySpawn.cs" Line="21" Column="21" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
