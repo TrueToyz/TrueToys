@@ -19,6 +19,15 @@ public class EnnemyAI : MonoBehaviour {
 	private int radius = 2; // Radius of anticipitation for collisions in patrolling case
 	private bool isFrozen = true;
 
+	/* PArticle effects */
+	public GameObject m_DeathPrefab;
+	public GameObject m_InjuryPrefab;
+
+	void Start () {
+		//Spawn
+		//TODO
+	}
+
 	void Awake () {
 		
 		player = GameObject.FindGameObjectWithTag("ChildToy");
@@ -38,6 +47,10 @@ public class EnnemyAI : MonoBehaviour {
 		else if (!ennemySight.playerInSight && !isFrozen ){
 			Patrolling ();
 		}
+		else {
+			Animator enemyAnimator = gameObject.GetComponent<Animator>();
+			enemyAnimator.SetBool("IsRunning", false);
+		}
 	}
 
 	void Chasing () {
@@ -47,6 +60,9 @@ public class EnnemyAI : MonoBehaviour {
 		// If the the last personal sighting of the player is not close...
 		if(sightingDeltaPos.sqrMagnitude > m_AttackRange) {
 			Debug.Log("Chasing !");
+
+			Animator enemyAnimator = gameObject.GetComponent<Animator>();
+			enemyAnimator.SetBool("IsRunning", true);
 
 			Vector3 destination = player.transform.position - transform.position ;
 			transform.Translate(destination.normalized * chaseSpeed * Time.deltaTime);
@@ -61,6 +77,13 @@ public class EnnemyAI : MonoBehaviour {
 				ennemySight.personalLastSighting = lastPlayerSighting.resetPosition;
 				chaseTimer = 0f;
 			}
+		}
+		/* TATA YOYOOOO */
+		else
+		{
+			Animator enemyAnimator = gameObject.GetComponent<Animator>();
+			enemyAnimator.SetBool("IsRunning", false);
+			Attack ();
 		}
 
 
@@ -95,17 +118,22 @@ public class EnnemyAI : MonoBehaviour {
 	
 	/* --------------------------------------------- Fight behaviour ------------------------------ */
 	
+	void Attack ()
+	{
+		Animator enemyAnimator = gameObject.GetComponent<Animator>();
+		enemyAnimator.SetTrigger("Attack");
+	}
+
 	void ReceiveDamage ()
 	{
 		Debug.Log ("Oh, it hurts !");
 		m_LifePoints--;
-		
-		if (m_LifePoints < 2)
-		{
-			Injured();
-		}
+
+
+		Injured();
+
 		/* Death Behaviour */
-		else if (m_LifePoints < 1)
+		if (m_LifePoints < 1)
 		{
 			Die();
 		}
@@ -113,12 +141,23 @@ public class EnnemyAI : MonoBehaviour {
 
 	void Injured ()
 	{
+		Animator enemyAnimator = gameObject.GetComponent<Animator>();
+		enemyAnimator.SetTrigger("TakeInjury");
+
 		// Blood particles and sound
+		if (m_InjuryPrefab)
+		{
+			Instantiate(m_InjuryPrefab, transform.position, transform.rotation);
+		}
 	}
 
 	void Die ()
 	{
 		// Launch particles and sound
+		if (m_DeathPrefab)
+		{
+			Instantiate(m_DeathPrefab, transform.position, transform.rotation);
+		}
 
 		Destroy (gameObject);
 
