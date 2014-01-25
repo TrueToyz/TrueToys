@@ -10,7 +10,7 @@ public class ChildBehaviour : MonoBehaviour {
 	/* Environment related variables */
 	public GameObject Environment;
 
-	/* Switch the environment */
+	/* Events when Switch the environment */
 	public delegate void WorldChanger();
 	public static event WorldChanger childToToy;
 	public static event WorldChanger toyToChild;
@@ -38,7 +38,8 @@ public class ChildBehaviour : MonoBehaviour {
 		if(toyToChild != null)
 			toyToChild(); // Launch all callbacks
 
-		AvatarManager.MoveRootTo(gameObject);
+		AvatarManager.MoveRootTo(gameObject); // Replace Vr hierarchy in child
+		AvatarManager.AttachNodeToHand(m_ChildHand); // Relink hand with VR object
 	}
 
 	/*
@@ -51,6 +52,9 @@ public class ChildBehaviour : MonoBehaviour {
 		m_IsControlled = false;
 		if(childToToy != null)
 			childToToy();
+
+		// Unlink the hand and the VR hierarchy, relink with child
+		m_ChildHand.transform.parent = transform;
 	}
 
 	/* --------------------------------------- Interaction functions --------------------------- */

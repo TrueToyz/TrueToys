@@ -31,6 +31,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		m_IsControlled = true;
 		m_OwnerChild = child;
 
+		// Move VR root to child, relink hand with VR node
 		AvatarManager.MoveRootTo(gameObject);
 	}
 	
