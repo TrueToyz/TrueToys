@@ -35,6 +35,7 @@ public class EnnemyAI : MonoBehaviour {
 		spawnTimer += Time.deltaTime;
 		
 		if(spawnTimer >= spawnWaitTime){
+			Debug.Log("New Enemy");
 			Instantiate(enemy, spawnPosition, Quaternion.identity);
 			spawnTimer = 0f;
 		}
