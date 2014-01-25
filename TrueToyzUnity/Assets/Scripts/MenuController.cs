@@ -4,6 +4,7 @@ using System.Collections;
 public class MenuController : MonoBehaviour {
 
 	public int radius = 10;
+	public float quitWaitTime = 2f;
 
 	private float quitTimer;
 	private GameObject quitButton;
