@@ -10362,7 +10362,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!132 &1165002465
 GUIText:
   m_ObjectHideFlags: 0
@@ -10420,7 +10420,7 @@ MonoBehaviour:
   WandButton4: 0
   WandButton5: 0
   DeltaTime: 0
-  ConfigFile: E:/Perso/GlobalGameJam/TrueToyz/TrueToyzUnity/Assets/MiddleVR/Config/config_ggj.vrx
+  ConfigFile: D:/Documents/Alexandre/Github/TrueToys/TrueToys/TrueToyzUnity/Assets/MiddleVR/Config/config_ggj.vrx
   RootNode: {fileID: 1997705283}
   TemplateCamera: {fileID: 0}
   ShowWand: 0
@@ -18212,6 +18212,7 @@ GameObject:
   - 4: {fileID: 2125576757}
   - 33: {fileID: 2125576759}
   - 23: {fileID: 2125576758}
+  - 114: {fileID: 2125576760}
   m_Layer: 0
   m_Name: p47 prop
   m_TagString: Untagged
@@ -18260,6 +18261,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1183446793}
   m_GameObject: {fileID: 2125576756}
   m_Mesh: {fileID: 4300002, guid: e7bfc23964e4c9f42b71035ad50136a3, type: 3}
+--- !u!114 &2125576760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2125576756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aba12eaa7323a64e8e94dba352ff59e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2131814251
 GameObject:
   m_ObjectHideFlags: 0
