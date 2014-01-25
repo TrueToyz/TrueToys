@@ -7,6 +7,7 @@ public class ChildBehaviour : MonoBehaviour {
 	/* Child-related Variables */
 	public GameObject m_ChildToy; // Toy actually hold in hand
 	private GameObject m_ChildHand; // The child left hand, recognizable by his tag
+	private GameObject cameraVR;
 	private bool m_ToyInHand = false; // the toy is in hand
 	private bool m_CanSwitch = true; // the child cannot switch whiel the toy falls
 
@@ -24,8 +25,8 @@ public class ChildBehaviour : MonoBehaviour {
 	private float timeBeforeNextIteration = 0.0f;
 
 	/*Audio*/
-	private AudioSource war;
-	private AudioSource calm;
+	private AudioClip war;
+	private AudioClip calm;
 
 	// Use this for initialization
 	public void Start () {
@@ -46,9 +47,17 @@ public class ChildBehaviour : MonoBehaviour {
 		childToToy += BiggerWorld;
 		toyToChild += SmallerWorld;
 
+		//Environment = GameObject.Find ("Environment"); //Confirm this ?!?
+
 		//Find the audio files
-		calm = transform.Find("ggjpuppetambchild").audio;
-		war = transform.Find("ggjpuppetwar").audio;
+
+		calm = Resources.Load("Audio/ggjpuppetambchild") as AudioClip;
+		war =  Resources.Load("Audio/ggjpuppetwar") as AudioClip;
+
+		cameraVR = GameObject.Find("CameraStereo0");
+		cameraVR.AddComponent<AudioListener>();
+		cameraVR.AddComponent<AudioSource>();
+
 
 	}
 	
@@ -79,9 +88,9 @@ public class ChildBehaviour : MonoBehaviour {
 		timeBeforeNextIteration = Time.time;
 
 		//Play the audio
-		if (calm.isPlaying)
-			calm.Stop();
-		war.Play();
+		cameraVR.audio.Stop();
+		cameraVR.audio.clip = war;
+		cameraVR.audio.Play();
 	}
 
 	/*
@@ -99,9 +108,9 @@ public class ChildBehaviour : MonoBehaviour {
 		m_ChildHand.transform.parent = transform;
 
 		//Play the audio
-		if (war.isPlaying)
-			war.Stop();
-		calm.Play();
+		cameraVR.audio.Stop();
+		cameraVR.audio.clip = calm;
+		cameraVR.audio.Play();
 	}
 
 	/* --------------------------------------- Interaction functions --------------------------- */

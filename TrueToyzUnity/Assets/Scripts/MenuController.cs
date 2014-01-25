@@ -26,6 +26,7 @@ public class MenuController : MonoBehaviour {
 
 				if(quitTimer >= quitWaitTime) {
 					//Quit the game
+					Debug.Log("Rage QUITTTTTT");
 					Application.Quit();
 					quitTimer = 0f;
 				}
