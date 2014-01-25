@@ -607,6 +607,56 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 337383538}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &424099759
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 424099761}
+  - 114: {fileID: 424099760}
+  - 114: {fileID: 424099762}
+  m_Layer: 0
+  m_Name: MenuController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &424099760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 424099759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64ad7eacfe0988a4685a64acaa7e4a51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &424099761
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 424099759}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .902810216, y: 3.00320721, z: .72000885}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &424099762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 424099759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8305fa2a4916c542a55b61cbd47a25c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &567339630
 GameObject:
   m_ObjectHideFlags: 0
@@ -895,6 +945,10 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 654eb2207d0de00459c54995ec518376, type: 2}
+      propertyPath: RootNode
+      value: 
+      objectReference: {fileID: 1584093541}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 654eb2207d0de00459c54995ec518376, type: 2}
   m_RootGameObject: {fileID: 1751439321}
@@ -1165,7 +1219,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 949278465}
-  m_LocalRotation: {x: -.00365108647, y: .703402042, z: -.710782409, w: .000747077342}
+  m_LocalRotation: {x: -.00365108671, y: .703402102, z: -.710782468, w: .0007470774}
   m_LocalPosition: {x: -.00462520262, y: -.00452423096, z: -.593935251}
   m_LocalScale: {x: .0992287397, y: 9.69889355, z: .0985095948}
   m_Children: []
@@ -2094,7 +2148,7 @@ GameObject:
   - 65: {fileID: 1509612369}
   m_Layer: 0
   m_Name: Play
-  m_TagString: Untagged
+  m_TagString: Play
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2333,8 +2387,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1584093541}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: .0307171177, y: 0, z: 0, w: .99952817}
+  m_LocalPosition: {x: 0, y: 4.2482729, z: -7.83491707}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2559,7 +2613,7 @@ MonoBehaviour:
   WandButton5: 0
   DeltaTime: 0
   ConfigFile: c:\config.vrx
-  RootNode: {fileID: 0}
+  RootNode: {fileID: 1584093541}
   TemplateCamera: {fileID: 0}
   ShowWand: 1
   ShowFPS: 1
