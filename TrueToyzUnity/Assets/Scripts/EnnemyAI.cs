@@ -7,6 +7,8 @@ public class EnnemyAI : MonoBehaviour {
 	public float chaseWaitTime = 2f;
 	public float m_AttackRange = 0.05f;
 
+	public int m_LifePoints = 2; // Easy to kill
+
 	private EnnemySight ennemySight;
 	private LastPlayerSighting lastPlayerSighting;
 	private GameObject player;
@@ -16,7 +18,7 @@ public class EnnemyAI : MonoBehaviour {
 	void Awake () {
 
 		player = GameObject.FindGameObjectWithTag("ChildToy");
-		ennemySight = GetComponent<EnnemySight>();
+		ennemySight = GetComponentInChildren<EnnemySight>();
 		lastPlayerSighting = GameObject.FindGameObjectWithTag("GameController").GetComponent<LastPlayerSighting>();
 
 		ChildBehaviour.toyToChild += Freeze;
@@ -54,6 +56,38 @@ public class EnnemyAI : MonoBehaviour {
 
 
 	}
+
+	/* --------------------------------------------- Fight behaviour ------------------------------ */
+
+	void ReceiveDamage ()
+	{
+		Debug.Log ("Oh, it hurts !");
+		m_LifePoints--;
+
+		if (m_LifePoints < 2)
+		{
+			Injured();
+		}
+		/* Death Behaviour */
+		else if (m_LifePoints < 1)
+		{
+			Die();
+		}
+	}
+
+	void Injured ()
+	{
+		// Blood particles and sound
+	}
+
+	void Die ()
+	{
+		// Launch particles and sound
+
+		Destroy (gameObject);
+
+	}
+	/* -------------------------------------------- Pause during swapping ---------------------- */
 
 	void Freeze () {
 		isFrozen = true;

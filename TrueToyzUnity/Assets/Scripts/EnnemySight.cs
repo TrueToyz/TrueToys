@@ -38,7 +38,7 @@ public class EnnemySight : MonoBehaviour {
 
 		previousSighting = lastPlayerSighting.position;
 	}
-	
+
 
 	void OnTriggerEnter (Collider other) {
 		// If the player enter the trigger zone
