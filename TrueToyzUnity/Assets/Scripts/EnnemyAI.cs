@@ -16,7 +16,7 @@ public class EnnemyAI : MonoBehaviour {
 	void Awake () {
 
 		player = GameObject.FindGameObjectWithTag("ChildToy");
-		ennemySight = GetComponent<EnnemySight>();
+		ennemySight = GetComponentInChildren<EnnemySight>();
 		lastPlayerSighting = GameObject.FindGameObjectWithTag("GameController").GetComponent<LastPlayerSighting>();
 
 		ChildBehaviour.toyToChild += Freeze;
@@ -54,6 +54,15 @@ public class EnnemyAI : MonoBehaviour {
 
 
 	}
+
+	/* --------------------------------------------- Fight behaviour ------------------------------ */
+
+	void ReceiveDamage ()
+	{
+		Debug.Log ("Oh, it hurts !");
+	}
+
+	/* -------------------------------------------- Pause during swapping ---------------------- */
 
 	void Freeze () {
 		isFrozen = true;
