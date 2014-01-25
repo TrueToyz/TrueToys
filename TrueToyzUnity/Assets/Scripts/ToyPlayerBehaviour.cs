@@ -17,7 +17,8 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 	private Renderer[] ml_GraphicComponents;
 
 	/* Combat attributes */
-	public float m_FireRate = 0.1f;
+	public float m_FireRate = 3f;
+	private float timeBeforeNextShot = 0.0f;
 
 	/* Vr inputs */
 	private vrJoystick m_HandRazer;
@@ -126,10 +127,17 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		Debug.Log ("Shoot someone!");
 
 		Ray myAim = new Ray(m_Aim.transform.position, m_Aim.transform.forward);
+		RaycastHit gunHit;
 
 
 		// Damage opponents in destructive cone !
-		//if (Physics.Raycast(
+		if (Physics.Raycast(myAim, out gunHit, 100.0f))
+		{
+			if (gunHit.collider.gameObject.tag == "Enemy")
+			{
+				gunHit.collider.gameObject.SendMessage("ReceiveDamage");
+			}
+		}
 
 	}
 
@@ -142,13 +150,8 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 	{
 		if (Time.time > timeBeforeNextIteration + 0.8f)
 		{
-			/* Shoot behavior */
-			if (m_HandRazer.IsButtonPressed(0))
-			{
-				Shoot ();
-			}
 			/* Swap behavior */
-			else if (m_HandRazer.IsButtonPressed(6))
+			if (m_HandRazer.IsButtonPressed(6))
 			{
 				Debug.Log ("Toy to Child");
 				m_OwnerChild.SendMessage("TakeControl",gameObject);
@@ -157,8 +160,18 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 				timeBeforeNextIteration = Time.time;
 			}
 		}
-	}
 
+		/* Shoot behavior */
+		if (m_HandRazer.IsButtonPressed(0))
+		{
+			if(Time.time > timeBeforeNextShot + m_FireRate) 
+			{
+				Shoot ();
+				timeBeforeNextShot = Time.time;
+			}
+		}
+	}
+	
 	/* --------------------------------------------- Debug functions --------------------------------- */
 	
 	/*

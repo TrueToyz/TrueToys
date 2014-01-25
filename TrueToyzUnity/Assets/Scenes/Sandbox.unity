@@ -14195,6 +14195,7 @@ MonoBehaviour:
   chaseSpeed: .200000003
   chaseWaitTime: 15
   m_AttackRange: .0500000007
+  m_LifePoints: 2
 --- !u!65 &1992560545
 BoxCollider:
   m_ObjectHideFlags: 0
