@@ -16,11 +16,14 @@ public class AvatarManager : MonoBehaviour {
 	
 	public static void MoveRootTo (GameObject avatar)
 	{
+		Debug.Log ("Change Root toward " + avatar.name);
 		AvatarManager.vrRootNode.transform.parent = avatar.transform;
+		AvatarManager.vrRootNode.transform.localPosition = Vector3.zero;
 	}
 
 	public static void AttachNodeToHand (GameObject hand)
 	{
 		hand.transform.parent = vrHandNode.transform;
+		hand.transform.localPosition = Vector3.zero;
 	}
 }

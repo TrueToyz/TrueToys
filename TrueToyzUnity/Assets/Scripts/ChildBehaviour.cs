@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using MiddleVR_Unity3D;
 
 public class ChildBehaviour : MonoBehaviour {
 
 	/* Child-related Variables */
-	public GameObject m_ToyInHand; // Toy actually hold in hand
+	public GameObject m_ChildToy; // Toy actually hold in hand
 	private GameObject m_ChildHand; // The child left hand, recognizable by his tag
+	private bool m_ToyInHand = false; // the toy is in hand
 
 	/* Environment related variables */
 	public GameObject Environment;
@@ -15,16 +17,39 @@ public class ChildBehaviour : MonoBehaviour {
 	public static event WorldChanger childToToy;
 	public static event WorldChanger toyToChild;
 	public bool m_IsControlled = true;
+
+	/* Vr inputs */
+	private vrJoystick m_HandRazer;
+	private float timeBeforeNextIteration = 0.0f;
 	
 	// Use this for initialization
 	public void Start () {
+
+		// Hand config
 		m_ChildHand = GameObject.FindGameObjectWithTag("ChildHand");
+		AvatarManager.AttachNodeToHand(m_ChildHand); // Initialize hand by atatching to vr node
+
+		// Assign toy
+		if (!m_ChildToy)
+			m_ChildToy = GameObject.FindGameObjectWithTag("ChildToy");
+
+		// Retrieve inputs
+		// Note: Might be not the good index
+		m_HandRazer = MiddleVR.VRDeviceMgr.GetJoystickByIndex(0);
+
+		// Handlers // Callbacks to transition
+		childToToy += BiggerWorld;
+		toyToChild += SmallerWorld;
+
 	}
 	
 	// Update is called once per frame
 	public void Update () {
 		if(m_IsControlled)
-			TestInteraction();
+		{
+			//TestInteraction();
+			MonitorInputs();
+		}
 	}
 
 	/* ------------------------------------ Control functions --------------------------- */
@@ -40,6 +65,9 @@ public class ChildBehaviour : MonoBehaviour {
 
 		AvatarManager.MoveRootTo(gameObject); // Replace Vr hierarchy in child
 		AvatarManager.AttachNodeToHand(m_ChildHand); // Relink hand with VR object
+
+		// Avoid immediate re-swap
+		timeBeforeNextIteration = Time.time;
 	}
 
 	/*
@@ -63,26 +91,27 @@ public class ChildBehaviour : MonoBehaviour {
 	/*
 	 * Verify if the hand is close enough to grab the toy
 	 * */
-	bool CanGrab (GameObject toy)
+	bool CanGrab ()
 	{
-		if(Vector3.Distance(toy.transform.position, m_ChildHand.transform.position) < 0.1)
+		if(Vector3.Distance(m_ChildToy.transform.position, m_ChildHand.transform.position) < 0.1)
 			return true;
 		else
-			return false;
+			return true;
 	}
 
 	/*
 	 * Grab the given toy, if close enough
 	 * */
-	void Grab (GameObject toy)
+	void Grab ()
 	{
-		m_ToyInHand = toy;
-		m_ToyInHand.transform.parent = m_ChildHand.transform; // Change toy parent in hierarchy by the hand transform
-		m_ToyInHand.transform.localPosition = Vector3.zero; // Optional : put the object in hand
+		m_ChildToy.transform.parent = m_ChildHand.transform; // Change toy parent in hierarchy by the hand transform
+		m_ChildToy.transform.localPosition = Vector3.zero; // Optional : put the object in hand
 
 		// Make it kinematic
-		Rigidbody toyBody = m_ToyInHand.GetComponent<Rigidbody>();
+		Rigidbody toyBody = m_ChildToy.GetComponent<Rigidbody>();
 		toyBody.isKinematic = true;
+
+		m_ToyInHand = true;
 	}
 
 	/*
@@ -90,18 +119,68 @@ public class ChildBehaviour : MonoBehaviour {
 	 * */
 	void Drop ()
 	{
-		m_ToyInHand.transform.parent = null; // Toy is not in hierarchy
-		m_ToyInHand.transform.position = m_ChildHand.transform.position;
+		m_ChildToy.transform.parent = null; // Toy is not in hierarchy
+		m_ChildToy.transform.rotation = Quaternion.identity;
 
 		// Make it physic
-		Rigidbody toyBody = m_ToyInHand.GetComponent<Rigidbody>();
+		Rigidbody toyBody = m_ChildToy.GetComponent<Rigidbody>();
 		toyBody.isKinematic = false;
 
 		// Special: Stop the toy from rotating over itself when it falls
 		toyBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
-		// Erase pointer
-		m_ToyInHand = null;
+		// Toy is not in hand
+		m_ToyInHand = false;
+	}
+
+	/* ------------------------------------------ VR interaction ---------------------------------- */
+
+	/*
+	 * Monitor VR inputs for grabbing/dropping
+	 * */
+	void MonitorInputs ()
+	{
+		if (Time.time > timeBeforeNextIteration + 0.8f)
+		{
+			if (m_HandRazer.IsButtonPressed(0))
+			{
+				if(!m_ToyInHand)
+				{
+					if(CanGrab())
+						Grab ();
+				}
+				else
+					Drop ();
+
+				timeBeforeNextIteration = Time.time;
+			}
+			else if (m_HandRazer.IsButtonPressed(6))
+			{
+				Debug.Log ("Child to Toy");
+				Drop ();
+				Debug.Log ("Child has dropped");
+				ReleaseControl();
+				m_ChildToy.SendMessage("TakeControl",gameObject);
+
+				// Avoid constant loop of drop/grab...
+				timeBeforeNextIteration = Time.time;
+			}
+		}
+	}
+
+	/* ------------------------------------------ World modification functions ---------------------------------- */
+
+	/*
+	 * Prototype to scale the level, called with an event
+	 * */
+	void BiggerWorld ()
+	{
+		Environment.transform.localScale = new Vector3(10.0f,10.0f, 10.0f);
+	}
+
+	void SmallerWorld ()
+	{
+		Environment.transform.localScale = new Vector3(1.0f,1.0f, 1.0f);
 	}
 
 	/* ------------------------------------------ Menu functions ---------------------------------- */
@@ -125,8 +204,7 @@ public class ChildBehaviour : MonoBehaviour {
 		{
 			if (!m_ToyInHand)
 			{
-				GameObject ChildToy = GameObject.FindGameObjectWithTag("ChildToy");
-				Grab (ChildToy);
+				Grab ();
 			}
 			else{
 				Drop ();
@@ -149,7 +227,7 @@ public class ChildBehaviour : MonoBehaviour {
 			Debug.Log ("Child to Toy");
 			if(m_ToyInHand)
 			{
-				m_ToyInHand.SendMessage("TakeControl",gameObject);
+				m_ChildToy.SendMessage("TakeControl",gameObject);
 				Drop ();
 				ReleaseControl();
 			}
