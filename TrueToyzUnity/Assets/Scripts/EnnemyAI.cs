@@ -87,7 +87,9 @@ public class EnnemyAI : MonoBehaviour {
 
 	}
 
-
+	/*
+	 * Replaces old behavior
+	 * */
 	IEnumerator Chase (GameObject soldier, GameObject player)
 	{
 
@@ -96,6 +98,8 @@ public class EnnemyAI : MonoBehaviour {
 
 		while(Vector3.Distance(soldier.transform.position, player.transform.position) > m_AttackRange)
 		{
+			if(isFrozen)
+				yield break;
 			soldier.transform.position = Vector3.Lerp(soldier.transform.position, player.transform.position, chaseSpeed * Time.deltaTime);
 			yield return null;
 		}
