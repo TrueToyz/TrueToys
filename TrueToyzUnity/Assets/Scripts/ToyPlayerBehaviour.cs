@@ -27,6 +27,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 	public float m_FireRate = 3f;
 	public float m_FireRange = 200f;
 	public int m_ShellNumbers = 3;
+	public float m_FireRadius = 0.1f;//
 	private float timeBeforeNextShot = 0.0f;
 
 	/* Vr inputs */
@@ -64,7 +65,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 
 			// Debug
 			if (m_Aim)
-				Debug.DrawRay(m_Aim.transform.position, m_Aim.transform.forward*1000,Color.red);
+				Debug.DrawRay(m_Aim.transform.position, m_Aim.transform.forward*m_FireRange,Color.red);
 		}
 	}
 
@@ -172,8 +173,8 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		// Random generation of bullets
 		for(int i=0; i<m_ShellNumbers; i++)
 		{
-			float offset_x = Random.Range(0.03f,0.06f);
-			float offset_z = Random.Range(0.03f,0.06f);
+			float offset_x = Random.Range(0f,m_FireRadius);
+			float offset_z = Random.Range(0f,m_FireRadius);
 
 			// Random direction
 			Vector3 randomAim = m_Aim.transform.forward;
@@ -196,9 +197,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 			{
 				Quaternion bulletRot = Quaternion.FromToRotation(new Vector3(0,0,1f), randomAim);
 				GameObject myBullet = (GameObject)Instantiate(m_BulletPrefab,myAim.GetPoint(0),bulletRot);
-
 				StartCoroutine(BulletBehavior(myBullet,myAim,2f));
-				
 			}
 
 			// Gunblast
@@ -277,6 +276,16 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 				Shoot ();
 				timeBeforeNextShot = Time.time;
 			}
+		}
+	}
+
+	/* --------------------------------------------- GUI ----------------------------------------------- */
+
+	void OnGUI()
+	{
+		if(m_IsControlled)
+		{
+
 		}
 	}
 	

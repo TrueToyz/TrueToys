@@ -3,6 +3,9 @@ using System.Collections;
 
 public class EnnemyAI : MonoBehaviour {
 
+	/* Hard coded */
+	public static int ms_EnemyCount =0;
+
 	public float chaseSpeed;
 	public float chaseWaitTime;
 	public float m_AttackRange = 5.0f;
@@ -39,6 +42,8 @@ public class EnnemyAI : MonoBehaviour {
 	void Start () {
 		//Spawn
 		//TODO
+
+		ms_EnemyCount++;
 
 		m_LifePoints = Random.Range(1, 5);
 		chaseSpeed = Random.Range(0.3f, 0.5f); // Not to slow, not too fast :D
@@ -103,7 +108,7 @@ public class EnnemyAI : MonoBehaviour {
 		// Only keep the Z component
 		while(Vector3.Distance(soldier.transform.position, player.transform.position) > m_AttackRange)
 		{
-			if(m_IsFrozen)
+			if(m_IsFrozen || !ennemySight.playerInSight)
 				yield break;
 
 			//Audio
@@ -209,6 +214,8 @@ public class EnnemyAI : MonoBehaviour {
 			cameraVR.audio.clip = die;
 			cameraVR.audio.Play();
 		}
+
+		ms_EnemyCount --;
 
 		Destroy (gameObject);
 
