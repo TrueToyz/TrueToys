@@ -93,12 +93,9 @@ public class EnemySpawn : MonoBehaviour {
 		}
 		
 		Debug.Log("Parachute !");
-		yield return new WaitForSeconds(0.5f);
-		Debug.Log("Fall has ended.");
-		
+
 		// the toy must returns to normal state
 		soldier.rigidbody.isKinematic = false;
-
 		soldier.SendMessage("Unfreeze");
 		
 	}

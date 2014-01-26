@@ -701,7 +701,8 @@ MonoBehaviour:
   m_BlastPrefab: {fileID: 100000, guid: e255eb0a109eef742b3b6da8163b68da, type: 2}
   m_FireRate: .300000012
   m_FireRange: 1000
-  m_ShellNumbers: 3
+  m_ShellNumbers: 1
+  m_FireRadius: .100000001
 --- !u!137 &13700000
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

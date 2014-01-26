@@ -11104,7 +11104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chaseSpeed: 1
   chaseWaitTime: 2
-  m_AttackRange: 1
+  m_AttackRange: .899999976
   m_LifePoints: 2
   m_DeathPrefab: {fileID: 100022, guid: 09e585e33f5f46c4691266db5e301e62, type: 2}
   m_InjuryPrefab: {fileID: 0}
@@ -11135,7 +11135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c7e86a99d406d4aa69e64ed695660c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldOfViewAngle: 180
+  fieldOfViewAngle: 360
   playerInSight: 0
   personalLastSighting: {x: 0, y: 0, z: 0}
   m_SightRadius: .5
@@ -26479,7 +26479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c7e86a99d406d4aa69e64ed695660c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldOfViewAngle: 180
+  fieldOfViewAngle: 360
   playerInSight: 0
   personalLastSighting: {x: 0, y: 0, z: 0}
   m_SightRadius: .5
@@ -32590,7 +32590,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chaseSpeed: 1
   chaseWaitTime: 2
-  m_AttackRange: 1
+  m_AttackRange: .899999976
   m_LifePoints: 2
   m_DeathPrefab: {fileID: 100022, guid: 09e585e33f5f46c4691266db5e301e62, type: 2}
   m_InjuryPrefab: {fileID: 0}
@@ -32621,7 +32621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c7e86a99d406d4aa69e64ed695660c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldOfViewAngle: 180
+  fieldOfViewAngle: 360
   playerInSight: 0
   personalLastSighting: {x: 0, y: 0, z: 0}
   m_SightRadius: .5
@@ -34169,7 +34169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chaseSpeed: 1
   chaseWaitTime: 2
-  m_AttackRange: 1
+  m_AttackRange: .899999976
   m_LifePoints: 2
   m_DeathPrefab: {fileID: 100022, guid: 09e585e33f5f46c4691266db5e301e62, type: 2}
   m_InjuryPrefab: {fileID: 0}
@@ -34200,7 +34200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c7e86a99d406d4aa69e64ed695660c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldOfViewAngle: 180
+  fieldOfViewAngle: 360
   playerInSight: 0
   personalLastSighting: {x: 0, y: 0, z: 0}
   m_SightRadius: .5
@@ -42878,7 +42878,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chaseSpeed: 1
   chaseWaitTime: 2
-  m_AttackRange: 1
+  m_AttackRange: .899999976
   m_LifePoints: 2
   m_DeathPrefab: {fileID: 100022, guid: 09e585e33f5f46c4691266db5e301e62, type: 2}
   m_InjuryPrefab: {fileID: 0}
@@ -42909,7 +42909,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c7e86a99d406d4aa69e64ed695660c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldOfViewAngle: 180
+  fieldOfViewAngle: 360
   playerInSight: 0
   personalLastSighting: {x: 0, y: 0, z: 0}
   m_SightRadius: .5

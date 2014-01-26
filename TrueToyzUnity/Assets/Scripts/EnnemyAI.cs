@@ -109,6 +109,8 @@ public class EnnemyAI : MonoBehaviour {
 		while(Vector3.Distance(soldier.transform.position, player.transform.position) > m_AttackRange)
 		{
 			if(m_IsFrozen || !ennemySight.playerInSight)
+			{
+				m_EnemyBehaviour = EnemyBehaviour.patrolling;
 				yield break;
 
 			//Audio
