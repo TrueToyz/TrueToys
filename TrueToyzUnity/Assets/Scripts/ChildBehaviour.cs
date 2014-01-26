@@ -4,6 +4,9 @@ using MiddleVR_Unity3D;
 
 public class ChildBehaviour : MonoBehaviour {
 
+	/* Balance variables */
+	private float m_GraspRadius = 0.35f;
+
 	/* Child-related Variables */
 	public GameObject m_ChildToy; // Toy actually hold in hand
 	private GameObject m_ChildHand; // The child left hand, recognizable by his tag
@@ -141,10 +144,11 @@ public class ChildBehaviour : MonoBehaviour {
 	 * */
 	bool CanGrab ()
 	{
-		if(Vector3.Distance(m_ChildToy.transform.position, m_ChildHand.transform.position) < 0.1)
+		
+		if(Vector3.Distance(m_ChildToy.transform.position, m_ChildHand.transform.position) < m_GraspRadius)
 			return true;
 		else
-			return true;
+			return false;
 	}
 
 	/*
@@ -165,6 +169,29 @@ public class ChildBehaviour : MonoBehaviour {
 
 		m_HandAnimator.SetTrigger("Grasp");
 		
+	}
+
+	/*
+	 * Stops player from putting the toy into the wall !
+	 * */
+	bool CanDrop ()
+	{
+		/*
+		int layer2 = LayerMask.NameToLayer("Default");
+		int layermask2 = 1 << layer2;
+		Collider[] potentialThreats = Physics.OverlapSphere(m_ChildHand.transform.position,0.1f,layermask2);
+		foreach( Collider other in potentialThreats)
+		{
+			Debug.Log (other.name);
+		}
+
+		return true;
+		*/
+
+		// TODO
+
+		return true;
+
 	}
 
 	/*
@@ -251,8 +278,10 @@ public class ChildBehaviour : MonoBehaviour {
 					if(CanGrab())
 						Grab ();
 				}
-				else
+				else if(CanDrop())
+				{
 					Drop ();
+				}
 
 				timeBeforeNextIteration = Time.time;
 			}

@@ -54,16 +54,6 @@ public class AvatarManager : MonoBehaviour {
 
 	}
 
-	public static void AttachNodeToHand (GameObject handChild, Vector3 fwd_direction)
-	{
-		handChild.transform.parent = vrHandNode.transform;
-		handChild.transform.localPosition = Vector3.zero;
-		
-		// We apply the inverse if the rotational difference between the forward and the hand 
-		Quaternion H_fwd_hand = Quaternion.FromToRotation(vrHandNode.transform.forward,fwd_direction);
-		handChild.transform.localRotation = Quaternion.Inverse(H_fwd_hand);
-	}
-
 	public static void AttachNodeToHand (GameObject handChild, Vector3 t_offset, Quaternion r_offset)
 	{
 		handChild.transform.parent = vrHandNode.transform;

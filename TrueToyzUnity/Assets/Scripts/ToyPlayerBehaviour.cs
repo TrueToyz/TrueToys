@@ -87,7 +87,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 
 		// Move VR root to child, relink hand with VR node
 		Vector3 offset = -AvatarManager.GetHeadTrackingOffset() ;
-		offset.y = 0; // I want to keep the height of the head
+		offset.y = 0.2f; // I want to keep the height of the head
 
 		// Instantiate weapon
 		if (m_WeaponPrefab)
@@ -149,12 +149,6 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		Animator gunAnimator = m_Weapon.GetComponent<Animator>();
 		gunAnimator.SetTrigger("Shoots");
 
-		// Random generation of bullets
-		/*
-		float offset_x = Random.Range(0.03f,0.06f);
-		float offset_z = Random.Range(0.03f,0.06f);
-		*/
-		
 		// Emitter of shells
 		if(m_ShellPrefab){
 			GameObject myShells = (GameObject)Instantiate(m_ShellPrefab);
@@ -163,48 +157,59 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 			Destroy(myShells,m_FireRate);
 		}
 		
-		Ray myAim = new Ray(m_Aim.transform.position, m_Aim.transform.forward);
-		RaycastHit gunHit;
-
-		// Emitter of bullets
-		if(m_BulletPrefab)
+		// Random generation of bullets
+		for(int i=0; i<m_ShellNumbers; i++)
 		{
-			for(int i=0; i<m_ShellNumbers; i++)
+			float offset_x = Random.Range(0.03f,0.06f);
+			float offset_z = Random.Range(0.03f,0.06f);
+
+			// Random direction
+			Vector3 randomAim = m_Aim.transform.forward;
+			randomAim.z += offset_z;
+			randomAim.x += offset_x;
+
+
+			Ray myAim = new Ray(m_Aim.transform.position, randomAim);
+			RaycastHit gunHit;
+
+			// Emitter of bullets
+			if(m_BulletPrefab)
 			{
-				Quaternion bulletRot = Quaternion.FromToRotation(new Vector3(0,0,1f), m_Aim.transform.forward);
+				Quaternion bulletRot = Quaternion.FromToRotation(new Vector3(0,0,1f), randomAim);
 				GameObject myBullet = (GameObject)Instantiate(m_BulletPrefab,myAim.GetPoint(0),bulletRot);
 
 				StartCoroutine(BulletBehavior(myBullet,myAim,2f));
+				
 			}
-		}
 
-		// Gunblast
-		if (m_BlastPrefab)
-		{
-			GameObject myBlast = (GameObject)Instantiate(m_BlastPrefab);
-			myBlast.transform.parent = m_Aim.transform;
-			myBlast.transform.localPosition = new Vector3(0f,0f,0.15f);
-			Destroy(myBlast,m_FireRate);
-		}
-
-		int layer1 = LayerMask.NameToLayer("Enemies");
-		int layer2 = LayerMask.NameToLayer("Default");
-
-		int layermask1  = 1 << layer1;
-		int layermask2 = 1 << layer2;
-		int layermask = layermask1 | layermask2;
-
-
-		// Physical hardcoded raycast
-		if (Physics.Raycast(myAim, out gunHit, m_FireRange,layermask))
-		{
-			if (gunHit.collider.gameObject.tag == "Enemy")
+			// Gunblast
+			if (m_BlastPrefab)
 			{
-				gunHit.collider.gameObject.SendMessage("ReceiveDamage");
+				GameObject myBlast = (GameObject)Instantiate(m_BlastPrefab);
+				myBlast.transform.parent = m_Aim.transform;
+				myBlast.transform.localPosition = new Vector3(0f,0f,0.15f);
+				Destroy(myBlast,m_FireRate);
 			}
-			else
+
+			int layer1 = LayerMask.NameToLayer("Enemies");
+			int layer2 = LayerMask.NameToLayer("Default");
+
+			int layermask1  = 1 << layer1;
+			int layermask2 = 1 << layer2;
+			int layermask = layermask1 | layermask2;
+
+
+			// Physical hardcoded raycast
+			if (Physics.Raycast(myAim, out gunHit, m_FireRange,layermask))
 			{
-				Debug.Log ("Touché ! :" +gunHit.collider.name);
+				if (gunHit.collider.gameObject.tag == "Enemy")
+				{
+					gunHit.collider.gameObject.SendMessage("ReceiveDamage");
+				}
+				else
+				{
+					Debug.Log ("Touché ! :" +gunHit.collider.name);
+				}
 			}
 		}
 
