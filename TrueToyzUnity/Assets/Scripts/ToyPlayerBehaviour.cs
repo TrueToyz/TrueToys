@@ -28,6 +28,11 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 	private vrJoystick m_HandRazer;
 	private float timeBeforeNextIteration = 0.0f;
 
+	/*Audio*/
+	private GameObject cameraVR;
+	private AudioClip shotgun;
+	private AudioClip shellfalling;
+
 	// Use this for initialization
 	public void Start () {
 		// Retrieve inputs
@@ -36,6 +41,13 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 
 		// Retrieve renderer components
 		ml_GraphicComponents = GetComponentsInChildren<Renderer>() as Renderer[]; 
+
+		shotgun = Resources.Load("Audio/shotgun") as AudioClip;
+		shellfalling =  Resources.Load("Audio/shellfalling") as AudioClip;
+		
+		cameraVR = GameObject.Find("CameraStereo0");
+		//cameraVR.AddComponent<AudioListener>();
+		cameraVR.AddComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -154,6 +166,12 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		int layermask2 = 1 << layer2;
 		int layermask = layermask1 | layermask2;
 
+
+		cameraVR.audio.Stop();
+		cameraVR.audio.clip = shotgun;
+		cameraVR.audio.Play();
+		cameraVR.audio.clip = shellfalling;
+		cameraVR.audio.Play();
 
 		// Physical hardcoded raycast
 		if (Physics.Raycast(myAim, out gunHit, m_FireRange,layermask))

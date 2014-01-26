@@ -10,6 +10,10 @@ public class Torchelight : MonoBehaviour {
 	public GameObject Fumee;
 	public float MaxLightIntensity;
 	public float IntensityLight;
+
+	/*Audio*/
+	private GameObject cameraVR;
+	private AudioClip torch;
 	
 
 	void Start () {
@@ -18,6 +22,11 @@ public class Torchelight : MonoBehaviour {
 		BaseFlame.GetComponent<ParticleSystem>().emissionRate=IntensityLight*15f;	
 		Etincelles.GetComponent<ParticleSystem>().emissionRate=IntensityLight*7f;
 		Fumee.GetComponent<ParticleSystem>().emissionRate=IntensityLight*12f;
+
+		torch = Resources.Load("Audio/torch") as AudioClip;
+		
+		cameraVR = GameObject.Find("CameraStereo0");
+		cameraVR.AddComponent<AudioSource>();
 	}
 	
 
@@ -31,7 +40,11 @@ public class Torchelight : MonoBehaviour {
 		MainFlame.GetComponent<ParticleSystem>().emissionRate=IntensityLight*20f;
 		BaseFlame.GetComponent<ParticleSystem>().emissionRate=IntensityLight*15f;
 		Etincelles.GetComponent<ParticleSystem>().emissionRate=IntensityLight*7f;
-		Fumee.GetComponent<ParticleSystem>().emissionRate=IntensityLight*12f;		
+		Fumee.GetComponent<ParticleSystem>().emissionRate=IntensityLight*12f;	
+
+		cameraVR.audio.Stop();
+		cameraVR.audio.clip = torch;
+		cameraVR.audio.Play();
 
 	}
 }

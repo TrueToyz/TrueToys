@@ -27,6 +27,11 @@ public class EnnemyAI : MonoBehaviour {
 	public GameObject m_DeathPrefab;
 	public GameObject m_InjuryPrefab;
 
+	/*Audio*/
+	private GameObject cameraVR;
+	private AudioClip hurt1;
+	private AudioClip hurt2;
+
 
 	private Animator m_EnemyAnimator;
 
@@ -35,6 +40,13 @@ public class EnnemyAI : MonoBehaviour {
 		//TODO
 
 		m_EnemyAnimator = gameObject.GetComponent<Animator>();
+
+		hurt1 = Resources.Load("Audio/hurt1") as AudioClip;
+		hurt2 =  Resources.Load("Audio/hurt2") as AudioClip;
+		
+		cameraVR = GameObject.Find("CameraStereo0");
+		//cameraVR.AddComponent<AudioListener>();
+		cameraVR.AddComponent<AudioSource>();
 	}
 
 	void Awake () {
@@ -139,7 +151,7 @@ public class EnnemyAI : MonoBehaviour {
 		m_LifePoints--;
 		
 		Injured();
-
+		
 		/* Death Behaviour */
 		if (m_LifePoints < 1)
 		{
@@ -155,6 +167,10 @@ public class EnnemyAI : MonoBehaviour {
 		if (m_InjuryPrefab)
 		{
 			Instantiate(m_InjuryPrefab, transform.position, transform.rotation);
+
+			cameraVR.audio.Stop();
+			cameraVR.audio.clip = hurt1;
+			cameraVR.audio.Play();
 		}
 	}
 
@@ -166,6 +182,10 @@ public class EnnemyAI : MonoBehaviour {
 			Vector3 newPosition =  transform.position;
 			newPosition.y += 0.25f;
 			Instantiate(m_DeathPrefab, newPosition, transform.rotation);
+
+			cameraVR.audio.Stop();
+			cameraVR.audio.clip = hurt2;
+			cameraVR.audio.Play();
 		}
 
 		Destroy (gameObject);
