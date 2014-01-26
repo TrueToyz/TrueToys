@@ -15,6 +15,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 	public GameObject m_WeaponPrefab;
 	private GameObject m_Weapon;
 	private GameObject m_Aim;
+	public GameObject m_ShellPrefab; // Emitter to be instantiated
 	
 	/* Graphical components of toy */
 	private Renderer[] ml_GraphicComponents;
@@ -144,8 +145,19 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		Ray myAim = new Ray(m_Aim.transform.position, m_Aim.transform.forward);
 		RaycastHit gunHit;
 
+		// Animation
 		Animator gunAnimator = m_Weapon.GetComponent<Animator>();
 		gunAnimator.SetTrigger("Shoots");
+
+		// Emitter of shells
+		if(m_ShellPrefab){
+			GameObject myShells = (GameObject)Instantiate(m_ShellPrefab);
+			myShells.transform.parent = m_Weapon.transform;
+			myShells.transform.localPosition = Vector3.zero;
+			Destroy(myShells,m_FireRate);
+		}
+
+		// Emitter of bullets
 
 		int layer1 = LayerMask.NameToLayer("Enemies");
 		int layer2 = LayerMask.NameToLayer("Default");

@@ -88,6 +88,7 @@ public class ChildBehaviour : MonoBehaviour {
 		if(toyToChild != null)
 			toyToChild(); // Launch all callbacks
 
+		m_ChildHand.SetActive(true);
 		AvatarManager.MoveRootTo(gameObject,Vector3.zero,Quaternion.identity); // Replace Vr hierarchy in child
 		AvatarManager.AttachNodeToHand(m_ChildHand); // Relink hand with VR object
 
@@ -113,6 +114,7 @@ public class ChildBehaviour : MonoBehaviour {
 
 		// Unlink the hand and the VR hierarchy, relink with child
 		m_ChildHand.transform.parent = transform;
+		m_ChildHand.SetActive(false);
 
 		//Play the audio
 		cameraVR.audio.Stop();

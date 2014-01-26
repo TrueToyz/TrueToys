@@ -13889,6 +13889,7 @@ MonoBehaviour:
   m_IsControlled: 0
   m_OwnerChild: {fileID: 0}
   m_WeaponPrefab: {fileID: 100012, guid: e625344ad5b2aa946ae1d0b731ff8518, type: 2}
+  m_ShellPrefab: {fileID: 100000, guid: 5a193cc08996ed74e8fe8d24c07208bb, type: 2}
   m_FireRate: .300000012
   m_FireRange: 1000
 --- !u!1 &632036079
@@ -32256,6 +32257,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8c180999ad1aeed49b0c77668d8b2b55, type: 2}
+    - target: {fileID: 11400000, guid: cbbedf5b733c2a24e9fedecfb40d544a, type: 2}
+      propertyPath: m_ShellPrefab
+      value: 
+      objectReference: {fileID: 100000, guid: 5a193cc08996ed74e8fe8d24c07208bb, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cbbedf5b733c2a24e9fedecfb40d544a, type: 2}
   m_RootGameObject: {fileID: 630269969}
