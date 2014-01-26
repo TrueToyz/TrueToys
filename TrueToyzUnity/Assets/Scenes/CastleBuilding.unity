@@ -12160,6 +12160,14 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
+      propertyPath: m_TagString
+      value: Effects
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
   m_RootGameObject: {fileID: 2069501462}
@@ -15235,6 +15243,14 @@ Prefab:
     - target: {fileID: 11400000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
+      propertyPath: m_TagString
+      value: Effects
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
@@ -28771,7 +28787,7 @@ GameObject:
   - 114: {fileID: 1471651970}
   m_Layer: 0
   m_Name: Torch
-  m_TagString: Untagged
+  m_TagString: Effects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38992,6 +39008,7 @@ GameObject:
   - 114: {fileID: 1962114486}
   - 82: {fileID: 1962114487}
   - 114: {fileID: 1962114488}
+  - 114: {fileID: 1962114489}
   m_Layer: 0
   m_Name: Level
   m_TagString: GameController
@@ -39122,6 +39139,17 @@ MonoBehaviour:
   spawnWaitTime: 2
   maxEnemies: 10
   m_EnemyPrefab: {fileID: 100036, guid: 09a6da65bd441434b9960270afa2f868, type: 2}
+--- !u!114 &1962114489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1962114483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 732e48652699e074ea07b9001f368407, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1962405481
 GameObject:
   m_ObjectHideFlags: 0
@@ -41945,7 +41973,7 @@ GameObject:
   - 114: {fileID: 2069501464}
   m_Layer: 0
   m_Name: Torch
-  m_TagString: Untagged
+  m_TagString: Effects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

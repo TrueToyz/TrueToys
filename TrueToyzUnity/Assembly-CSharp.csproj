@@ -72,6 +72,7 @@
      <Compile Include="Assets\MiddleVR\Scripts\Samples\VRVirtualTrackerSimulation.cs" />
      <Compile Include="Assets\Scripts\AvatarManager.cs" />
      <Compile Include="Assets\Scripts\ChildBehaviour.cs" />
+     <Compile Include="Assets\Scripts\EffectManager.cs" />
      <Compile Include="Assets\Scripts\EnemySpawn.cs" />
      <Compile Include="Assets\Scripts\EnnemyAI.cs" />
      <Compile Include="Assets\Scripts\EnnemySight.cs" />
