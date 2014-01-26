@@ -3,12 +3,12 @@ using System.Collections;
 
 public class EnnemyAI : MonoBehaviour {
 
-	public float chaseSpeed = 0.05f;
-	public float chaseWaitTime = 2f;
+	public float chaseSpeed;
+	public float chaseWaitTime;
 	public float m_AttackRange = 5.0f;
 
 
-	public int m_LifePoints = 2; // Easy to kill
+	public int m_LifePoints; // Easy to kill
 
 	private EnnemySight ennemySight;
 	private LastPlayerSighting lastPlayerSighting;
@@ -33,6 +33,10 @@ public class EnnemyAI : MonoBehaviour {
 	void Start () {
 		//Spawn
 		//TODO
+
+		m_LifePoints = Random.Range(1, 5);
+		chaseSpeed = Random.Range(0.03f, 0.05f);
+		chaseWaitTime = Random.Range(1.8f, 2.1f);
 
 		m_EnemyAnimator = gameObject.GetComponent<Animator>();
 	}
