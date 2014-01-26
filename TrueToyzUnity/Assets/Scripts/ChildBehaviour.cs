@@ -4,10 +4,18 @@ using MiddleVR_Unity3D;
 
 public class ChildBehaviour : MonoBehaviour {
 
+	/* Balance variables */
+	private float m_GraspRadius = 0.35f;
+
 	/* Child-related Variables */
 	public GameObject m_ChildToy; // Toy actually hold in hand
 	private GameObject m_ChildHand; // The child left hand, recognizable by his tag
+	private Animator m_HandAnimator;
 	private GameObject cameraVR;
+
+	/* For automatic generation of hand */
+	public GameObject m_HandPrefab;
+
 	private bool m_ToyInHand = false; // the toy is in hand
 	private bool m_CanSwitch = true; // the child cannot switch whiel the toy falls
 
@@ -33,7 +41,12 @@ public class ChildBehaviour : MonoBehaviour {
 
 		// Hand config
 		m_ChildHand = GameObject.FindGameObjectWithTag("ChildHand");
-		AvatarManager.AttachNodeToHand(m_ChildHand); // Initialize hand by atatching to vr node
+
+		Quaternion myRotation = Quaternion.Euler(0f,90f,0f);
+		AvatarManager.AttachNodeToHand(m_ChildHand, Vector3.zero, myRotation); // Initialize hand by atatching to vr node
+
+		// Retrieve animator
+		m_HandAnimator = m_ChildHand.GetComponent<Animator>();
 
 		// Assign toy
 		if (!m_ChildToy)
@@ -81,8 +94,15 @@ public class ChildBehaviour : MonoBehaviour {
 		if(toyToChild != null)
 			toyToChild(); // Launch all callbacks
 
-		AvatarManager.MoveRootTo(gameObject,Vector3.zero,Quaternion.identity); // Replace Vr hierarchy in child
-		AvatarManager.AttachNodeToHand(m_ChildHand); // Relink hand with VR object
+		// Recreate the hand
+		m_ChildHand = (GameObject)Instantiate(m_HandPrefab);
+		m_HandAnimator = m_ChildHand.GetComponent<Animator>();
+
+		// Attach the hand to the node
+		AvatarManager.AttachNodeToHand(m_ChildHand);
+		
+		// Change the root to the origin
+		AvatarManager.MoveRootTo(gameObject,Vector3.zero,Quaternion.identity);
 
 		// Avoid immediate re-swap
 		timeBeforeNextIteration = Time.time;
@@ -105,7 +125,10 @@ public class ChildBehaviour : MonoBehaviour {
 			childToToy();
 
 		// Unlink the hand and the VR hierarchy, relink with child
-		m_ChildHand.transform.parent = transform;
+		//m_ChildHand.transform.parent = transform;
+		//m_ChildHand.SetActive(false);
+
+		Destroy(m_ChildHand);
 
 		//Play the audio
 		cameraVR.audio.Stop();
@@ -121,10 +144,11 @@ public class ChildBehaviour : MonoBehaviour {
 	 * */
 	bool CanGrab ()
 	{
-		if(Vector3.Distance(m_ChildToy.transform.position, m_ChildHand.transform.position) < 0.1)
+		
+		if(Vector3.Distance(m_ChildToy.transform.position, m_ChildHand.transform.position) < m_GraspRadius)
 			return true;
 		else
-			return true;
+			return false;
 	}
 
 	/*
@@ -139,7 +163,35 @@ public class ChildBehaviour : MonoBehaviour {
 
 		// If it's not the case, the toy must returns to normal state
 		m_ChildToy.rigidbody.isKinematic = true;
+
+		// The object is hidden
+		m_ChildToy.SetActive(false);
+
+		m_HandAnimator.SetTrigger("Grasp");
 		
+	}
+
+	/*
+	 * Stops player from putting the toy into the wall !
+	 * */
+	bool CanDrop ()
+	{
+		/*
+		int layer2 = LayerMask.NameToLayer("Default");
+		int layermask2 = 1 << layer2;
+		Collider[] potentialThreats = Physics.OverlapSphere(m_ChildHand.transform.position,0.1f,layermask2);
+		foreach( Collider other in potentialThreats)
+		{
+			Debug.Log (other.name);
+		}
+
+		return true;
+		*/
+
+		// TODO
+
+		return true;
+
 	}
 
 	/*
@@ -155,23 +207,15 @@ public class ChildBehaviour : MonoBehaviour {
 		newRot.z = 0;
 
 		m_ChildToy.transform.rotation = Quaternion.Euler(newRot);
-
-		/* Obsolete code */
-		// Make it physic
-		//Rigidbody toyBody = m_ChildToy.GetComponent<Rigidbody>();
-		//toyBody.isKinematic = false;
-
-		// Special: Stop the toy from rotating over itself when it falls
-		//toyBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-
+		
 		// Toy is not in hand
 		m_ToyInHand = false;
 
 		/* Manually move the object above the ground */
 		Vector3 groundPos = ToyUtilities.RayCastToGround(m_ChildToy);
-		//groundPos.y -= 0.2f; // offset to be hovering over the ground...
-		Debug.Log (groundPos.y);
-
+		
+		m_HandAnimator.SetTrigger("Drop");
+		
 		// Launch coroutine
 		StartCoroutine(FallSoldier(m_ChildToy,groundPos)); 
 
@@ -183,6 +227,12 @@ public class ChildBehaviour : MonoBehaviour {
 	 * */
 	IEnumerator FallSoldier (GameObject soldier, Vector3 targetPos)
 	{
+		// Give time for animation
+		yield return new WaitForSeconds(0.4f);
+
+		// The object is not
+		m_ChildToy.SetActive(true);
+
 		// Lock the switch ability
 		m_CanSwitch = false;
 
@@ -193,7 +243,7 @@ public class ChildBehaviour : MonoBehaviour {
 		{
 			if(m_ToyInHand)
 				yield break;
-			soldier.transform.position = Vector3.Lerp(soldier.transform.position, newTarget, 2.0f * Time.deltaTime);
+			soldier.transform.position = Vector3.Lerp(soldier.transform.position, newTarget, 4f * Time.deltaTime);
 			yield return null;
 		}
 		
@@ -228,8 +278,10 @@ public class ChildBehaviour : MonoBehaviour {
 					if(CanGrab())
 						Grab ();
 				}
-				else
+				else if(CanDrop())
+				{
 					Drop ();
+				}
 
 				timeBeforeNextIteration = Time.time;
 			}

@@ -40,10 +40,25 @@ public class AvatarManager : MonoBehaviour {
 		AvatarManager.vrRootNode.transform.localRotation = rotation;
 	}
 
-	public static void AttachNodeToHand (GameObject hand)
+	public static void AttachNodeToHand (GameObject handChild)
 	{
-		hand.transform.parent = vrHandNode.transform;
-		hand.transform.localPosition = Vector3.zero;
+		// Instinctive answer
+		handChild.transform.rotation = vrHandNode.transform.rotation;
+
+		// Change hierarchy
+		handChild.transform.parent = vrHandNode.transform;
+		handChild.transform.localPosition = Vector3.zero;
+
+		// Instinctive answer
+		handChild.transform.localRotation = Quaternion.AngleAxis(90,new Vector3(0f,1f,0f));
+
+	}
+
+	public static void AttachNodeToHand (GameObject handChild, Vector3 t_offset, Quaternion r_offset)
+	{
+		handChild.transform.parent = vrHandNode.transform;
+		handChild.transform.localPosition = t_offset;
+		handChild.transform.localRotation = r_offset;
 	}
 
 	public static Vector3 GetHeadTrackingOffset ()

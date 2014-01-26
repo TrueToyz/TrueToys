@@ -11,7 +11,15 @@ public class EnemySpawn : MonoBehaviour {
 	private float spawnTimer;
 	private GameObject[] enemies;
 
+	/*Audio*/
+	private GameObject cameraVR;
+	private AudioClip fall;
+
 	void Awake () {
+		fall =  Resources.Load("Audio/fall") as AudioClip;
+		
+		cameraVR = GameObject.Find("CameraStereo0");
+		cameraVR.AddComponent<AudioSource>();
 	}
 
 	void Update () {
@@ -24,6 +32,10 @@ public class EnemySpawn : MonoBehaviour {
 			Debug.Log("New Enemy");
 			foreach(GameObject spawnPoint in ml_SpawnObjects)
 			{
+				cameraVR.audio.Stop();
+				cameraVR.audio.clip = fall;
+				cameraVR.audio.Play();
+
 				GameObject enemy = (GameObject)Instantiate(m_EnemyPrefab, spawnPoint.transform.position, Quaternion.identity);
 				enemy.transform.parent = transform;
 			}

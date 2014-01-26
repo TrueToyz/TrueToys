@@ -3,12 +3,12 @@ using System.Collections;
 
 public class EnnemyAI : MonoBehaviour {
 
-	public float chaseSpeed = 0.05f;
-	public float chaseWaitTime = 2f;
+	public float chaseSpeed;
+	public float chaseWaitTime;
 	public float m_AttackRange = 5.0f;
 
 
-	public int m_LifePoints = 2; // Easy to kill
+	public int m_LifePoints; // Easy to kill
 
 	private EnnemySight ennemySight;
 	private LastPlayerSighting lastPlayerSighting;
@@ -31,7 +31,8 @@ public class EnnemyAI : MonoBehaviour {
 	private GameObject cameraVR;
 	private AudioClip hurt1;
 	private AudioClip hurt2;
-
+	private AudioClip running;
+	private AudioClip die;
 
 	private Animator m_EnemyAnimator;
 
@@ -39,10 +40,16 @@ public class EnnemyAI : MonoBehaviour {
 		//Spawn
 		//TODO
 
+		m_LifePoints = Random.Range(1, 5);
+		chaseSpeed = Random.Range(0.3f, 0.5f); // Not to slow, not too fast :D
+		chaseWaitTime = Random.Range(1.8f, 2.1f);
+
 		m_EnemyAnimator = gameObject.GetComponent<Animator>();
 
 		hurt1 = Resources.Load("Audio/hurt1") as AudioClip;
 		hurt2 =  Resources.Load("Audio/hurt2") as AudioClip;
+		running = Resources.Load("Audio/running") as AudioClip;
+		die = Resources.Load("Audio/die") as AudioClip;
 		
 		cameraVR = GameObject.Find("CameraStereo0");
 		//cameraVR.AddComponent<AudioListener>();
@@ -98,6 +105,12 @@ public class EnnemyAI : MonoBehaviour {
 		{
 			if(m_IsFrozen)
 				yield break;
+
+			//Audio
+			cameraVR.audio.Stop();
+			cameraVR.audio.clip = running;
+			cameraVR.audio.Play();
+
 			// Translation
 			soldier.transform.position = Vector3.Lerp(soldier.transform.position, player.transform.position, chaseSpeed * Time.deltaTime);
 
@@ -168,9 +181,18 @@ public class EnnemyAI : MonoBehaviour {
 		{
 			Instantiate(m_InjuryPrefab, transform.position, transform.rotation);
 
-			cameraVR.audio.Stop();
-			cameraVR.audio.clip = hurt1;
-			cameraVR.audio.Play();
+			//Audio
+			int random = Random.Range(1, 2);
+			if (random == 1 ){
+				cameraVR.audio.Stop();
+				cameraVR.audio.clip = hurt1;
+				cameraVR.audio.Play();
+			}
+			else if (random == 2) {
+				cameraVR.audio.Stop();
+				cameraVR.audio.clip = hurt2;
+				cameraVR.audio.Play();
+			}
 		}
 	}
 
@@ -184,7 +206,7 @@ public class EnnemyAI : MonoBehaviour {
 			Instantiate(m_DeathPrefab, newPosition, transform.rotation);
 
 			cameraVR.audio.Stop();
-			cameraVR.audio.clip = hurt2;
+			cameraVR.audio.clip = die;
 			cameraVR.audio.Play();
 		}
 
@@ -196,8 +218,11 @@ public class EnnemyAI : MonoBehaviour {
 	void Freeze () {
 		m_IsFrozen = true;
 		m_EnemyBehaviour = EnemyBehaviour.patrolling;
-		m_EnemyAnimator.SetBool("IsRunning", false);
-		m_EnemyAnimator.SetTrigger("Freeze");
+		if (m_EnemyAnimator)
+		{
+			m_EnemyAnimator.SetBool("IsRunning", false);
+			m_EnemyAnimator.SetTrigger("Freeze");
+		}
 	}
 
 	void Unfreeze () {

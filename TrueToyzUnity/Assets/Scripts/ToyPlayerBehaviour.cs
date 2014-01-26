@@ -11,10 +11,14 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 	/* Reference toward the owner-child */
 	public GameObject m_OwnerChild;
 
-	/* Weapon prefab */
+	/* Weapon prefab and subcomponents */
 	public GameObject m_WeaponPrefab;
 	private GameObject m_Weapon;
-	private GameObject m_Aim;
+	private GameObject m_Aim; // Canon of the gun, -X as the forward vector
+	private GameObject m_Loader; 
+	public GameObject m_ShellPrefab; // Emitter to be instantiated
+	public GameObject m_BulletPrefab; // OBject to be launched at gunshot
+	public GameObject m_BlastPrefab; // Effecdt to apply when gunshot
 	
 	/* Graphical components of toy */
 	private Renderer[] ml_GraphicComponents;
@@ -22,6 +26,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 	/* Combat attributes */
 	public float m_FireRate = 3f;
 	public float m_FireRange = 200f;
+	public int m_ShellNumbers = 3;
 	private float timeBeforeNextShot = 0.0f;
 
 	/* Vr inputs */
@@ -91,11 +96,10 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 
 		// If it's not the case, the toy must be kinematic
 		rigidbody.isKinematic = true;
-		//collider.enabled = false;
 
 		// Move VR root to child, relink hand with VR node
 		Vector3 offset = -AvatarManager.GetHeadTrackingOffset() ;
-		offset.y = 0; // I want to keep the height of the head
+		offset.y = 0.2f; // I want to keep the height of the head
 
 		// Instantiate weapon
 		if (m_WeaponPrefab)
@@ -104,7 +108,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 			
 			// Attach the gun to the VR hand
 			AvatarManager.AttachNodeToHand(m_Weapon);
-			m_Aim = m_Weapon.transform.Find("Aim").gameObject;
+			m_Aim = m_Weapon.transform.FindChild("Aim").gameObject;
 			
 		}
 
@@ -153,39 +157,101 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		// Do stuff
 		Debug.Log ("Shoot someone!");
 
-		Ray myAim = new Ray(m_Aim.transform.position, m_Aim.transform.forward);
-		RaycastHit gunHit;
-
+		// Animation
 		Animator gunAnimator = m_Weapon.GetComponent<Animator>();
 		gunAnimator.SetTrigger("Shoots");
 
-		int layer1 = LayerMask.NameToLayer("Enemies");
-		int layer2 = LayerMask.NameToLayer("Default");
+		// Emitter of shells
+		if(m_ShellPrefab){
+			GameObject myShells = (GameObject)Instantiate(m_ShellPrefab);
+			myShells.transform.parent = m_Aim.transform;
+			myShells.transform.localPosition = Vector3.zero;
+			Destroy(myShells,m_FireRate);
+		}
+		
+		// Random generation of bullets
+		for(int i=0; i<m_ShellNumbers; i++)
+		{
+			float offset_x = Random.Range(0.03f,0.06f);
+			float offset_z = Random.Range(0.03f,0.06f);
 
-		int layermask1  = 1 << layer1;
-		int layermask2 = 1 << layer2;
-		int layermask = layermask1 | layermask2;
+			// Random direction
+			Vector3 randomAim = m_Aim.transform.forward;
+			randomAim.z += offset_z;
+			randomAim.x += offset_x;
 
 
-		cameraVR.audio.Stop();
-		cameraVR.audio.clip = shotgun;
-		cameraVR.audio.Play();
-		cameraVR.audio.clip = shellfalling;
-		cameraVR.audio.Play();
+			Ray myAim = new Ray(m_Aim.transform.position, randomAim);
+			RaycastHit gunHit;
+
+			cameraVR.audio.Stop();
+			cameraVR.audio.clip = shotgun;
+			cameraVR.audio.Play();
+			cameraVR.audio.clip = shellfalling;
+			cameraVR.audio.Play();
 
 		// Physical hardcoded raycast
 		if (Physics.Raycast(myAim, out gunHit, m_FireRange,layermask))
 		{
 			if (gunHit.collider.gameObject.tag == "Enemy")
+
+			// Emitter of bullets
+			if(m_BulletPrefab)
 			{
-				gunHit.collider.gameObject.SendMessage("ReceiveDamage");
+				Quaternion bulletRot = Quaternion.FromToRotation(new Vector3(0,0,1f), randomAim);
+				GameObject myBullet = (GameObject)Instantiate(m_BulletPrefab,myAim.GetPoint(0),bulletRot);
+
+				StartCoroutine(BulletBehavior(myBullet,myAim,2f));
+				
 			}
-			else
+
+			// Gunblast
+			if (m_BlastPrefab)
 			{
-				Debug.Log ("Touché ! :" +gunHit.collider.name);
+				GameObject myBlast = (GameObject)Instantiate(m_BlastPrefab);
+				myBlast.transform.parent = m_Aim.transform;
+				myBlast.transform.localPosition = new Vector3(0f,0f,0.15f);
+				Destroy(myBlast,m_FireRate);
+			}
+
+			int layer1 = LayerMask.NameToLayer("Enemies");
+			int layer2 = LayerMask.NameToLayer("Default");
+
+			int layermask1  = 1 << layer1;
+			int layermask2 = 1 << layer2;
+			int layermask = layermask1 | layermask2;
+
+
+			// Physical hardcoded raycast
+			if (Physics.Raycast(myAim, out gunHit, m_FireRange,layermask))
+			{
+				if (gunHit.collider.gameObject.tag == "Enemy")
+				{
+					gunHit.collider.gameObject.SendMessage("ReceiveDamage");
+				}
+				else
+				{
+					Debug.Log ("Touché ! :" +gunHit.collider.name);
+				}
 			}
 		}
 
+	}
+	}
+
+	/*
+	 * Launches a bullet toward a given direction which ends at a given distance
+	 * */
+	IEnumerator BulletBehavior(GameObject bullet, Ray direction, float distance) 
+	{
+		
+		while(Vector3.Distance(bullet.transform.position, direction.GetPoint(distance)) > 0.01f)
+		{
+			bullet.transform.position = Vector3.Lerp(bullet.transform.position, direction.GetPoint(distance), 12f * Time.deltaTime);
+			yield return null;
+		}
+
+		Destroy(bullet);
 	}
 
 	/* ------------------------------------------ VR interaction ---------------------------------- */
