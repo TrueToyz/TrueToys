@@ -172,3 +172,6 @@ pip-log.txt
 *.pidb
 *.DS_store
 *.userprefs
+/TrueToyzUnity\TrueToyZ_Data\Managed/*.dll
+*.dll
+*.aspx

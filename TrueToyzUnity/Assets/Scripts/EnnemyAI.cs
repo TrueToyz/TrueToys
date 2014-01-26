@@ -237,11 +237,14 @@ public class EnnemyAI : MonoBehaviour {
 			m_Parachute.transform.localPosition = new Vector3(0f,0.05f,0f);
 			m_Parachute.transform.localRotation = Quaternion.Euler(-90f,0f,0f);
 			m_Parachute.transform.localScale = m_Parachute.transform.localScale * AvatarManager.swapScale;
+		
+			Destroy(m_Parachute,2.5f);
 		}
 	}
 	
 	void CloseParachute ()
 	{
+		Debug.Log ("Destroy your parachute");
 		if (m_Parachute)
 			Destroy(m_Parachute);
 	}

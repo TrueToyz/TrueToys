@@ -218,8 +218,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 			Vector3 randomAim = m_Aim.transform.forward;
 			randomAim.z += offset_z;
 			randomAim.x += offset_x;
-
-
+		
 			Ray myAim = new Ray(m_Aim.transform.position, randomAim);
 			RaycastHit gunHit;
 
@@ -230,7 +229,6 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 				GameObject myBullet = (GameObject)Instantiate(m_BulletPrefab,myAim.GetPoint(0),bulletRot);
 				StartCoroutine(BulletBehavior(myBullet,myAim,2f));
 			}
-
 
 			int layer1 = LayerMask.NameToLayer("Enemies");
 			int layer2 = LayerMask.NameToLayer("Default");
@@ -313,6 +311,8 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 			m_Parachute.transform.parent = transform;
 			m_Parachute.transform.localPosition = new Vector3(0f,0.05f,0f);
 			m_Parachute.transform.localRotation = Quaternion.Euler(-90f,0f,0f);
+		
+			Destroy(m_Parachute,2f);
 		}
 	}
 
