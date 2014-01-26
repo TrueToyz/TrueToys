@@ -4372,13 +4372,13 @@ ParticleSystem:
           inSlope: 1.94215918
           outSlope: 1.94215918
           tangentMode: 0
-        - time: .53179419
-          value: .537634373
+        - time: .544837654
+          value: .402499259
           inSlope: .0749780312
           outSlope: .0749780312
           tangentMode: 0
-        - time: .984496117
-          value: .713261724
+        - time: 1
+          value: .240288794
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -12033,7 +12033,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
       propertyPath: IntensityLight
-      value: 10
+      value: .200000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
+      propertyPath: MaxLightIntensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
@@ -15385,7 +15393,31 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
       propertyPath: IntensityLight
-      value: 10
+      value: .200000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
+      propertyPath: MaxLightIntensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[3].value
+      value: .240288794
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[3].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[2].value
+      value: .402499259
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[2].time
+      value: .544837654
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
@@ -22839,7 +22871,7 @@ MonoBehaviour:
   WandButton4: 0
   WandButton5: 0
   DeltaTime: 0
-  ConfigFile: E:/Perso/GlobalGameJam/TrueToyz/TrueToyzUnity/Assets/MiddleVR/Config/config_ggj.vrx
+  ConfigFile: D:/Documents/Alexandre/Github/TrueToys/TrueToys/TrueToyzUnity/Assets/MiddleVR/Config/config_ggj.vrx
   RootNode: {fileID: 1997705283}
   TemplateCamera: {fileID: 0}
   ShowWand: 0
@@ -22849,7 +22881,7 @@ MonoBehaviour:
   DebugNodes: 0
   DebugScreens: 0
   QuitOnEsc: 1
-  DontChangeWindowGeometry: 1
+  DontChangeWindowGeometry: 0
   SimpleCluster: 1
   ForceQuality: 1
   ForceQualityIndex: 3
@@ -28759,7 +28791,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 739386986}
   m_GameObject: {fileID: 1471651968}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14e1ccb9bc5e66e46b9ebc20caf6db2d, type: 3}
   m_Name: 
@@ -28769,8 +28801,8 @@ MonoBehaviour:
   BaseFlame: {fileID: 1774263933}
   Etincelles: {fileID: 626866492}
   Fumee: {fileID: 549382525}
-  MaxLightIntensity: 3
-  IntensityLight: 10
+  MaxLightIntensity: 1
+  IntensityLight: .200000003
 --- !u!1 &1472239275
 GameObject:
   m_ObjectHideFlags: 0
@@ -38448,7 +38480,6 @@ GameObject:
   - 20: {fileID: 1947077416}
   - 124: {fileID: 1947077415}
   - 92: {fileID: 1947077414}
-  - 81: {fileID: 1947077413}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -38467,13 +38498,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2143308743}
---- !u!81 &1947077413
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1947077411}
-  m_Enabled: 0
 --- !u!92 &1947077414
 Behaviour:
   m_ObjectHideFlags: 0
@@ -38644,8 +38668,8 @@ Transform:
   - {fileID: 618097297}
   - {fileID: 1053553090}
   - {fileID: 630269970}
-  - {fileID: 1471651969}
   - {fileID: 2069501463}
+  - {fileID: 1471651969}
   - {fileID: 994893130}
   - {fileID: 1865285835}
   m_Father: {fileID: 0}
@@ -41595,7 +41619,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 619885463}
   m_GameObject: {fileID: 2069501462}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14e1ccb9bc5e66e46b9ebc20caf6db2d, type: 3}
   m_Name: 
@@ -41605,8 +41629,8 @@ MonoBehaviour:
   BaseFlame: {fileID: 1550497339}
   Etincelles: {fileID: 1987472351}
   Fumee: {fileID: 460320264}
-  MaxLightIntensity: 3
-  IntensityLight: 10
+  MaxLightIntensity: 1
+  IntensityLight: .200000003
 --- !u!1 &2072345205
 GameObject:
   m_ObjectHideFlags: 0
