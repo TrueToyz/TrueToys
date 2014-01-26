@@ -16,6 +16,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 	private GameObject m_Weapon;
 	private GameObject m_Aim;
 	public GameObject m_ShellPrefab; // Emitter to be instantiated
+	public GameObject m_BulletPrefab; // OBject to be launched at gunshot
 	
 	/* Graphical components of toy */
 	private Renderer[] ml_GraphicComponents;
@@ -23,6 +24,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 	/* Combat attributes */
 	public float m_FireRate = 3f;
 	public float m_FireRange = 200f;
+	public int m_ShellNumbers = 3;
 	private float timeBeforeNextShot = 0.0f;
 
 	/* Vr inputs */
@@ -142,9 +144,6 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		// Do stuff
 		Debug.Log ("Shoot someone!");
 
-		Ray myAim = new Ray(m_Aim.transform.position, m_Aim.transform.forward);
-		RaycastHit gunHit;
-
 		// Animation
 		Animator gunAnimator = m_Weapon.GetComponent<Animator>();
 		gunAnimator.SetTrigger("Shoots");
@@ -157,7 +156,21 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 			Destroy(myShells,m_FireRate);
 		}
 
+		
+		Ray myAim = new Ray(m_Aim.transform.position, m_Aim.transform.forward);
+		RaycastHit gunHit;
+
 		// Emitter of bullets
+		if(m_BulletPrefab)
+		{
+			for(int i=0; i<m_ShellNumbers; i++)
+			{
+				Quaternion bulletRot = Quaternion.FromToRotation(new Vector3(0,0,1f), m_Aim.transform.forward);
+				GameObject myBullet = (GameObject)Instantiate(m_BulletPrefab,myAim.GetPoint(0),bulletRot);
+
+				StartCoroutine(BulletBehavior(myBullet,myAim,2f));
+			}
+		}
 
 		int layer1 = LayerMask.NameToLayer("Enemies");
 		int layer2 = LayerMask.NameToLayer("Default");
@@ -180,6 +193,21 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 			}
 		}
 
+	}
+
+	/*
+	 * Launches a bullet toward a given direction which ends at a given distance
+	 * */
+	IEnumerator BulletBehavior (GameObject bullet, Ray direction, float distance) {
+
+
+		while(Vector3.Distance(bullet.transform.position, direction.GetPoint(distance)) > 0.01f)
+		{
+			bullet.transform.position = Vector3.Lerp(bullet.transform.position, direction.GetPoint(distance), 12f * Time.deltaTime);
+			yield return null;
+		}
+
+		Destroy(bullet);
 	}
 
 	/* ------------------------------------------ VR interaction ---------------------------------- */

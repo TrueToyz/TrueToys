@@ -3,8 +3,9 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ChildBehaviour.cs">
     <Files>
       <File FileName="Assets\Scripts\EnnemyAI.cs" Line="95" Column="4" />
-      <File FileName="Assets\Scripts\ChildBehaviour.cs" Line="206" Column="72" />
-      <File FileName="Assets\Scripts\AvatarManager.cs" Line="27" Column="2" />
+      <File FileName="Assets\Scripts\ChildBehaviour.cs" Line="94" Column="3" />
+      <File FileName="Assets\Scripts\AvatarManager.cs" Line="25" Column="44" />
+      <File FileName="Assets\Scripts\ToyPlayerBehaviour.cs" Line="75" Column="7" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

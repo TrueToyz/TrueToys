@@ -696,6 +696,8 @@ MonoBehaviour:
   m_IsControlled: 0
   m_OwnerChild: {fileID: 0}
   m_WeaponPrefab: {fileID: 100012, guid: e625344ad5b2aa946ae1d0b731ff8518, type: 2}
+  m_ShellPrefab: {fileID: 100000, guid: 5a193cc08996ed74e8fe8d24c07208bb, type: 2}
+  m_BulletPrefab: {fileID: 100000, guid: 5a95ccb3c52b51a479aa6d4204a70a06, type: 2}
   m_FireRate: .300000012
   m_FireRange: 1000
 --- !u!137 &13700000
