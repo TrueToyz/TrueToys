@@ -184,16 +184,12 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 			Ray myAim = new Ray(m_Aim.transform.position, randomAim);
 			RaycastHit gunHit;
 
+			//Audio
 			cameraVR.audio.Stop();
 			cameraVR.audio.clip = shotgun;
 			cameraVR.audio.Play();
 			cameraVR.audio.clip = shellfalling;
 			cameraVR.audio.Play();
-
-		// Physical hardcoded raycast
-		if (Physics.Raycast(myAim, out gunHit, m_FireRange,layermask))
-		{
-			if (gunHit.collider.gameObject.tag == "Enemy")
 
 			// Emitter of bullets
 			if(m_BulletPrefab)
@@ -236,7 +232,6 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 			}
 		}
 
-	}
 	}
 
 	/*
