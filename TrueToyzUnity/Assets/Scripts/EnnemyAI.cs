@@ -180,8 +180,11 @@ public class EnnemyAI : MonoBehaviour {
 	void Freeze () {
 		m_IsFrozen = true;
 		m_EnemyBehaviour = EnemyBehaviour.patrolling;
-		m_EnemyAnimator.SetBool("IsRunning", false);
-		m_EnemyAnimator.SetTrigger("Freeze");
+		if (m_EnemyAnimator)
+		{
+			m_EnemyAnimator.SetBool("IsRunning", false);
+			m_EnemyAnimator.SetTrigger("Freeze");
+		}
 	}
 
 	void Unfreeze () {
