@@ -46,6 +46,13 @@ public class AvatarManager : MonoBehaviour {
 		hand.transform.localPosition = Vector3.zero;
 	}
 
+	public static void AttachNodeToHand (GameObject hand, Vector3 t_offset, Quaternion r_offset)
+	{
+		hand.transform.parent = vrHandNode.transform;
+		hand.transform.localPosition = t_offset;
+		hand.transform.localRotation = r_offset;
+	}
+
 	public static Vector3 GetHeadTrackingOffset ()
 	{
 		return AvatarManager.vrHeadNode.transform.localPosition;
