@@ -12116,7 +12116,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 18c6e1fdff1923c4999ee94bf17381e6, type: 2}
+  - {fileID: 2100000, guid: 1e2c1fdf7bcdb3e42bd97dcf655917f2, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -13593,7 +13593,7 @@ MonoBehaviour:
   m_IsControlled: 0
   m_OwnerChild: {fileID: 0}
   m_WeaponPrefab: {fileID: 100012, guid: 0413450dfbcb8d14aa36892db1a54e7f, type: 2}
-  m_ShellPrefab: {fileID: 0}
+  m_ShellPrefab: {fileID: 100000, guid: 5a193cc08996ed74e8fe8d24c07208bb, type: 2}
   m_BulletPrefab: {fileID: 0}
   m_BlastPrefab: {fileID: 0}
   m_FireRate: .300000012
@@ -22837,7 +22837,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!132 &1165002465
 GUIText:
   m_ObjectHideFlags: 0
