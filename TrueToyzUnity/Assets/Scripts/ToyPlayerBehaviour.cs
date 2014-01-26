@@ -11,12 +11,14 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 	/* Reference toward the owner-child */
 	public GameObject m_OwnerChild;
 
-	/* Weapon prefab */
+	/* Weapon prefab and subcomponents */
 	public GameObject m_WeaponPrefab;
 	private GameObject m_Weapon;
-	private GameObject m_Aim;
+	private GameObject m_Aim; // Canon of the gun, -X as the forward vector
+	private GameObject m_Loader; 
 	public GameObject m_ShellPrefab; // Emitter to be instantiated
 	public GameObject m_BulletPrefab; // OBject to be launched at gunshot
+	public GameObject m_BlastPrefab; // Effecdt to apply when gunshot
 	
 	/* Graphical components of toy */
 	private Renderer[] ml_GraphicComponents;
@@ -82,7 +84,6 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 
 		// If it's not the case, the toy must be kinematic
 		rigidbody.isKinematic = true;
-		//collider.enabled = false;
 
 		// Move VR root to child, relink hand with VR node
 		Vector3 offset = -AvatarManager.GetHeadTrackingOffset() ;
@@ -95,7 +96,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 			
 			// Attach the gun to the VR hand
 			AvatarManager.AttachNodeToHand(m_Weapon);
-			m_Aim = m_Weapon.transform.Find("Aim").gameObject;
+			m_Aim = m_Weapon.transform.FindChild("Aim").gameObject;
 			
 		}
 
@@ -148,14 +149,19 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		Animator gunAnimator = m_Weapon.GetComponent<Animator>();
 		gunAnimator.SetTrigger("Shoots");
 
+		// Random generation of bullets
+		/*
+		float offset_x = Random.Range(0.03f,0.06f);
+		float offset_z = Random.Range(0.03f,0.06f);
+		*/
+		
 		// Emitter of shells
 		if(m_ShellPrefab){
 			GameObject myShells = (GameObject)Instantiate(m_ShellPrefab);
-			myShells.transform.parent = m_Weapon.transform;
+			myShells.transform.parent = m_Aim.transform;
 			myShells.transform.localPosition = Vector3.zero;
 			Destroy(myShells,m_FireRate);
 		}
-
 		
 		Ray myAim = new Ray(m_Aim.transform.position, m_Aim.transform.forward);
 		RaycastHit gunHit;
@@ -170,6 +176,15 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 
 				StartCoroutine(BulletBehavior(myBullet,myAim,2f));
 			}
+		}
+
+		// Gunblast
+		if (m_BlastPrefab)
+		{
+			GameObject myBlast = (GameObject)Instantiate(m_BlastPrefab);
+			myBlast.transform.parent = m_Aim.transform;
+			myBlast.transform.localPosition = new Vector3(0f,0f,0.15f);
+			Destroy(myBlast,m_FireRate);
 		}
 
 		int layer1 = LayerMask.NameToLayer("Enemies");
@@ -198,9 +213,9 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 	/*
 	 * Launches a bullet toward a given direction which ends at a given distance
 	 * */
-	IEnumerator BulletBehavior (GameObject bullet, Ray direction, float distance) {
-
-
+	IEnumerator BulletBehavior (GameObject bullet, Ray direction, float distance) 
+	{
+		
 		while(Vector3.Distance(bullet.transform.position, direction.GetPoint(distance)) > 0.01f)
 		{
 			bullet.transform.position = Vector3.Lerp(bullet.transform.position, direction.GetPoint(distance), 12f * Time.deltaTime);

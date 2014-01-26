@@ -35,7 +35,7 @@ public class EnnemyAI : MonoBehaviour {
 		//TODO
 
 		m_LifePoints = Random.Range(1, 5);
-		chaseSpeed = Random.Range(0.03f, 0.05f);
+		chaseSpeed = Random.Range(0.3f, 0.5f); // Not to slow, not too fast :D
 		chaseWaitTime = Random.Range(1.8f, 2.1f);
 
 		m_EnemyAnimator = gameObject.GetComponent<Animator>();
