@@ -11058,7 +11058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97c1d8bc4df9194c98d1c39b8f93f63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeed: .5
+  chaseSpeed: 1
   chaseWaitTime: 2
   m_AttackRange: 1
   m_LifePoints: 2
@@ -12110,15 +12110,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.120028935
+      value: -.0867052972
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -.00947283208
+      value: .0495644324
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -.471303314
+      value: -.35082674
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
       propertyPath: m_LocalRotation.x
@@ -15514,15 +15514,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.295210063
+      value: -.224969685
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -.00911731087
+      value: .0410543084
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -.47122547
+      value: -.348014444
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
       propertyPath: m_LocalRotation.x
@@ -26641,7 +26641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97c1d8bc4df9194c98d1c39b8f93f63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeed: .5
+  chaseSpeed: 1
   chaseWaitTime: 2
   m_AttackRange: .200000003
   m_LifePoints: 2
@@ -29127,7 +29127,7 @@ Transform:
   m_PrefabInternal: {fileID: 739386986}
   m_GameObject: {fileID: 1471651968}
   m_LocalRotation: {x: 4.71029482e-09, y: -.994177043, z: -.107758984, w: -4.34568577e-08}
-  m_LocalPosition: {x: -.295210063, y: -.00911731087, z: -.47122547}
+  m_LocalPosition: {x: -.224969685, y: .0410543084, z: -.348014444}
   m_LocalScale: {x: .100000001, y: .100000001, z: .100000001}
   m_Children:
   - {fileID: 2018821591}
@@ -32766,7 +32766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97c1d8bc4df9194c98d1c39b8f93f63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeed: .5
+  chaseSpeed: 1
   chaseWaitTime: 2
   m_AttackRange: 1
   m_LifePoints: 2
@@ -34291,7 +34291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97c1d8bc4df9194c98d1c39b8f93f63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeed: .5
+  chaseSpeed: 1
   chaseWaitTime: 2
   m_AttackRange: 1
   m_LifePoints: 2
@@ -42256,7 +42256,7 @@ Transform:
   m_PrefabInternal: {fileID: 619885463}
   m_GameObject: {fileID: 2069501462}
   m_LocalRotation: {x: 4.71029571e-09, y: -.994177043, z: -.107759006, w: -4.34568577e-08}
-  m_LocalPosition: {x: -.120028935, y: -.00947283208, z: -.471303314}
+  m_LocalPosition: {x: -.0867052972, y: .0495644324, z: -.35082674}
   m_LocalScale: {x: .100000001, y: .100000009, z: .100000009}
   m_Children:
   - {fileID: 1250257627}
@@ -42982,7 +42982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97c1d8bc4df9194c98d1c39b8f93f63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeed: .5
+  chaseSpeed: 1
   chaseWaitTime: 2
   m_AttackRange: 1
   m_LifePoints: 2

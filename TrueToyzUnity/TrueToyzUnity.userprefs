@@ -1,8 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\EnnemyAI.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ChildBehaviour.cs">
     <Files>
-      <File FileName="Assets\Scripts\EnnemyAI.cs" Line="161" Column="13" />
+      <File FileName="Assets\Scripts\EnnemyAI.cs" Line="95" Column="4" />
+      <File FileName="Assets\Scripts\ChildBehaviour.cs" Line="206" Column="72" />
+      <File FileName="Assets\Scripts\AvatarManager.cs" Line="27" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
