@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnnemyAI : MonoBehaviour {
 
@@ -31,12 +32,8 @@ public class EnnemyAI : MonoBehaviour {
 	public GameObject m_InjuryPrefab;
 
 	/*Audio*/
-	private GameObject cameraVR;
-	private AudioClip hurt1;
-	private AudioClip hurt2;
-	private AudioClip running;
-	private AudioClip die;
-
+	private Dictionary<string,AudioClip> ml_ActionSounds;
+	private AudioSource m_EnemyAudio;
 	private Animator m_EnemyAnimator;
 
 	void Start () {
@@ -51,14 +48,25 @@ public class EnnemyAI : MonoBehaviour {
 
 		m_EnemyAnimator = gameObject.GetComponent<Animator>();
 
-		hurt1 = Resources.Load("Audio/hurt1") as AudioClip;
-		hurt2 =  Resources.Load("Audio/hurt2") as AudioClip;
-		running = Resources.Load("Audio/running") as AudioClip;
-		die = Resources.Load("Audio/die") as AudioClip;
+		ml_ActionSounds = new Dictionary<string, AudioClip>();
+		ml_ActionSounds["Hurt1"] = Resources.Load("Audio/scream1") as AudioClip;
+		ml_ActionSounds["Hurt2"] =  Resources.Load("Audio/scream2") as AudioClip;
+		ml_ActionSounds["Running"] = Resources.Load("Audio/running") as AudioClip;
+		ml_ActionSounds["Attack"] = Resources.Load("Audio/scream3") as AudioClip;
+
+
+		ml_ActionSounds["Die1"] = Resources.Load("Audio/explo3") as AudioClip;
+		ml_ActionSounds["Die2"] = Resources.Load("Audio/explo4") as AudioClip;
+		ml_ActionSounds["Die3"] = Resources.Load("Audio/explo5") as AudioClip;
+
+		m_EnemyAudio = gameObject.GetComponent<AudioSource>();
+		if(!m_EnemyAudio)
+		{
+			gameObject.AddComponent<AudioSource>();
+			m_EnemyAudio = gameObject.GetComponent<AudioSource>();
+		}
 		
-		cameraVR = GameObject.Find("CameraStereo0");
-		//cameraVR.AddComponent<AudioListener>();
-		cameraVR.AddComponent<AudioSource>();
+
 	}
 
 	void Awake () {
@@ -104,7 +112,9 @@ public class EnnemyAI : MonoBehaviour {
 	{
 		soldier.transform.LookAt(player.transform.position);
 		soldier.transform.Rotate(new Vector3(0f,1f,0f), 90);
-
+		
+		AudioSource.PlayClipAtPoint(ml_ActionSounds["Running"], soldier.transform.position, 0.5f);
+		
 		// Only keep the Z component
 		while(Vector3.Distance(soldier.transform.position, player.transform.position) > m_AttackRange)
 		{
@@ -112,11 +122,7 @@ public class EnnemyAI : MonoBehaviour {
 			{
 				m_EnemyBehaviour = EnemyBehaviour.patrolling;
 				yield break;
-
-			//Audio
-			cameraVR.audio.Stop();
-			cameraVR.audio.clip = running;
-			cameraVR.audio.Play();
+			}
 
 			// Translation
 			soldier.transform.position = Vector3.Lerp(soldier.transform.position, player.transform.position, chaseSpeed * Time.deltaTime);
@@ -189,17 +195,9 @@ public class EnnemyAI : MonoBehaviour {
 			Instantiate(m_InjuryPrefab, transform.position, transform.rotation);
 
 			//Audio
-			int random = Random.Range(1, 2);
-			if (random == 1 ){
-				cameraVR.audio.Stop();
-				cameraVR.audio.clip = hurt1;
-				cameraVR.audio.Play();
-			}
-			else if (random == 2) {
-				cameraVR.audio.Stop();
-				cameraVR.audio.clip = hurt2;
-				cameraVR.audio.Play();
-			}
+			int randHurt = Random.Range(1, 2);
+			AudioSource.PlayClipAtPoint(ml_ActionSounds["Hurt"+randHurt], transform.position);
+
 		}
 	}
 
@@ -212,9 +210,9 @@ public class EnnemyAI : MonoBehaviour {
 			newPosition.y += 0.25f;
 			Instantiate(m_DeathPrefab, newPosition, transform.rotation);
 
-			cameraVR.audio.Stop();
-			cameraVR.audio.clip = die;
-			cameraVR.audio.Play();
+			int randDeath = Random.Range(1, 3);
+			AudioSource.PlayClipAtPoint(ml_ActionSounds["Die" + randDeath], transform.position);
+
 		}
 
 		ms_EnemyCount --;

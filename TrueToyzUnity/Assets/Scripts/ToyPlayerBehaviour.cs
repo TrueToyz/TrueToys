@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ToyPlayerBehaviour : MonoBehaviour {
 
@@ -35,9 +36,9 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 	private float timeBeforeNextIteration = 0.0f;
 
 	/*Audio*/
-	private GameObject cameraVR;
-	private AudioClip shotgun;
-	private AudioClip shellfalling;
+	private Dictionary<string,AudioClip> ml_ActionSounds;
+	private AudioClip m_MusicToy;
+	private AudioSource m_PlayerAudio;
 
 	// Use this for initialization
 	public void Start () {
@@ -48,12 +49,28 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		// Retrieve renderer components
 		ml_GraphicComponents = GetComponentsInChildren<Renderer>() as Renderer[]; 
 
-		shotgun = Resources.Load("Audio/shotgun") as AudioClip;
-		shellfalling =  Resources.Load("Audio/shellfalling") as AudioClip;
+		ml_ActionSounds = new Dictionary<string, AudioClip>();
+		ml_ActionSounds["Shot1"] = Resources.Load("Audio/bullet1") as AudioClip;
+		ml_ActionSounds["Shot2"] = Resources.Load("Audio/bullet11") as AudioClip;
+		ml_ActionSounds["Shot3"] = Resources.Load("Audio/bullet3") as AudioClip;
+		ml_ActionSounds["Shot4"] = Resources.Load("Audio/bullet7") as AudioClip;
+		ml_ActionSounds["Shot5"] = Resources.Load("Audio/bullet2") as AudioClip;
+		ml_ActionSounds["Shot6"] = Resources.Load("Audio/bullet9") as AudioClip;
+		m_MusicToy = Resources.Load ("Audio/ggjpuppetwar") as AudioClip;
 		
-		cameraVR = GameObject.Find("CameraStereo0");
-		//cameraVR.AddComponent<AudioListener>();
-		cameraVR.AddComponent<AudioSource>();
+		m_PlayerAudio = gameObject.GetComponent<AudioSource>();
+		if(!m_PlayerAudio)
+		{
+			gameObject.AddComponent<AudioSource>();
+			m_PlayerAudio = gameObject.GetComponent<AudioSource>();
+		}
+
+		Debug.Log ("Start player");
+		m_PlayerAudio.clip = m_MusicToy;
+		m_PlayerAudio.loop = true;
+		m_PlayerAudio.volume = 0.5f;
+		m_PlayerAudio.Stop ();
+
 	}
 	
 	// Update is called once per frame
@@ -94,6 +111,8 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 	{
 		m_IsControlled = true;
 		m_OwnerChild = child;
+
+		m_PlayerAudio.Play();
 
 		// If it's not the case, the toy must be kinematic
 		rigidbody.isKinematic = true;
@@ -136,6 +155,8 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		m_IsControlled = false;
 		m_OwnerChild = null;
 
+		m_PlayerAudio.Pause();
+
 		// If it's not the case, the toy must returns to normal state
 		rigidbody.isKinematic = false;
 		//collider.enabled = true;
@@ -162,12 +183,25 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 		Animator gunAnimator = m_Weapon.GetComponent<Animator>();
 		gunAnimator.SetTrigger("Shoots");
 
+		//Audio
+		int randDeath = Random.Range(1, 6);
+		AudioSource.PlayClipAtPoint(ml_ActionSounds["Shot" + randDeath], transform.position);
+
 		// Emitter of shells
 		if(m_ShellPrefab){
 			GameObject myShells = (GameObject)Instantiate(m_ShellPrefab);
 			myShells.transform.parent = m_Aim.transform;
 			myShells.transform.localPosition = Vector3.zero;
 			Destroy(myShells,m_FireRate);
+		}
+
+		// Gunblast
+		if (m_BlastPrefab)
+		{
+			GameObject myBlast = (GameObject)Instantiate(m_BlastPrefab);
+			myBlast.transform.parent = m_Aim.transform;
+			myBlast.transform.localPosition = new Vector3(0f,0f,0.15f);
+			Destroy(myBlast,m_FireRate);
 		}
 		
 		// Random generation of bullets
@@ -185,13 +219,6 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 			Ray myAim = new Ray(m_Aim.transform.position, randomAim);
 			RaycastHit gunHit;
 
-			//Audio
-			cameraVR.audio.Stop();
-			cameraVR.audio.clip = shotgun;
-			cameraVR.audio.Play();
-			cameraVR.audio.clip = shellfalling;
-			cameraVR.audio.Play();
-
 			// Emitter of bullets
 			if(m_BulletPrefab)
 			{
@@ -200,14 +227,6 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 				StartCoroutine(BulletBehavior(myBullet,myAim,2f));
 			}
 
-			// Gunblast
-			if (m_BlastPrefab)
-			{
-				GameObject myBlast = (GameObject)Instantiate(m_BlastPrefab);
-				myBlast.transform.parent = m_Aim.transform;
-				myBlast.transform.localPosition = new Vector3(0f,0f,0.15f);
-				Destroy(myBlast,m_FireRate);
-			}
 
 			int layer1 = LayerMask.NameToLayer("Enemies");
 			int layer2 = LayerMask.NameToLayer("Default");
@@ -229,6 +248,7 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 					Debug.Log ("Touché ! :" +gunHit.collider.name);
 				}
 			}
+
 		}
 
 	}

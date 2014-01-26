@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using MiddleVR_Unity3D;
+using System.Collections.Generic;
 
 public class ChildBehaviour : MonoBehaviour {
 
@@ -33,8 +34,8 @@ public class ChildBehaviour : MonoBehaviour {
 	private float timeBeforeNextIteration = 0.0f;
 
 	/*Audio*/
-	private AudioClip war;
-	private AudioClip calm;
+	private Dictionary<string,AudioClip> ml_Music;
+	private AudioSource m_ChildAudio;
 
 	// Use this for initialization
 	public void Start () {
@@ -60,17 +61,19 @@ public class ChildBehaviour : MonoBehaviour {
 		childToToy += BiggerWorld;
 		toyToChild += SmallerWorld;
 
-		//Environment = GameObject.Find ("Environment"); //Confirm this ?!?
+		ml_Music = new Dictionary<string, AudioClip>();
+		ml_Music["Child"] = Resources.Load("Audio/ggjpuppetambchild") as AudioClip;
+		
+		m_ChildAudio = gameObject.GetComponent<AudioSource>();
+		if(!m_ChildAudio)
+		{
+			gameObject.AddComponent<AudioSource>();
+			m_ChildAudio = gameObject.GetComponent<AudioSource>();
+		}
 
-		//Find the audio files
-
-		calm = Resources.Load("Audio/ggjpuppetambchild") as AudioClip;
-		war =  Resources.Load("Audio/ggjpuppetwar") as AudioClip;
-
-		cameraVR = GameObject.Find("CameraStereo0");
-		//cameraVR.AddComponent<AudioListener>();
-		cameraVR.AddComponent<AudioSource>();
-
+		m_ChildAudio.clip = ml_Music["Child"];
+		m_ChildAudio.loop = true;
+		m_ChildAudio.Play();
 
 	}
 	
@@ -107,10 +110,6 @@ public class ChildBehaviour : MonoBehaviour {
 		// Avoid immediate re-swap
 		timeBeforeNextIteration = Time.time;
 
-		//Play the audio
-		cameraVR.audio.Stop();
-		cameraVR.audio.clip = war;
-		cameraVR.audio.Play();
 	}
 
 	/*
@@ -129,11 +128,7 @@ public class ChildBehaviour : MonoBehaviour {
 		//m_ChildHand.SetActive(false);
 
 		Destroy(m_ChildHand);
-
-		//Play the audio
-		cameraVR.audio.Stop();
-		cameraVR.audio.clip = calm;
-		cameraVR.audio.Play();
+		
 	}
 
 	/* --------------------------------------- Interaction functions --------------------------- */
@@ -314,12 +309,16 @@ public class ChildBehaviour : MonoBehaviour {
 	{
 		Environment.transform.localScale = new Vector3(5.0f,5.0f, 5.0f);
 		AvatarManager.ResetScale();
+
+		m_ChildAudio.Pause();
 	}
 
 	void SmallerWorld ()
 	{
 		Environment.transform.localScale = new Vector3(1.0f,1.0f, 1.0f);
 		AvatarManager.ResetScale();
+
+		m_ChildAudio.Play();
 	}
 
 	/* ------------------------------------------ Menu functions ---------------------------------- */

@@ -17,17 +17,10 @@ public class EnemySpawn : MonoBehaviour {
 	private float spawnTimer;
 	private GameObject[] enemies;
 
-	/*Audio*/
-	private GameObject cameraVR;
-	private AudioClip fall;
 
-	void Awake () {
+	void Start () {
 		ChildBehaviour.childToToy += StartSpawning;
 		ChildBehaviour.toyToChild += StopSpawning;
-		fall =  Resources.Load("Audio/fall") as AudioClip;
-		
-		cameraVR = GameObject.Find("CameraStereo0");
-		cameraVR.AddComponent<AudioSource>();
 	}
 
 	void Update () {
@@ -80,12 +73,6 @@ public class EnemySpawn : MonoBehaviour {
 				Destroy(soldier);
 				EnnemyAI.ms_EnemyCount --;
 				yield break;
-				cameraVR.audio.Stop();
-				cameraVR.audio.clip = fall;
-				cameraVR.audio.Play();
-
-				GameObject enemy = (GameObject)Instantiate(m_EnemyPrefab, spawnPoint.transform.position, Quaternion.identity);
-				enemy.transform.parent = transform;
 			}
 
 			soldier.transform.position = Vector3.Lerp(soldier.transform.position, newTarget, m_FallSpeed * Time.deltaTime);
@@ -95,9 +82,11 @@ public class EnemySpawn : MonoBehaviour {
 		Debug.Log("Parachute !");
 
 		// the toy must returns to normal state
-		soldier.rigidbody.isKinematic = false;
-		soldier.SendMessage("Unfreeze");
-		
+		if(soldier)
+		{
+			soldier.rigidbody.isKinematic = false;
+			soldier.SendMessage("Unfreeze");
+		}
 	}
 
 	/* ----------------------------------- Callbacks for when the world swaps ----------------------- */
