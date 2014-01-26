@@ -3,16 +3,15 @@ using System.Collections;
 
 public class EnemySpawn : MonoBehaviour {
 
-	public Vector3 spawnPosition;
+	public GameObject[] ml_SpawnObjects;
 	public float spawnWaitTime = 2f;
-	public int maxEnemies = 10;
+	public int maxEnemies = 5;
 
-	private GameObject enemy;
+	public GameObject m_EnemyPrefab;
 	private float spawnTimer;
 	private GameObject[] enemies;
 
 	void Awake () {
-		enemy = GameObject.FindGameObjectWithTag("Enemy");
 	}
 
 	void Update () {
@@ -21,9 +20,14 @@ public class EnemySpawn : MonoBehaviour {
 
 		spawnTimer += Time.deltaTime;
 		
-		if(spawnTimer >= spawnWaitTime && enemies.Length < 10){
+		if(spawnTimer >= spawnWaitTime && enemies.Length < maxEnemies){
 			Debug.Log("New Enemy");
-			Instantiate(enemy, spawnPosition, Quaternion.identity);
+			foreach(GameObject spawnPoint in ml_SpawnObjects)
+			{
+				GameObject enemy = (GameObject)Instantiate(m_EnemyPrefab, spawnPoint.transform.position, Quaternion.identity);
+				enemy.transform.parent = transform;
+			}
+
 			spawnTimer = 0f;
 		}
 	}

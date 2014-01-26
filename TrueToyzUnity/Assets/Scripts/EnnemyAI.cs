@@ -5,7 +5,7 @@ public class EnnemyAI : MonoBehaviour {
 
 	public float chaseSpeed = 0.05f;
 	public float chaseWaitTime = 2f;
-	public float m_AttackRange = 0.05f;
+	public float m_AttackRange = 5.0f;
 
 
 	public int m_LifePoints = 2; // Easy to kill
@@ -17,15 +17,24 @@ public class EnnemyAI : MonoBehaviour {
 	private Vector3 nextMovePosition;
 	private bool isBlocked; //Means by a collision
 	private int radius = 2; // Radius of anticipitation for collisions in patrolling case
-	private bool isFrozen = true;
+	private bool m_IsFrozen = true;
+
+	/* Behavior */
+	public enum EnemyBehaviour{chasing,attacking,patrolling};
+	private EnemyBehaviour m_EnemyBehaviour = EnemyBehaviour.patrolling;
 
 	/* PArticle effects */
 	public GameObject m_DeathPrefab;
 	public GameObject m_InjuryPrefab;
 
+
+	private Animator m_EnemyAnimator;
+
 	void Start () {
 		//Spawn
 		//TODO
+
+		m_EnemyAnimator = gameObject.GetComponent<Animator>();
 	}
 
 	void Awake () {
@@ -40,51 +49,28 @@ public class EnnemyAI : MonoBehaviour {
 
 	void Update () {
 
-		if (ennemySight.playerInSight && !isFrozen) {
-			StartCoroutine(Chase(gameObject,player));
-			//Chasing ();
-		}
-
-		else if (!ennemySight.playerInSight && !isFrozen ){
-			Patrolling ();
-		}
-
-	}
-
-	void Chasing () {
-	
-		Vector3 sightingDeltaPos = ennemySight.personalLastSighting - transform.position;
-
-		// If the the last personal sighting of the player is not close...
-		if(sightingDeltaPos.sqrMagnitude > m_AttackRange) {
-			Debug.Log("Chasing !");
-
-			Animator enemyAnimator = gameObject.GetComponent<Animator>();
-			enemyAnimator.SetBool("IsRunning", true);
-
-			Vector3 destination = player.transform.position - transform.position ;
-			transform.Translate(destination.normalized * chaseSpeed * Time.deltaTime);
-
-			// Timer
-			chaseTimer += Time.deltaTime;
-
-			if(chaseTimer >= chaseWaitTime)
-			{
-				Debug.Log(" ------------ TIME OUT : quit chasing -------------- ");
-				lastPlayerSighting.position = lastPlayerSighting.resetPosition;
-				ennemySight.personalLastSighting = lastPlayerSighting.resetPosition;
-				chaseTimer = 0f;
-			}
-		}
-		/* TATA YOYOOOO */
-		else
+		/* */
+		if(!m_IsFrozen)
 		{
-			Animator enemyAnimator = gameObject.GetComponent<Animator>();
-			enemyAnimator.SetBool("IsRunning", false);
-			Attack ();
+			if(m_EnemyBehaviour != EnemyBehaviour.chasing)
+			{
+				Debug.Log ("Enter once here");
+				if(Vector3.Distance(transform.position, player.transform.position) < m_AttackRange)
+				{
+					m_EnemyBehaviour = EnemyBehaviour.attacking;
+					Attack ();
+				}
+				else if(ennemySight.playerInSight){
+					m_EnemyBehaviour = EnemyBehaviour.chasing;
+					m_EnemyAnimator.SetBool("IsRunning", true);
+					
+					/* MAnages routines */
+					StartCoroutine(Chase (gameObject,player));
+				}
+			}
+
 		}
-
-
+	
 	}
 
 	/*
@@ -92,23 +78,22 @@ public class EnnemyAI : MonoBehaviour {
 	 * */
 	IEnumerator Chase (GameObject soldier, GameObject player)
 	{
-
-		Animator enemyAnimator = gameObject.GetComponent<Animator>();
-		enemyAnimator.SetBool("IsRunning", true);
-
+		// Only keep the Z component
 		while(Vector3.Distance(soldier.transform.position, player.transform.position) > m_AttackRange)
 		{
-			if(isFrozen)
+			if(m_IsFrozen)
 				yield break;
-			soldier.transform.position = Vector3.Lerp(soldier.transform.position, player.transform.position, chaseSpeed * Time.deltaTime);
+			// Translation
+			soldier.transform.position = Vector3.Lerp(soldier.transform.position, player.transform.position, 2.0f * Time.deltaTime);
+
+			// Rotation
+			Quaternion consigne = Quaternion.LookRotation(player.transform.position -soldier.transform.position);
+			soldier.transform.rotation = Quaternion.RotateTowards(soldier.transform.rotation,consigne,10);
 			yield return null;
 		}
-
-
-		enemyAnimator.SetBool("IsRunning", false);
+		
+		m_EnemyBehaviour = EnemyBehaviour.patrolling;
 	}
-
-	
 
 	void Patrolling () {
 		Debug.Log("Patrolling");
@@ -141,8 +126,8 @@ public class EnnemyAI : MonoBehaviour {
 	
 	void Attack ()
 	{
-		Animator enemyAnimator = gameObject.GetComponent<Animator>();
-		enemyAnimator.SetTrigger("Attack");
+		Debug.Log ("Attack !");
+		m_EnemyAnimator.SetTrigger("Attack");
 	}
 
 	void ReceiveDamage ()
@@ -161,8 +146,7 @@ public class EnnemyAI : MonoBehaviour {
 
 	void Injured ()
 	{
-		Animator enemyAnimator = gameObject.GetComponent<Animator>();
-		enemyAnimator.SetTrigger("TakeInjury");
+		m_EnemyAnimator.SetTrigger("TakeInjury");
 
 		// Blood particles and sound
 		if (m_InjuryPrefab)
@@ -176,7 +160,9 @@ public class EnnemyAI : MonoBehaviour {
 		// Launch particles and sound
 		if (m_DeathPrefab)
 		{
-			Instantiate(m_DeathPrefab, transform.position, transform.rotation);
+			Vector3 newPosition =  transform.position;
+			newPosition.y += 0.25f;
+			Instantiate(m_DeathPrefab, newPosition, transform.rotation);
 		}
 
 		Destroy (gameObject);
@@ -185,11 +171,11 @@ public class EnnemyAI : MonoBehaviour {
 	/* -------------------------------------------- Pause during swapping ---------------------- */
 
 	void Freeze () {
-		isFrozen = true;
+		m_IsFrozen = true;
 	}
 
 	void Unfreeze () {
-		isFrozen = false;
+		m_IsFrozen = false;
 	}
 
 }
