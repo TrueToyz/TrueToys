@@ -234,6 +234,9 @@ public class ChildBehaviour : MonoBehaviour {
 		// Only keep the Z component
 		Vector3 newTarget = new Vector3(soldier.transform.position.x, targetPos.y, soldier.transform.position.z);
 
+		// PArachute !
+		soldier.SendMessage("OpenParachute");
+
 		while(Vector3.Distance(soldier.transform.position, newTarget) > 0.01f)
 		{
 			if(m_ToyInHand)
@@ -245,6 +248,8 @@ public class ChildBehaviour : MonoBehaviour {
 		Debug.Log("Reached the target.");
 		yield return new WaitForSeconds(0.5f);
 		Debug.Log("Fall has ended.");
+
+		soldier.SendMessage("CloseParachute");
 
 		// the toy must returns to normal state
 		m_ChildToy.rigidbody.isKinematic = false;

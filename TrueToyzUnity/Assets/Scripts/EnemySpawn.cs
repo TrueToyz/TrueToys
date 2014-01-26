@@ -65,6 +65,9 @@ public class EnemySpawn : MonoBehaviour {
 
 		// Only keep the Z component
 		Vector3 newTarget = new Vector3(soldier.transform.position.x, targetPos.y, soldier.transform.position.z);
+
+		// Open parachute
+		soldier.SendMessage("OpenParachute");
 		
 		while(soldier != null && Vector3.Distance(soldier.transform.position, newTarget) > m_DistanceBeforeParachute)
 		{
@@ -78,12 +81,11 @@ public class EnemySpawn : MonoBehaviour {
 			soldier.transform.position = Vector3.Lerp(soldier.transform.position, newTarget, m_FallSpeed * Time.deltaTime);
 			yield return null;
 		}
-		
-		Debug.Log("Parachute !");
 
 		// the toy must returns to normal state
 		if(soldier)
 		{
+			soldier.SendMessage("CloseParachute");
 			soldier.rigidbody.isKinematic = false;
 			soldier.SendMessage("Unfreeze");
 		}

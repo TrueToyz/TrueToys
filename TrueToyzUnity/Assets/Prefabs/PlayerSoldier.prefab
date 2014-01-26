@@ -699,6 +699,7 @@ MonoBehaviour:
   m_ShellPrefab: {fileID: 100000, guid: 5a193cc08996ed74e8fe8d24c07208bb, type: 2}
   m_BulletPrefab: {fileID: 100000, guid: 5a95ccb3c52b51a479aa6d4204a70a06, type: 2}
   m_BlastPrefab: {fileID: 100000, guid: e255eb0a109eef742b3b6da8163b68da, type: 2}
+  m_ParachutePrefab: {fileID: 100000, guid: 5f7fd05a1c75783418d6e8b76b345e75, type: 2}
   m_FireRate: .300000012
   m_FireRange: 1000
   m_ShellNumbers: 1

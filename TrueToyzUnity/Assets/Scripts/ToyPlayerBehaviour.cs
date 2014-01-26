@@ -13,13 +13,17 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 	public GameObject m_OwnerChild;
 
 	/* Weapon prefab and subcomponents */
-	public GameObject m_WeaponPrefab;
+
 	private GameObject m_Weapon;
 	private GameObject m_Aim; // Canon of the gun, -X as the forward vector
 	private GameObject m_Loader; 
+	private GameObject m_Parachute;
+
+	public GameObject m_WeaponPrefab;
 	public GameObject m_ShellPrefab; // Emitter to be instantiated
 	public GameObject m_BulletPrefab; // OBject to be launched at gunshot
 	public GameObject m_BlastPrefab; // Effecdt to apply when gunshot
+	public GameObject m_ParachutePrefab;
 	
 	/* Graphical components of toy */
 	private Renderer[] ml_GraphicComponents;
@@ -297,6 +301,25 @@ public class ToyPlayerBehaviour : MonoBehaviour {
 				timeBeforeNextShot = Time.time;
 			}
 		}
+	}
+
+	/* --------------------------------------------- Parachute ----------------------------------------------- */
+
+	void OpenParachute ()
+	{
+		if (m_ParachutePrefab)
+		{
+			m_Parachute = Instantiate(m_ParachutePrefab,Vector3.zero, Quaternion.identity) as GameObject;
+			m_Parachute.transform.parent = transform;
+			m_Parachute.transform.localPosition = new Vector3(0f,0.05f,0f);
+			m_Parachute.transform.localRotation = Quaternion.Euler(-90f,0f,0f);
+		}
+	}
+
+	void CloseParachute ()
+	{
+		if (m_Parachute)
+			Destroy(m_Parachute);
 	}
 
 	/* --------------------------------------------- GUI ----------------------------------------------- */

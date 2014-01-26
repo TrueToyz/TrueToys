@@ -681,6 +681,7 @@ MonoBehaviour:
   m_LifePoints: 2
   m_DeathPrefab: {fileID: 100022, guid: 09e585e33f5f46c4691266db5e301e62, type: 2}
   m_InjuryPrefab: {fileID: 0}
+  m_ParachutePrefab: {fileID: 100000, guid: 5f7fd05a1c75783418d6e8b76b345e75, type: 2}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1

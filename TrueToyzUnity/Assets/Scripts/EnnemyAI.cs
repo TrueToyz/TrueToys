@@ -16,6 +16,9 @@ public class EnnemyAI : MonoBehaviour {
 
 	private EnnemySight ennemySight;
 	private LastPlayerSighting lastPlayerSighting;
+
+	private GameObject m_Parachute;
+
 	private GameObject player;
 	private float chaseTimer;
 	private Vector3 nextMovePosition;
@@ -27,9 +30,10 @@ public class EnnemyAI : MonoBehaviour {
 	public enum EnemyBehaviour{chasing,attacking,patrolling};
 	private EnemyBehaviour m_EnemyBehaviour = EnemyBehaviour.patrolling;
 
-	/* PArticle effects */
+	/* Effects */
 	public GameObject m_DeathPrefab;
 	public GameObject m_InjuryPrefab;
+	public GameObject m_ParachutePrefab;
 
 	/*Audio*/
 	private Dictionary<string,AudioClip> ml_ActionSounds;
@@ -220,6 +224,29 @@ public class EnnemyAI : MonoBehaviour {
 		Destroy (gameObject);
 
 	}
+
+	/* ------------------------------------------ Parachue ------------------------------------ */
+
+	void OpenParachute ()
+	{
+		if (m_ParachutePrefab)
+		{
+			Debug.Log ("Open parachute!");
+			m_Parachute = Instantiate(m_ParachutePrefab,Vector3.zero, Quaternion.identity) as GameObject;
+			m_Parachute.transform.parent = transform;
+			m_Parachute.transform.localPosition = new Vector3(0f,0.05f,0f);
+			m_Parachute.transform.localRotation = Quaternion.Euler(-90f,0f,0f);
+			m_Parachute.transform.localScale = m_Parachute.transform.localScale * AvatarManager.swapScale;
+		}
+	}
+	
+	void CloseParachute ()
+	{
+		if (m_Parachute)
+			Destroy(m_Parachute);
+	}
+
+
 	/* -------------------------------------------- Pause during swapping ---------------------- */
 
 	void Freeze () {
