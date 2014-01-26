@@ -10,6 +10,9 @@ public class ChildBehaviour : MonoBehaviour {
 	private Animator m_HandAnimator;
 	private GameObject cameraVR;
 
+	/* For automatic generation of hand */
+	public GameObject m_HandPrefab;
+
 	private bool m_ToyInHand = false; // the toy is in hand
 	private bool m_CanSwitch = true; // the child cannot switch whiel the toy falls
 
@@ -88,9 +91,15 @@ public class ChildBehaviour : MonoBehaviour {
 		if(toyToChild != null)
 			toyToChild(); // Launch all callbacks
 
-		m_ChildHand.SetActive(true);
-		AvatarManager.MoveRootTo(gameObject,Vector3.zero,Quaternion.identity); // Replace Vr hierarchy in child
-		AvatarManager.AttachNodeToHand(m_ChildHand); // Relink hand with VR object
+		// Recreate the hand
+		m_ChildHand = (GameObject)Instantiate(m_HandPrefab);
+		m_HandAnimator = m_ChildHand.GetComponent<Animator>();
+
+		// Attach the hand to the node
+		AvatarManager.AttachNodeToHand(m_ChildHand);
+		
+		// Change the root to the origin
+		AvatarManager.MoveRootTo(gameObject,Vector3.zero,Quaternion.identity);
 
 		// Avoid immediate re-swap
 		timeBeforeNextIteration = Time.time;
@@ -113,8 +122,10 @@ public class ChildBehaviour : MonoBehaviour {
 			childToToy();
 
 		// Unlink the hand and the VR hierarchy, relink with child
-		m_ChildHand.transform.parent = transform;
-		m_ChildHand.SetActive(false);
+		//m_ChildHand.transform.parent = transform;
+		//m_ChildHand.SetActive(false);
+
+		Destroy(m_ChildHand);
 
 		//Play the audio
 		cameraVR.audio.Stop();
