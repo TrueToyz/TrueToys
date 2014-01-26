@@ -78,17 +78,20 @@ public class EnnemyAI : MonoBehaviour {
 	 * */
 	IEnumerator Chase (GameObject soldier, GameObject player)
 	{
+		soldier.transform.LookAt(player.transform.position);
+		soldier.transform.Rotate(new Vector3(0f,1f,0f), 90);
+
 		// Only keep the Z component
 		while(Vector3.Distance(soldier.transform.position, player.transform.position) > m_AttackRange)
 		{
 			if(m_IsFrozen)
 				yield break;
 			// Translation
-			soldier.transform.position = Vector3.Lerp(soldier.transform.position, player.transform.position, 2.0f * Time.deltaTime);
+			soldier.transform.position = Vector3.Lerp(soldier.transform.position, player.transform.position, chaseSpeed * Time.deltaTime);
 
 			// Rotation
-			Quaternion consigne = Quaternion.LookRotation(player.transform.position -soldier.transform.position);
-			soldier.transform.rotation = Quaternion.RotateTowards(soldier.transform.rotation,consigne,10);
+			//Quaternion consigne = Quaternion.LookRotation(player.transform.position -soldier.transform.position);
+			//soldier.transform.rotation = Quaternion.RotateTowards(soldier.transform.rotation,consigne,50);
 			yield return null;
 		}
 		
@@ -172,6 +175,9 @@ public class EnnemyAI : MonoBehaviour {
 
 	void Freeze () {
 		m_IsFrozen = true;
+		m_EnemyBehaviour = EnemyBehaviour.patrolling;
+		m_EnemyAnimator.SetBool("IsRunning", false);
+		m_EnemyAnimator.SetTrigger("Freeze");
 	}
 
 	void Unfreeze () {
