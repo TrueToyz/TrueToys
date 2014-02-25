@@ -40,7 +40,7 @@ public class EnemySpawn : MonoBehaviour {
 		if(m_canSpawn)
 		{
 			spawnTimer += Time.deltaTime;
-			if(spawnTimer >= m_spawnWaitTime && ml_enemies.Count + ml_stackSpawns.Count < m_maxEnemies)
+			if(spawnTimer >= m_spawnWaitTime &&  ml_enemies.Count + ml_stackSpawns.Count < m_maxEnemies)
 			{
 				// Randomize spawn point
 				int index = Random.Range(0,ml_spawnObjects.Length-1);
@@ -49,12 +49,21 @@ public class EnemySpawn : MonoBehaviour {
 				newPosition.x += Random.Range(0f,m_spawnRadius);
 				newPosition.z += Random.Range(0f,m_spawnRadius);
 
+				spawnTimer = 0f;
+
 				// Stack this spawn
 				ml_stackSpawns.Add(newPosition);
+
+				// Repoint to the first
+				m_spawnIndicator.rigidbody.MovePosition(ml_stackSpawns[0]);
 			}
 
-			if(ml_stackSpawns.Count > 0) 
-				m_spawnIndicator.transform.position = ml_stackSpawns[0];
+			else if(spawnTimer >= m_spawnWaitTime && ml_stackSpawns.Count > 1) 
+			{
+				m_spawnIndicator.rigidbody.MovePosition(ml_stackSpawns[1]);
+				ml_stackSpawns.RemoveAt(0);
+				spawnTimer = 0f;
+			}
 		}
 	}
 
@@ -100,7 +109,7 @@ public class EnemySpawn : MonoBehaviour {
 			}
 			else
 			{
-				ml_stackSpawns.RemoveAt(0);
+				spawnTimer = m_spawnWaitTime;
 			}
 		}
 	}

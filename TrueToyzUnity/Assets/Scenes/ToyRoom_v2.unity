@@ -19969,6 +19969,7 @@ MonoBehaviour:
   ml_obstacles: []
   m_target: {fileID: 630269969}
   m_owner: {fileID: 1997705283}
+  m_collisionType: 0
 --- !u!198 &1040995234
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -21571,6 +21572,7 @@ MonoBehaviour:
   ml_obstacles: []
   m_target: {fileID: 1353441786}
   m_owner: {fileID: 1962114483}
+  m_collisionType: 0
 --- !u!4 &1081877810
 Transform:
   m_ObjectHideFlags: 0

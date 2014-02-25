@@ -10,6 +10,14 @@ public class FallFeedback : MonoBehaviour {
 	public	GameObject		m_target;
 	public	GameObject		m_owner;
 
+	/* Two kinds of behavior */
+	public	enum 	CollisionDetectionType
+		{
+		 	Stay,
+			EnterExit
+		}
+	public	CollisionDetectionType	m_collisionType;
+
 	// Use this for initialization
 	void Start () {
 		m_particleFalls = gameObject.GetComponent<ParticleSystem>();
@@ -17,7 +25,7 @@ public class FallFeedback : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
 		// Change speed of particles depending on distance
 		RaycastHit hit;
