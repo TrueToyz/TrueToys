@@ -228,7 +228,19 @@ public class PlayerToy : Toy {
 		}
 		Destroy(bullet);
 	}
-	
+
+
+	public	void	bonusPower()
+	{
+		m_ShellNumbers++;
+	}
+
+	public	void	malusPower()
+	{
+		m_ShellNumbers--;
+		if(m_ShellNumbers<1)
+			m_ShellNumbers = 1;
+	}
 
 	/* ------------------------------------------ VR interaction ---------------------------------- */
 	

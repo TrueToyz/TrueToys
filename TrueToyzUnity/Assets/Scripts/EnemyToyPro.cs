@@ -5,7 +5,8 @@ using System.Collections.Generic;
 public class EnemyToyPro : Toy {
 	
 	
-	public 	float 	attackRange = 5.0f;
+	public 	float 	m_attackRange = 0.8f;
+	public	float	m_attackSpeed = 1.0f;
 	
 	// AI variables
 	private	float	m_chaseWaitTime;
@@ -84,9 +85,18 @@ public class EnemyToyPro : Toy {
 			}
 			else
 			{
-				if(Vector3.Distance(transform.position, GameManager.Instance.playerToy.transform.position) < attackRange)
+				if(Vector3.Distance(transform.position, GameManager.Instance.playerToy.transform.position) < m_attackRange)
 				{
-					m_enemyAnimator.SetTrigger("Attack");
+					if(Time.time-m_chaseTimer > m_attackSpeed)
+					{
+						m_chaseTimer = 0f;
+						m_enemyAnimator.SetTrigger("Attack");
+						GameManager.Instance.playerToy.SendMessage("malusPower");
+					}
+					else
+					{
+						m_chaseTimer+= Time.deltaTime;
+					}
 				}
 				else
 				{
@@ -124,7 +134,6 @@ public class EnemyToyPro : Toy {
 		NavMeshHit closestHit;
 		if(NavMesh.SamplePosition(transform.position,out closestHit, 1000,1))
 		{
-			Debug.Log ("maman");
 			transform.position = closestHit.position;
 
 			// Create nav Mesh agent now that it can be done
@@ -185,7 +194,7 @@ public class EnemyToyPro : Toy {
 		}
 
 		// Notify the level
-		GameManager.Instance.level.SendMessage("die",gameObject);
+		GameManager.Instance.level.SendMessage("enemyDies",gameObject);
 
 		/*
 		 * Note: Very strange behaviour: if you destroy "gameObject", the script is still... existing ! but why ?
@@ -200,15 +209,38 @@ public class EnemyToyPro : Toy {
 	void freeze () {
 		m_isFrozen = true;
 		m_enemyBehaviour = EnemyBehaviour.patrolling;
+
+		// Freeze animation
 		if (m_enemyAnimator)
 		{
 			m_enemyAnimator.SetBool("IsRunning", false);
 			m_enemyAnimator.SetTrigger("Freeze");
 		}
+
+		// Freeze navmesh
+		// Note: Why do I need to verify this ?
+		if(this != null && gameObject != null)
+		{
+			NavMeshAgent navigation = GetComponent<NavMeshAgent>();
+			if(navigation)
+			{
+				navigation.enabled = false;
+			}
+		}
 	}
 	
 	void unfreeze () {
 		m_isFrozen = false;
+
+		// Freeze navmesh
+		if(this != null && gameObject != null)
+		{
+			NavMeshAgent navigation = GetComponent<NavMeshAgent>();
+			if(navigation)
+			{
+				navigation.enabled = true;
+			}
+		}
 	}
 	
 }

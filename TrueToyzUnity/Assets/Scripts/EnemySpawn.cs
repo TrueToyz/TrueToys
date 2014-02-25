@@ -90,7 +90,7 @@ public class EnemySpawn : MonoBehaviour {
 		spawnTimer = 0f;
 	}
 
-	void die(GameObject toy)
+	void enemyDies(GameObject toy)
 	{
 		if(ml_enemies.Contains(toy))
 			ml_enemies.Remove(toy);

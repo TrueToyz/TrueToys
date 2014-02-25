@@ -106,4 +106,9 @@ public class GameManager : Singleton<GameManager> {
 	{
 		vrRootNode.transform.localScale = Vector3.one;
 	}
+
+	public void enemyDies(GameObject toy)
+	{
+		playerToy.SendMessage("bonusPower");
+	}
 }

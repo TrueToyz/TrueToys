@@ -5,7 +5,8 @@ using System.Collections.Generic;
 public class EnemyToy : Toy {
 	
 	
-	public 	float 	attackRange = 5.0f;
+	public 	float 	m_attackRange = 5.0f;
+	public	float	m_attackSpeed = 1.0f;
 
 	// AI variables
 	private	float	m_chaseWaitTime;
@@ -80,9 +81,18 @@ public class EnemyToy : Toy {
 			}
 			else
 			{
-				if(Vector3.Distance(transform.position, GameManager.Instance.playerToy.transform.position) < attackRange)
+				if(Vector3.Distance(transform.position, GameManager.Instance.playerToy.transform.position) < m_attackRange)
 				{
-					m_enemyAnimator.SetTrigger("Attack");
+					if(Time.time - m_chaseTimer > m_attackSpeed)
+					{
+						m_chaseTimer = 0f;
+						m_enemyAnimator.SetTrigger("Attack");
+						GameManager.Instance.playerToy.SendMessage("malusPower");
+					}
+					else
+					{
+						m_chaseTimer+= Time.deltaTime;
+					}
 				}
 				else
 				{
