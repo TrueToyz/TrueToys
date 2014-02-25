@@ -45,7 +45,7 @@ public class ChildBehaviour : MonoBehaviour {
 		m_ChildHand = GameObject.FindGameObjectWithTag("ChildHand");
 
 		Quaternion myRotation = Quaternion.Euler(0f,90f,0f);
-		GameManager.AttachNodeToHand(m_ChildHand, Vector3.zero, myRotation); // Initialize hand by atatching to vr node
+		GameManager.Instance.AttachNodeToHand(m_ChildHand, Vector3.zero, myRotation); // Initialize hand by atatching to vr node
 
 		// Retrieve animator
 		m_HandAnimator = m_ChildHand.GetComponent<Animator>();
@@ -95,10 +95,10 @@ public class ChildBehaviour : MonoBehaviour {
 		m_HandAnimator = m_ChildHand.GetComponent<Animator>();
 
 		// Attach the hand to the node
-		GameManager.AttachNodeToHand(m_ChildHand);
+		GameManager.Instance.AttachNodeToHand(m_ChildHand);
 		
 		// Change the root to the origin
-		GameManager.MoveRootTo(gameObject,Vector3.zero,Quaternion.identity);
+		GameManager.Instance.MoveRootTo(gameObject,Vector3.zero,Quaternion.identity);
 
 		// Avoid immediate re-swap
 		timeBeforeNextIteration = Time.time;
@@ -126,7 +126,7 @@ public class ChildBehaviour : MonoBehaviour {
 
 	bool 	canGrab ()
 	{
-		return Vector3.Distance(m_ChildToy.transform.position, m_ChildHand.transform.position) < GameManager.graspRadius;
+		return Vector3.Distance(m_ChildToy.transform.position, m_ChildHand.transform.position) < GameManager.Instance.graspRadius;
 	}
 
 	void 	grab ()
@@ -196,7 +196,7 @@ public class ChildBehaviour : MonoBehaviour {
 		{
 			if(m_ToyInHand)
 				yield break;
-			soldier.transform.position = Vector3.Lerp(soldier.transform.position, newTarget, GameManager.fallSpeed * Time.deltaTime);
+			soldier.transform.position = Vector3.Lerp(soldier.transform.position, newTarget, GameManager.Instance.fallSpeed * Time.deltaTime);
 			yield return null;
 		}
 		
@@ -266,7 +266,7 @@ public class ChildBehaviour : MonoBehaviour {
 	void 	biggerWorld ()
 	{
 		Environment.transform.localScale = new Vector3(5.0f,5.0f, 5.0f);
-		GameManager.ResetScale();
+		GameManager.Instance.ResetScale();
 
 		m_ChildAudio.Pause();
 	}
@@ -274,7 +274,7 @@ public class ChildBehaviour : MonoBehaviour {
 	void 	smallerWorld ()
 	{
 		Environment.transform.localScale = new Vector3(1.0f,1.0f, 1.0f);
-		GameManager.ResetScale();
+		GameManager.Instance.ResetScale();
 
 		m_ChildAudio.Play();
 	}

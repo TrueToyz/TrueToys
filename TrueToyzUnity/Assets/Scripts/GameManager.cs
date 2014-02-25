@@ -1,30 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : Singleton<GameManager> {
 
 	// MiddleVR runtime generated nodes
-	public 	static 	GameObject 	vrRootNode; // Root node for all VR nodes
-	public 	static 	GameObject 	vrHandNode; // Node to which the hand is attached
-	public 	static 	GameObject 	vrHeadNode; // Head tracking
+	public 	GameObject 	vrRootNode; // Root node for all VR nodes
+	public 	GameObject 	vrHandNode; // Node to which the hand is attached
+	public 	GameObject 	vrHeadNode; // Head tracking
 
 	// Game elements
-	public	static	GameObject	playerToy;
-	public	static	GameObject	playerAvatar;
+	public	GameObject	playerToy;
+	public	GameObject	playerAvatar;
 
 	// Runtime elements
-	public	static	int		enemyCount;
+	public	int		enemyCount = 0;
 
 	// Game rules
-	public 	static 	float 	swapScale = 5.0f;
-	public	static	float	fallSpeed = 5.0f;
-	public 	static	float 	distanceBeforeParachute = 0.1f;
-	public	static	float	graspRadius = 0.35f;
+	public 	float 	swapScale = 5.0f;
+	public	float	fallSpeed = 5.0f;
+	public 	float 	distanceBeforeParachute = 0.1f;
+	public	float	graspRadius = 0.35f;
 	
 	// Use this for initialization
 	void Start () 
 	{
-		enemyCount = 0;
 		if(!playerAvatar)
 			playerAvatar = GameObject.Find("Child");
 		if(!playerToy)
@@ -36,26 +35,34 @@ public class GameManager : MonoBehaviour {
 		if(!vrHeadNode)
 			vrHeadNode = GameObject.Find ("HeadTracking");
 	}
+
+	/*
+	 * TODO: is there any other way to do that ?
+	 * */
+	void Update ()
+	{
+		enemyCount = Instance.enemyCount;
+	}
 	
-	public static void MoveRootTo (GameObject avatar)
+	public void MoveRootTo (GameObject avatar)
 	{
-		GameManager.vrRootNode.transform.parent = avatar.transform;
+		vrRootNode.transform.parent = avatar.transform;
 	}
 
-	public static void MoveRootTo (GameObject avatar, Vector3 offset)
+	public void MoveRootTo (GameObject avatar, Vector3 offset)
 	{
-		GameManager.vrRootNode.transform.parent = avatar.transform;
-		GameManager.vrRootNode.transform.localPosition = offset;
+		vrRootNode.transform.parent = avatar.transform;
+		vrRootNode.transform.localPosition = offset;
 	}
 
-	public static void MoveRootTo (GameObject avatar, Vector3 offset, Quaternion rotation)
+	public void MoveRootTo (GameObject avatar, Vector3 offset, Quaternion rotation)
 	{
-		GameManager.vrRootNode.transform.parent = avatar.transform;
-		GameManager.vrRootNode.transform.localPosition = offset;
-		GameManager.vrRootNode.transform.localRotation = rotation;
+		vrRootNode.transform.parent = avatar.transform;
+		vrRootNode.transform.localPosition = offset;
+		vrRootNode.transform.localRotation = rotation;
 	}
 
-	public static void AttachNodeToHand (GameObject handChild)
+	public void AttachNodeToHand (GameObject handChild)
 	{
 		// Instinctive answer
 		handChild.transform.rotation = vrHandNode.transform.rotation;
@@ -69,19 +76,19 @@ public class GameManager : MonoBehaviour {
 
 	}
 
-	public static void AttachNodeToHand (GameObject handChild, Vector3 t_offset, Quaternion r_offset)
+	public void AttachNodeToHand (GameObject handChild, Vector3 t_offset, Quaternion r_offset)
 	{
 		handChild.transform.parent = vrHandNode.transform;
 		handChild.transform.localPosition = t_offset;
 		handChild.transform.localRotation = r_offset;
 	}
 
-	public static Vector3 GetHeadTrackingOffset ()
+	public Vector3 GetHeadTrackingOffset ()
 	{
-		return GameManager.vrHeadNode.transform.localPosition;
+		return vrHeadNode.transform.localPosition;
 	}
 
-	public static void ResetScale ()
+	public void ResetScale ()
 	{
 		vrRootNode.transform.localScale = Vector3.one;
 	}

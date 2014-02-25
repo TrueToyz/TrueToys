@@ -109,7 +109,7 @@ public class PlayerToy : Toy {
 		//rigidbody.isKinematic = true;
 
 		// Move VR root to child, relink hand with VR node
-		Vector3 offset = -GameManager.GetHeadTrackingOffset() ;
+		Vector3 offset = -GameManager.Instance.GetHeadTrackingOffset() ;
 		offset.y = 0.2f; // I want to keep the height of the head
 
 		// Instantiate weapon
@@ -118,16 +118,16 @@ public class PlayerToy : Toy {
 			m_Weapon = Instantiate(m_WeaponPrefab) as GameObject;
 			
 			// Attach the gun to the VR hand
-			GameManager.AttachNodeToHand(m_Weapon);
+			GameManager.Instance.AttachNodeToHand(m_Weapon);
 			m_Aim = m_Weapon.transform.FindChild("Aim").gameObject;
 			
 		}
 
 		// Rotate to face the front of the toy. This information is given HARD-CODED in static ms_Forward
-		Quaternion rotOffset = Quaternion.FromToRotation(GameManager.vrRootNode.transform.forward, ms_Forward); 
+		Quaternion rotOffset = Quaternion.FromToRotation(GameManager.Instance.vrRootNode.transform.forward, ms_Forward); 
 
 		// Apply offset
-		GameManager.MoveRootTo(gameObject, offset/GameManager.swapScale, rotOffset);
+		GameManager.Instance.MoveRootTo(gameObject, offset/GameManager.Instance.swapScale, rotOffset);
 
 		// Hide character
 		showSoldier(false);

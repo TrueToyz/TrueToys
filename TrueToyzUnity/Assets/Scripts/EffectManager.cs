@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EffectManager : MonoBehaviour {
+public class EffectManager : Singleton<EffectManager> {
 
-	public static GameObject[] ml_SpecialEffects;
+	public GameObject[] ml_SpecialEffects;
 
 	void Start ()
 	{
@@ -17,7 +17,7 @@ public class EffectManager : MonoBehaviour {
 	{
 
 		// Activate ALL scripts
-		foreach (GameObject effect in EffectManager.ml_SpecialEffects)
+		foreach (GameObject effect in EffectManager.Instance.ml_SpecialEffects)
 		{
 			// Routines active
 			effect.SendMessage("activate");
@@ -32,7 +32,7 @@ public class EffectManager : MonoBehaviour {
 	public static void TerminateEffects ()
 	{
 		// Activate ALL scripts
-		foreach (GameObject effect in EffectManager.ml_SpecialEffects)
+		foreach (GameObject effect in EffectManager.Instance.ml_SpecialEffects)
 		{
 			// Routines active
 			effect.SendMessage("desactivate");

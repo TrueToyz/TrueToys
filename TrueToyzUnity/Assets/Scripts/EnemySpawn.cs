@@ -33,24 +33,26 @@ public class EnemySpawn : MonoBehaviour {
 			{
 			spawnTimer += Time.deltaTime;
 			
-			if(spawnTimer >= m_spawnWaitTime && GameManager.enemyCount < m_maxEnemies){
-				foreach(GameObject spawnPoint in ml_spawnObjects)
-				{
-					// Random position of spawn
-					Vector3 spawnPos = spawnPoint.transform.position;
-					spawnPos.x += Random.Range(0f,m_spawnRadius);
-					spawnPos.z += Random.Range(0f,m_spawnRadius);
+			if(spawnTimer >= m_spawnWaitTime && GameManager.Instance.enemyCount < m_maxEnemies){
 
-					// Instantiate them
-					GameObject enemy = (GameObject)Instantiate(m_enemyPrefab, spawnPos, Quaternion.identity);
-					enemy.transform.parent = transform;
-					enemy.transform.localScale = new Vector3(1f,1f,1f);
+				GameManager.Instance.enemyCount ++;
+				Debug.Log(GameManager.Instance.enemyCount );
+				int index = Random.Range(0,ml_spawnObjects.Length-1);
 
-					// Make them fall !
-					RaycastHit hit;
-					ToyUtilities.RayCastToGround(enemy, out hit);
-					StartCoroutine(fallSoldier(enemy,hit.point));
-				}
+				// Random position of spawn
+				Vector3 spawnPos = ml_spawnObjects[index].transform.position;
+				spawnPos.x += Random.Range(0f,m_spawnRadius);
+				spawnPos.z += Random.Range(0f,m_spawnRadius);
+
+				// Instantiate them
+				GameObject enemy = (GameObject)Instantiate(m_enemyPrefab, spawnPos, Quaternion.identity);
+				enemy.transform.parent = transform;
+				enemy.transform.localScale = new Vector3(1f,1f,1f);
+
+				// Make them fall !
+				RaycastHit hit;
+				ToyUtilities.RayCastToGround(enemy, out hit);
+				StartCoroutine(fallSoldier(enemy,hit.point));
 
 				spawnTimer = 0f;
 			}
@@ -68,7 +70,7 @@ public class EnemySpawn : MonoBehaviour {
 		// Open parachute
 		soldier.SendMessage("openParachute");
 		
-		while(soldier != null && Vector3.Distance(soldier.transform.position, newTarget) > GameManager.distanceBeforeParachute)
+		while(soldier != null && Vector3.Distance(soldier.transform.position, newTarget) > GameManager.Instance.distanceBeforeParachute)
 		{
 			if(!m_canSpawn)
 			{
@@ -76,7 +78,7 @@ public class EnemySpawn : MonoBehaviour {
 				yield break;
 			}
 
-			soldier.transform.position = Vector3.Lerp(soldier.transform.position, newTarget, GameManager.fallSpeed * Time.deltaTime);
+			soldier.transform.position = Vector3.Lerp(soldier.transform.position, newTarget, GameManager.Instance.fallSpeed * Time.deltaTime);
 			yield return null;
 		}
 

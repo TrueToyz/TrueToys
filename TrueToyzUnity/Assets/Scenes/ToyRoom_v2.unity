@@ -2712,6 +2712,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8305fa2a4916c542a55b61cbd47a25c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vrRootNode: {fileID: 0}
+  vrHandNode: {fileID: 0}
+  vrHeadNode: {fileID: 0}
+  playerToy: {fileID: 0}
+  playerAvatar: {fileID: 0}
+  enemyCount: 0
+  swapScale: 5
+  fallSpeed: 5
+  distanceBeforeParachute: .100000001
+  graspRadius: .349999994
 --- !u!114 &195775179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39654,6 +39664,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8305fa2a4916c542a55b61cbd47a25c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vrRootNode: {fileID: 0}
+  vrHandNode: {fileID: 0}
+  vrHeadNode: {fileID: 0}
+  playerToy: {fileID: 0}
+  playerAvatar: {fileID: 0}
+  enemyCount: 0
+  swapScale: 5
+  fallSpeed: 5
+  distanceBeforeParachute: .100000001
+  graspRadius: .349999994
 --- !u!114 &1962114488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39681,6 +39701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 732e48652699e074ea07b9001f368407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ml_SpecialEffects: []
 --- !u!1 &1962405481
 GameObject:
   m_ObjectHideFlags: 0

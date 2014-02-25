@@ -56,7 +56,6 @@ public class EnemyToy : Toy {
 	}
 
 	void Awake () {
-		GameManager.enemyCount ++;
 		ChildBehaviour.toyToChild += freeze;
 		ChildBehaviour.childToToy += unfreeze;
 	}
@@ -67,7 +66,7 @@ public class EnemyToy : Toy {
 		{
 			if(m_enemyBehaviour == EnemyBehaviour.patrolling)
 			{
-				if(m_sight.gameObjectsOnSight.Contains(GameManager.playerToy))
+				if(m_sight.gameObjectsOnSight.Contains(GameManager.Instance.playerToy))
 				{
 					m_enemyBehaviour = EnemyBehaviour.chasing;
 					m_enemyAnimator.SetBool("IsRunning", true);
@@ -81,22 +80,22 @@ public class EnemyToy : Toy {
 			}
 			else
 			{
-				if(Vector3.Distance(transform.position, GameManager.playerToy.transform.position) < attackRange)
+				if(Vector3.Distance(transform.position, GameManager.Instance.playerToy.transform.position) < attackRange)
 				{
 					m_enemyAnimator.SetTrigger("Attack");
 				}
 				else
 				{
-					transform.LookAt(GameManager.playerToy.transform.position);
+					transform.LookAt(GameManager.Instance.playerToy.transform.position);
 					transform.Rotate(new Vector3(0f,1f,0f), 90); // Offset because of character wrong orientation
 
 					// Move toward player
-					transform.position = Vector3.Lerp(transform.position, GameManager.playerToy.transform.position, m_chaseSpeed * Time.deltaTime);
+					transform.position = Vector3.Lerp(transform.position, GameManager.Instance.playerToy.transform.position, m_chaseSpeed * Time.deltaTime);
 
 				}
 
 				// If player disappears
-				if(!m_sight.gameObjectsOnSight.Contains(GameManager.playerToy))
+				if(!m_sight.gameObjectsOnSight.Contains(GameManager.Instance.playerToy))
 				{
 					m_enemyBehaviour = EnemyBehaviour.patrolling;
 					m_enemyAnimator.SetBool("IsRunning", false);
@@ -168,8 +167,11 @@ public class EnemyToy : Toy {
 	
 	void receiveDamage ()
 	{
+		// TODO: solve this impossible behavior
 		if(m_lifePoints <1)
-			Debug.Log ("Whaaat?");
+		{
+			return;
+		}
 
 		if (--m_lifePoints < 1)
 			die();
@@ -206,7 +208,7 @@ public class EnemyToy : Toy {
 			AudioSource.PlayClipAtPoint(ml_actionSounds["Die" + randDeath], transform.position);
 		}
 
-		GameManager.enemyCount --;
+		GameManager.Instance.enemyCount --;
 
 		/*
 		 * Note: Very strange behaviour: if you destroy "gameObject", the script is still... existing ! but why ?

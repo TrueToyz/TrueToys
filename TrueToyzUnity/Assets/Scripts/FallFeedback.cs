@@ -19,11 +19,11 @@ public class FallFeedback : MonoBehaviour {
 
 		// Change speed of particles depending on distance
 		RaycastHit hit;
-		ToyUtilities.RayCastToGround(GameManager.playerToy,out hit);
-		m_particleFalls.startSpeed = Vector3.Distance(GameManager.playerToy.transform.position,hit.point);
+		ToyUtilities.RayCastToGround(GameManager.Instance.playerToy,out hit);
+		m_particleFalls.startSpeed = Vector3.Distance(GameManager.Instance.playerToy.transform.position,hit.point);
 
 		// Position under the hand
-		transform.position = new Vector3(GameManager.playerToy.transform.position.x,hit.point.y,GameManager.playerToy.transform.position.z);
+		transform.position = new Vector3(GameManager.Instance.playerToy.transform.position.x,hit.point.y,GameManager.Instance.playerToy.transform.position.z);
 
 	}
 
@@ -49,7 +49,7 @@ public class FallFeedback : MonoBehaviour {
 		}
 
 		// Send this to player
-		GameManager.playerAvatar.SendMessage("canDrop",m_canBeDeployed);
+		GameManager.Instance.playerAvatar.SendMessage("canDrop",m_canBeDeployed);
 	}
 
 	void OnTriggerEnter (Collider other)

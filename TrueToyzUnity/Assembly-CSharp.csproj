@@ -75,11 +75,11 @@
      <Compile Include="Assets\Scripts\EnemySpawn.cs" />
      <Compile Include="Assets\Scripts\EnemyToy.cs" />
      <Compile Include="Assets\Scripts\FallFeedback.cs" />
-     <Compile Include="Assets\Scripts\FireRangeBehaviour.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\MenuController.cs" />
      <Compile Include="Assets\Scripts\PlayerToy.cs" />
      <Compile Include="Assets\Scripts\RotateBlades.cs" />
+     <Compile Include="Assets\Scripts\Singleton.cs" />
      <Compile Include="Assets\Scripts\Torchelight.cs" />
      <Compile Include="Assets\Scripts\Toy.cs" />
      <Compile Include="Assets\Scripts\ToySight.cs" />
