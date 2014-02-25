@@ -33,14 +33,14 @@ public class RotateBlades : MonoBehaviour {
 			transform.Rotate(Vector3.up * Time.deltaTime * 100);
 	}
 
-	void Activate ()
+	void activate ()
 	{
 		m_IsActive = true;
 		if(m_PlaneAudio)
 			m_PlaneAudio.Play();
 	}
 
-	void Desactivate ()
+	void desactivate ()
 	{
 		m_IsActive = false;
 		if(m_PlaneAudio)

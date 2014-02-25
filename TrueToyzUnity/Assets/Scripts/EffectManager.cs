@@ -19,11 +19,8 @@ public class EffectManager : MonoBehaviour {
 		// Activate ALL scripts
 		foreach (GameObject effect in EffectManager.ml_SpecialEffects)
 		{
-			// Object active
-			//effect.SetActive(true);
-
 			// Routines active
-			effect.SendMessage("Activate");
+			effect.SendMessage("activate");
 
 			MonoBehaviour[] scriptComponents = effect.GetComponents<MonoBehaviour>();
 			foreach(MonoBehaviour script in scriptComponents) {
@@ -38,15 +35,7 @@ public class EffectManager : MonoBehaviour {
 		foreach (GameObject effect in EffectManager.ml_SpecialEffects)
 		{
 			// Routines active
-			effect.SendMessage("Desactivate");
-
-			//effect.SetActive(false);
-			/*
-			MonoBehaviour[] scriptComponents = effect.GetComponents<MonoBehaviour>();
-			foreach(MonoBehaviour script in scriptComponents) {
-				script.enabled = false;
-			}
-			*/
+			effect.SendMessage("desactivate");
 		}
 	}
 

@@ -3,51 +3,53 @@ using System.Collections;
 
 public class EnemySpawn : MonoBehaviour {
 
-	static bool m_CanSpawn = false;
+	static 	bool 			m_canSpawn = false;
 
-	public GameObject[] ml_SpawnObjects;
-	public float spawnWaitTime = 2f;
-	public int maxEnemies = 5;
+	public 	GameObject[] 	ml_spawnObjects;
+	public 	float 			m_spawnWaitTime = 2f;
+	public 	int 			m_maxEnemies = 5;
 
-	public float m_SpawnRadius = 1f;
-	public float m_FallSpeed = 4f;
-	public float m_DistanceBeforeParachute = 0.1f;
+	public 	float 			m_spawnRadius = 1f;
 
-	public GameObject m_EnemyPrefab;
-	private float spawnTimer;
-	private GameObject[] enemies;
+	public 	GameObject 		m_enemyPrefab;
+	private float 			spawnTimer;
+	private GameObject[] 	ml_enemies;
 
 
-	void Start () {
-		ChildBehaviour.childToToy += StartSpawning;
-		ChildBehaviour.toyToChild += StopSpawning;
+	void Start () 
+	{
+
+		// Find all spawn point
+		ml_spawnObjects = GameObject.FindGameObjectsWithTag("SpawnPoint") as GameObject[];
+
+		// Transition
+		ChildBehaviour.childToToy += startSpawning;
+		ChildBehaviour.toyToChild += stopSpawning;
 	}
 
 	void Update () {
 		//Spawn
-		if(m_CanSpawn)
+		if(m_canSpawn)
 			{
 			spawnTimer += Time.deltaTime;
 			
-			if(spawnTimer >= spawnWaitTime && EnnemyAI.ms_EnemyCount < maxEnemies){
-				Debug.Log("New Enemy");
-				foreach(GameObject spawnPoint in ml_SpawnObjects)
+			if(spawnTimer >= m_spawnWaitTime && GameManager.enemyCount < m_maxEnemies){
+				foreach(GameObject spawnPoint in ml_spawnObjects)
 				{
 					// Random position of spawn
-					float offset_x = Random.Range(0f,m_SpawnRadius);
-					float offset_z = Random.Range(0f,m_SpawnRadius);
 					Vector3 spawnPos = spawnPoint.transform.position;
-					spawnPos.x += offset_x;
-					spawnPos.z += offset_z;
+					spawnPos.x += Random.Range(0f,m_spawnRadius);
+					spawnPos.z += Random.Range(0f,m_spawnRadius);
 
 					// Instantiate them
-					GameObject enemy = (GameObject)Instantiate(m_EnemyPrefab, spawnPos, Quaternion.identity);
+					GameObject enemy = (GameObject)Instantiate(m_enemyPrefab, spawnPos, Quaternion.identity);
 					enemy.transform.parent = transform;
 					enemy.transform.localScale = new Vector3(1f,1f,1f);
 
 					// Make them fall !
-					Vector3 groundPos = ToyUtilities.RayCastToGround(enemy);
-					StartCoroutine(FallSoldier(enemy,groundPos));
+					RaycastHit hit;
+					ToyUtilities.RayCastToGround(enemy, out hit);
+					StartCoroutine(fallSoldier(enemy,hit.point));
 				}
 
 				spawnTimer = 0f;
@@ -58,48 +60,43 @@ public class EnemySpawn : MonoBehaviour {
 	/* --------------------------------- Function for making them falling ------------------------------ */
 
 
-	IEnumerator FallSoldier (GameObject soldier, Vector3 targetPos)
+	IEnumerator fallSoldier (GameObject soldier, Vector3 targetPos)
 	{
-		/* This fall can only be made in kinematic*/
-		soldier.rigidbody.isKinematic = true;
-
 		// Only keep the Z component
 		Vector3 newTarget = new Vector3(soldier.transform.position.x, targetPos.y, soldier.transform.position.z);
 
 		// Open parachute
-		soldier.SendMessage("OpenParachute");
+		soldier.SendMessage("openParachute");
 		
-		while(soldier != null && Vector3.Distance(soldier.transform.position, newTarget) > m_DistanceBeforeParachute)
+		while(soldier != null && Vector3.Distance(soldier.transform.position, newTarget) > GameManager.distanceBeforeParachute)
 		{
-			if(!m_CanSpawn)
+			if(!m_canSpawn)
 			{
-				Destroy(soldier);
-				EnnemyAI.ms_EnemyCount --;
+				soldier.SendMessage("die");
 				yield break;
 			}
 
-			soldier.transform.position = Vector3.Lerp(soldier.transform.position, newTarget, m_FallSpeed * Time.deltaTime);
+			soldier.transform.position = Vector3.Lerp(soldier.transform.position, newTarget, GameManager.fallSpeed * Time.deltaTime);
 			yield return null;
 		}
 
 		// the toy must returns to normal state
 		if(soldier)
 		{
-			soldier.SendMessage("CloseParachute");
-			soldier.rigidbody.isKinematic = false;
-			soldier.SendMessage("Unfreeze");
+			soldier.SendMessage("closeParachute");
+			soldier.SendMessage("unfreeze");
 		}
 	}
 
 	/* ----------------------------------- Callbacks for when the world swaps ----------------------- */
 
-	void StartSpawning ()
+	void startSpawning ()
 	{
-		m_CanSpawn = true;
+		m_canSpawn = true;
 	}
 
-	void StopSpawning ()
+	void stopSpawning ()
 	{
-		m_CanSpawn = false;
+		m_canSpawn = false;
 	}
 }

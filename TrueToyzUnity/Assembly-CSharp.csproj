@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_3;UNITY_4_3;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_3;UNITY_4_3;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -70,26 +70,22 @@
      <Compile Include="Assets\MiddleVR\Scripts\Samples\VRShareFloat.cs" />
      <Compile Include="Assets\MiddleVR\Scripts\Samples\VRVirtualTrackerMapping.cs" />
      <Compile Include="Assets\MiddleVR\Scripts\Samples\VRVirtualTrackerSimulation.cs" />
-     <Compile Include="Assets\Scripts\AvatarManager.cs" />
      <Compile Include="Assets\Scripts\ChildBehaviour.cs" />
      <Compile Include="Assets\Scripts\EffectManager.cs" />
      <Compile Include="Assets\Scripts\EnemySpawn.cs" />
-     <Compile Include="Assets\Scripts\EnnemyAI.cs" />
-     <Compile Include="Assets\Scripts\EnnemySight.cs" />
+     <Compile Include="Assets\Scripts\EnemyToy.cs" />
+     <Compile Include="Assets\Scripts\FallFeedback.cs" />
      <Compile Include="Assets\Scripts\FireRangeBehaviour.cs" />
-     <Compile Include="Assets\Scripts\LastPlayerSighting.cs" />
+     <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\MenuController.cs" />
+     <Compile Include="Assets\Scripts\PlayerToy.cs" />
      <Compile Include="Assets\Scripts\RotateBlades.cs" />
-     <Compile Include="Assets\Scripts\SniperBehaviour.cs" />
-     <Compile Include="Assets\Scripts\ToyPlayerBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Torchelight.cs" />
+     <Compile Include="Assets\Scripts\Toy.cs" />
+     <Compile Include="Assets\Scripts\ToySight.cs" />
      <Compile Include="Assets\Scripts\ToyUtilities.cs" />
-     <Compile Include="Assets\torch\scene\script\TorchSlider.cs" />
-     <Compile Include="Assets\torch\scene\script\Torchslider2.cs" />
-     <Compile Include="Assets\torch\scripts\Torchelight.cs" />
-     <None Include="Assets\WWII P47 Thunderbolt\aeroplanes.shader" />
      <None Include="Assets\MiddleVR\Assets\Materials\OVRLensCorrection.shader" />
-     <None Include="Assets\Models\WWII P47 Thunderbolt\aeroplanes.shader" />
-     <None Include="Assets\torch\readme.txt" />
+     <None Include="Assets\Shaders\aeroplanes.shader" />
      <None Include="Assets\Shaders\SpecialCulling.shader" />
  <Reference Include="MiddleVR_dotNet">
  <HintPath>Assets\MiddleVR\MiddleVR_dotNet.dll</HintPath>

@@ -1,16 +1,19 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\EnnemyAI.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\EnemyToy.cs">
     <Files>
-      <File FileName="Assets\Scripts\EnnemyAI.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\ToyPlayerBehaviour.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\RotateBlades.cs" Line="1" Column="1" />
-      <File FileName="Assets\torch\scripts\Torchelight.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\ChildBehaviour.cs" Line="195" Column="38" />
+      <File FileName="Assets\Scripts\EnemyToy.cs" Line="202" Column="3" />
+      <File FileName="Assets\Scripts\FireRangeBehaviour.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\ToyUtilities.cs" Line="16" Column="3" />
+      <File FileName="Assets\Scripts\EnemySpawn.cs" Line="44" Column="12" />
       <File FileName="Assets\Scripts\EffectManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\MiddleVR\Scripts\Internal\VRManagerScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\EnnemyAI.cs" Line="232" Column="25" />
-      <File FileName="Assets\Scripts\EnemySpawn.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\ChildBehaviour.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="20" Column="47" />
+      <File FileName="Assets\Scripts\Toy.cs" Line="16" Column="52" />
+      <File FileName="Assets\Scripts\MenuController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\RotateBlades.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PlayerToy.cs" Line="190" Column="35" />
+      <File FileName="Assets\Scripts\ToySight.cs" Line="17" Column="42" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

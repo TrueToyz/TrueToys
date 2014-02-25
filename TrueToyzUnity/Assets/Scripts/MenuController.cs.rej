@@ -1,9 +1,0 @@
-diff a/TrueToyzUnity/Assets/Scripts/MenuController.cs b/TrueToyzUnity/Assets/Scripts/MenuController.cs	(rejected hunks)
-@@ -4,6 +4,7 @@
- public class MenuController : MonoBehaviour {
- 
- 	public int radius = 10;
-+<<<<<<< HEAD
- 	public float quitWaitTime = 2f;
- =======
- 	public float quitWaitTime = 2.0f;

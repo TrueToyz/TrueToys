@@ -22,50 +22,25 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _BumpMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Detail
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
           name: _Illum
         second:
           m_Texture: {fileID: 2800000, guid: 8181acd5ef374174aaafeb6f57d1e27e, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _ParallaxMap
-        second:
-          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
           name: _Shininess
-        second: .0724504068
+        second: .0166987106
       data:
         first:
           name: _EmissionLM
         second: 0
-      data:
-        first:
-          name: _Parallax
-        second: .0199999996
     m_Colors:
       data:
         first:
           name: _Color
-        second: {r: .470588207, g: .470588207, b: .470588207, a: 1}
+        second: {r: .867647052, g: .867647052, b: .867647052, a: 1}
       data:
         first:
           name: _SpecColor
