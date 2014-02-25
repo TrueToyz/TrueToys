@@ -109,62 +109,8 @@ public class EnemyToy : Toy {
 		}
 	
 	}
-
-	/*
-	IEnumerator chase (GameObject soldier, GameObject player)
-	{
-		soldier.transform.LookAt(player.transform.position);
-		soldier.transform.Rotate(new Vector3(0f,1f,0f), 90);
-		
-		AudioSource.PlayClipAtPoint(ml_actionSounds["Running"], soldier.transform.position, 0.5f);
-		
-		// Only keep the Z component
-		while(Vector3.Distance(soldier.transform.position, player.transform.position) > attackRange)
-		{
-			if(m_isFrozen || !ennemySight.playerInSight)
-			{
-				m_enemyBehaviour = EnemyBehaviour.patrolling;
-				yield break;
-			}
-
-			// Translation
-			soldier.transform.position = Vector3.Lerp(soldier.transform.position, player.transform.position, m_chaseSpeed * Time.deltaTime);
-
-			// Rotation
-			//Quaternion consigne = Quaternion.LookRotation(player.transform.position -soldier.transform.position);
-			//soldier.transform.rotation = Quaternion.RotateTowards(soldier.transform.rotation,consigne,50);
-			yield return null;
-		}
-		
-		m_enemyBehaviour = EnemyBehaviour.patrolling;
-	}
-
-	void patrolling () {
-		//Update the futur position
-		nextMovePosition = nextMovePosition + transform.forward * Time.deltaTime;
-		Vector3 destination = nextMovePosition - transform.position ;
-
-		//Test the collision of the next move
-		RaycastHit hit;
-
-		if (Physics.Raycast(transform.position, destination.normalized, out hit, radius)) {
-			//Compute a new destination
-			float discFactor = 50;
-			float i = Random.Range(1, discFactor);
-			Vector3 circle = new Vector3 ( radius*Mathf.Cos(2*i*Mathf.PI / discFactor ), radius*Mathf.Sin(2*i*Mathf.PI / discFactor), 0);
-			Vector3 randomPosition = transform.position + circle;
-			nextMovePosition = randomPosition;
-
-			destination = nextMovePosition - transform.position;
-		}
-
-		//Move the enemy
-		transform.Translate(destination.normalized * m_chaseSpeed * Time.deltaTime);
-
-	}
-	*/
-
 	
+
 	/* --------------------------------------------- Fight behaviour ------------------------------ */
 	
 	void receiveDamage ()
@@ -209,8 +155,6 @@ public class EnemyToy : Toy {
 			int randDeath = Random.Range(1, 3);
 			AudioSource.PlayClipAtPoint(ml_actionSounds["Die" + randDeath], transform.position);
 		}
-
-		GameManager.Instance.enemyCount --;
 
 		/*
 		 * Note: Very strange behaviour: if you destroy "gameObject", the script is still... existing ! but why ?

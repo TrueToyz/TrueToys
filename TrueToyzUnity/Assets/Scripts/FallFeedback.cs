@@ -22,7 +22,8 @@ public class FallFeedback : MonoBehaviour {
 		// Change speed of particles depending on distance
 		RaycastHit hit;
 		ToyUtilities.RayCastToGround(m_target,out hit);
-		m_particleFalls.startSpeed = Vector3.Distance(m_target.transform.position,hit.point);
+		if(m_particleFalls)
+			m_particleFalls.startSpeed = Vector3.Distance(m_target.transform.position,hit.point);
 
 		// Position under the hand
 		transform.position = new Vector3(m_target.transform.position.x,hit.point.y,m_target.transform.position.z);
@@ -41,13 +42,16 @@ public class FallFeedback : MonoBehaviour {
 				m_canBeDeployed = false;
 		}
 
-		if(m_canBeDeployed)
+		if(m_particleFalls)
 		{
-			m_particleFalls.startColor = Color.green;
-		}
-		else
-		{
-			m_particleFalls.startColor = Color.red;
+			if(m_canBeDeployed)
+			{
+				m_particleFalls.startColor = Color.green;
+			}
+			else
+			{
+				m_particleFalls.startColor = Color.red;
+			}
 		}
 
 		// Send this to player

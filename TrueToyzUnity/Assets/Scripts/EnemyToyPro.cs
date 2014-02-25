@@ -183,9 +183,10 @@ public class EnemyToyPro : Toy {
 			int randDeath = Random.Range(1, 3);
 			AudioSource.PlayClipAtPoint(ml_actionSounds["Die" + randDeath], transform.position);
 		}
-		
-		GameManager.Instance.enemyCount --;
-		
+
+		// Notify the level
+		GameManager.Instance.level.SendMessage("die",gameObject);
+
 		/*
 		 * Note: Very strange behaviour: if you destroy "gameObject", the script is still... existing ! but why ?
 		 * */

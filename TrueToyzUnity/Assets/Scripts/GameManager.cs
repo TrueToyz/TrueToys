@@ -11,6 +11,8 @@ public class GameManager : Singleton<GameManager> {
 	// Game elements
 	public	GameObject	playerToy;
 	public	GameObject	playerAvatar;
+	public	GameObject	spawnIndicator;
+	public	GameObject	level;
 
 	// Runtime elements
 	public	int		enemyCount = 0;
@@ -27,12 +29,15 @@ public class GameManager : Singleton<GameManager> {
 	// Use this for initialization
 	void Start () 
 	{
+		Instance.spawnIndicator = spawnIndicator;
 		Instance.distanceBeforeParachute = distanceBeforeParachute;
 		Instance.graspRadius = graspRadius;
 		Instance.parachuteDampingCoef = parachuteDampingCoef;
 		Instance.fallSpeed = fallSpeed;
 		Instance.swapScale = swapScale;
 
+		if(!level)
+			level = GameObject.Find("Level");
 		if(!playerAvatar)
 			playerAvatar = GameObject.Find("Child");
 		if(!playerToy)
