@@ -52,7 +52,12 @@ public class EnemySpawn : MonoBehaviour {
 				// Make them fall !
 				RaycastHit hit;
 				ToyUtilities.RayCastToGround(enemy, out hit);
-				StartCoroutine(fallSoldier(enemy,hit.point));
+
+				// Launch PlayerToy parachute fall
+				Toy toyScript = enemy.GetComponent<Toy>() as Toy;
+
+				// Don't forget to specify the callbacks
+				StartCoroutine(toyScript.ParachuteFall(enemy,hit.point)); 
 
 				spawnTimer = 0f;
 			}
@@ -60,35 +65,6 @@ public class EnemySpawn : MonoBehaviour {
 	}
 
 	/* --------------------------------- Function for making them falling ------------------------------ */
-
-
-	IEnumerator fallSoldier (GameObject soldier, Vector3 targetPos)
-	{
-		// Only keep the Z component
-		Vector3 newTarget = new Vector3(soldier.transform.position.x, targetPos.y, soldier.transform.position.z);
-
-		// Open parachute
-		soldier.SendMessage("openParachute");
-		
-		while(soldier != null && Vector3.Distance(soldier.transform.position, newTarget) > GameManager.Instance.distanceBeforeParachute)
-		{
-			if(!m_canSpawn)
-			{
-				soldier.SendMessage("die");
-				yield break;
-			}
-
-			soldier.transform.position = Vector3.Lerp(soldier.transform.position, newTarget, GameManager.Instance.fallSpeed * Time.deltaTime);
-			yield return null;
-		}
-
-		// the toy must returns to normal state
-		if(soldier)
-		{
-			soldier.SendMessage("closeParachute");
-			soldier.SendMessage("unfreeze");
-		}
-	}
 
 	/* ----------------------------------- Callbacks for when the world swaps ----------------------- */
 

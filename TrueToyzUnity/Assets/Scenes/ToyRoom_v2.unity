@@ -798,6 +798,75 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1183446793}
   m_GameObject: {fileID: 46528980}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &51788206
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 51788207}
+  - 33: {fileID: 51788210}
+  - 65: {fileID: 51788209}
+  - 23: {fileID: 51788208}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &51788207
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 51788206}
+  m_LocalRotation: {x: 0, y: .702998042, z: 0, w: .711191833}
+  m_LocalPosition: {x: .368126541, y: .402973413, z: -.156622916}
+  m_LocalScale: {x: .455108374, y: .455108762, z: .455108374}
+  m_Children: []
+  m_Father: {fileID: 1878470794}
+--- !u!23 &51788208
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 51788206}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+--- !u!65 &51788209
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 51788206}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &51788210
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 51788206}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &58946098
 GameObject:
   m_ObjectHideFlags: 0
@@ -2720,6 +2789,7 @@ MonoBehaviour:
   enemyCount: 0
   swapScale: 5
   fallSpeed: 5
+  parachuteDampingCoef: 2
   distanceBeforeParachute: .100000001
   graspRadius: .349999994
 --- !u!114 &195775179
@@ -12794,6 +12864,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 630269970}
   - 95: {fileID: 630269971}
+  - 114: {fileID: 630269975}
   - 114: {fileID: 630269972}
   - 135: {fileID: 630269973}
   - 54: {fileID: 630269974}
@@ -12844,6 +12915,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ParachutePrefab: {fileID: 100000, guid: 5f7fd05a1c75783418d6e8b76b345e75, type: 2}
+  m_interruptFlag: 0
+  m_isFrozen: 0
   m_IsControlled: 0
   m_FireRate: .5
   m_FireRange: 200
@@ -12879,6 +12952,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &630269975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: cbbedf5b733c2a24e9fedecfb40d544a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1599788732}
+  m_GameObject: {fileID: 630269969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba67bb0761155b842a58b9cbbd691f27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ParachutePrefab: {fileID: 100000, guid: 5f7fd05a1c75783418d6e8b76b345e75, type: 2}
+  m_interruptFlag: 0
+  m_isFrozen: 0
+  m_IsControlled: 0
+  m_FireRate: 1
+  m_FireRange: 200
+  m_ShellNumbers: 3
+  m_FireRadius: .100000001
+  m_OwnerChild: {fileID: 0}
+  m_WeaponPrefab: {fileID: 100012, guid: 0413450dfbcb8d14aa36892db1a54e7f, type: 2}
+  m_BulletPrefab: {fileID: 100000, guid: 5a95ccb3c52b51a479aa6d4204a70a06, type: 2}
 --- !u!1 &632036079
 GameObject:
   m_ObjectHideFlags: 0
@@ -31567,11 +31663,11 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8c180999ad1aeed49b0c77668d8b2b55, type: 2}
-    - target: {fileID: 11400000, guid: cbbedf5b733c2a24e9fedecfb40d544a, type: 2}
+    - target: {fileID: 0}
       propertyPath: m_ShellPrefab
       value: 
       objectReference: {fileID: 100000, guid: 5a193cc08996ed74e8fe8d24c07208bb, type: 2}
-    - target: {fileID: 11400000, guid: cbbedf5b733c2a24e9fedecfb40d544a, type: 2}
+    - target: {fileID: 0}
       propertyPath: m_ShellNumbers
       value: 1
       objectReference: {fileID: 0}
@@ -31586,7 +31682,7 @@ Prefab:
     m_RemovedComponents:
     - {fileID: 6500000, guid: cbbedf5b733c2a24e9fedecfb40d544a, type: 2}
     - {fileID: 5400000, guid: cbbedf5b733c2a24e9fedecfb40d544a, type: 2}
-    - {fileID: 11400000, guid: cbbedf5b733c2a24e9fedecfb40d544a, type: 2}
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: cbbedf5b733c2a24e9fedecfb40d544a, type: 2}
   m_RootGameObject: {fileID: 630269969}
   m_IsPrefabParent: 0
@@ -38453,6 +38549,7 @@ Transform:
   - {fileID: 271904321}
   - {fileID: 1977848959}
   - {fileID: 60430441}
+  - {fileID: 51788207}
   m_Father: {fileID: 1962114484}
 --- !u!95 &1878470795
 Animator:
@@ -39672,7 +39769,8 @@ MonoBehaviour:
   enemyCount: 0
   swapScale: 5
   fallSpeed: 5
-  distanceBeforeParachute: .100000001
+  parachuteDampingCoef: 2
+  distanceBeforeParachute: 1.5
   graspRadius: .349999994
 --- !u!114 &1962114488
 MonoBehaviour:
@@ -42312,6 +42410,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ParachutePrefab: {fileID: 100000, guid: 5f7fd05a1c75783418d6e8b76b345e75, type: 2}
+  m_interruptFlag: 0
+  m_isFrozen: 1
   attackRange: 1
   m_sight: {fileID: 1574746560}
   m_deathPrefab: {fileID: 100022, guid: 09e585e33f5f46c4691266db5e301e62, type: 2}

@@ -131,13 +131,14 @@ public class ChildBehaviour : MonoBehaviour {
 
 	void 	grab ()
 	{
+		timeBeforeNextIteration = Time.time;
+
+		// Interrupt any ongoing motion
+		m_ChildToy.SendMessage("interrupt");
 
 		m_ChildToy.transform.parent = m_ChildHand.transform; // Change toy parent in hierarchy by the hand transform
 		m_ChildToy.transform.localPosition = Vector3.zero; // Optional : put the object in hand
 		m_ToyInHand = true;
-
-		// If it's not the case, the toy must returns to normal state
-		//m_ChildToy.rigidbody.isKinematic = true;
 
 		// The object is hidden
 		m_ChildToy.SetActive(false);
@@ -151,6 +152,7 @@ public class ChildBehaviour : MonoBehaviour {
 	 * */
 	void 	drop ()
 	{
+		timeBeforeNextIteration = Time.time;
 		m_ChildToy.transform.parent = Environment.transform; // Toy is not in hierarchy
 
 		// Orient the toy
@@ -167,54 +169,24 @@ public class ChildBehaviour : MonoBehaviour {
 		RaycastHit hit;
 		ToyUtilities.RayCastToGround(m_ChildToy, out hit);
 
-		// Launch coroutine
-		StartCoroutine(fallSoldier(m_ChildToy,hit.point)); 
+		// Launch PlayerToy parachute fall
+		Toy toyScript = m_ChildToy.GetComponent<Toy>() as Toy;
 
-	}
-	
-
-	/*
-	 * Note: you should interrupt this coroutine when a new grab has been sent
-	 * */
-	IEnumerator fallSoldier (GameObject soldier, Vector3 targetPos)
-	{
-		// Give time for animation
-		yield return new WaitForSeconds(0.4f);
-
-		// The object is not
 		m_ChildToy.SetActive(true);
-
-		// Lock the switch ability
 		m_CanSwitch = false;
 
-		// Only keep the y component
-		Vector3 newTarget = new Vector3(soldier.transform.position.x, targetPos.y, soldier.transform.position.z);
-		
-		soldier.SendMessage("openParachute");
-
-		while(Vector3.Distance(soldier.transform.position, newTarget) > 0.01f)
-		{
-			if(m_ToyInHand)
-				yield break;
-			soldier.transform.position = Vector3.Lerp(soldier.transform.position, newTarget, GameManager.Instance.fallSpeed * Time.deltaTime);
-			yield return null;
-		}
-		
-
-		yield return new WaitForSeconds(0.5f);
-
-		soldier.SendMessage("closeParachute");
-
-		// the toy must returns to normal state
-		//m_ChildToy.rigidbody.isKinematic = false;
-		//m_ChildToy.rigidbody.AddForce(-m_ChildToy.transform.up *50); // One of the worst hack ever
-		
-		// Unlock the switch ability
-		m_CanSwitch = true;
+		// Don't forget to specify the callbacks
+		toyScript.addCallback(landing);
+		StartCoroutine(toyScript.ParachuteFall(m_ChildToy,hit.point)); 
 
 	}
+
+	public void	landing()
+	{
+		m_CanSwitch = true;
+	}
 	
-	
+
 	/* ------------------------------------------ VR interaction ---------------------------------- */
 
 	/*
@@ -231,16 +203,21 @@ public class ChildBehaviour : MonoBehaviour {
 				{
 					if(this.canGrab())
 						this.grab ();
+					// Move the world
 				}
-				else if(m_canDrop)
+	
+			}
+			else
+			{
+				if(m_canDrop && m_ToyInHand)
 				{
 					this.drop ();
 				}
-
-				timeBeforeNextIteration = Time.time;
 			}
+
+
 			/* Can control toy only if child has dropped toy */
-			else if (!m_ToyInHand && m_WandButtons.IsPressed(1) && m_CanSwitch)
+			if (!m_ToyInHand && m_WandButtons.IsPressed(1) && m_CanSwitch)
 			{
 				releaseControl();
 				m_ChildToy.SendMessage("takeControl",gameObject);
@@ -250,12 +227,6 @@ public class ChildBehaviour : MonoBehaviour {
 			}
 		}
 
-		// Display help on the ground
-		if (m_ToyInHand)
-		{
-			// TODO : particles ? 
-
-		}
 	}
 
 	/* ------------------------------------------ World modification functions ---------------------------------- */

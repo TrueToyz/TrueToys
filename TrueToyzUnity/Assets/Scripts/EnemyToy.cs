@@ -15,7 +15,6 @@ public class EnemyToy : Toy {
 	private Vector3 m_destination;
 	private bool 	m_isBlocked; //Means by a collision
 	private int 	m_radius = 2; // Radius of anticipitation for collisions in patrolling case
-	private bool 	m_isFrozen = true;
 
 	// Sight
 	public	ToySight	m_sight;

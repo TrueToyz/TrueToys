@@ -18,12 +18,21 @@ public class GameManager : Singleton<GameManager> {
 	// Game rules
 	public 	float 	swapScale = 5.0f;
 	public	float	fallSpeed = 5.0f;
-	public 	float 	distanceBeforeParachute = 0.1f;
+	public	float	parachuteDampingCoef = 2.0f;
+	public 	float 	distanceBeforeParachute = 9f;
 	public	float	graspRadius = 0.35f;
-	
+
+	// TODO: what an horrible behavior from this singleton class !
+
 	// Use this for initialization
 	void Start () 
 	{
+		Instance.distanceBeforeParachute = distanceBeforeParachute;
+		Instance.graspRadius = graspRadius;
+		Instance.parachuteDampingCoef = parachuteDampingCoef;
+		Instance.fallSpeed = fallSpeed;
+		Instance.swapScale = swapScale;
+
 		if(!playerAvatar)
 			playerAvatar = GameObject.Find("Child");
 		if(!playerToy)
