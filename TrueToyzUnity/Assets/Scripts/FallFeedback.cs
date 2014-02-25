@@ -7,6 +7,8 @@ public class FallFeedback : MonoBehaviour {
 	public	ParticleSystem	m_particleFalls;
 	public	bool			m_canBeDeployed = true;
 	public	List<Collider>	ml_obstacles;
+	public	GameObject		m_target;
+	public	GameObject		m_owner;
 
 	// Use this for initialization
 	void Start () {
@@ -19,11 +21,11 @@ public class FallFeedback : MonoBehaviour {
 
 		// Change speed of particles depending on distance
 		RaycastHit hit;
-		ToyUtilities.RayCastToGround(GameManager.Instance.playerToy,out hit);
-		m_particleFalls.startSpeed = Vector3.Distance(GameManager.Instance.playerToy.transform.position,hit.point);
+		ToyUtilities.RayCastToGround(m_target,out hit);
+		m_particleFalls.startSpeed = Vector3.Distance(m_target.transform.position,hit.point);
 
 		// Position under the hand
-		transform.position = new Vector3(GameManager.Instance.playerToy.transform.position.x,hit.point.y,GameManager.Instance.playerToy.transform.position.z);
+		transform.position = new Vector3(m_target.transform.position.x,hit.point.y,m_target.transform.position.z);
 
 	}
 
@@ -49,7 +51,7 @@ public class FallFeedback : MonoBehaviour {
 		}
 
 		// Send this to player
-		GameManager.Instance.playerAvatar.SendMessage("canDrop",m_canBeDeployed);
+		m_owner.SendMessage("canDrop",m_canBeDeployed);
 	}
 
 	void OnTriggerEnter (Collider other)

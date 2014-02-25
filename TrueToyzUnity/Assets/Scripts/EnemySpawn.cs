@@ -8,9 +8,7 @@ public class EnemySpawn : MonoBehaviour {
 	public 	GameObject[] 	ml_spawnObjects;
 	public 	float 			m_spawnWaitTime = 2f;
 	public 	int 			m_maxEnemies = 5;
-
-	public 	float 			m_spawnRadius = 1f;
-
+	public 	float 			m_spawnRadius = 5f;
 	public 	GameObject 		m_enemyPrefab;
 	private float 			spawnTimer;
 	private GameObject[] 	ml_enemies;

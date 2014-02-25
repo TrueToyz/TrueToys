@@ -74,6 +74,7 @@
      <Compile Include="Assets\Scripts\EffectManager.cs" />
      <Compile Include="Assets\Scripts\EnemySpawn.cs" />
      <Compile Include="Assets\Scripts\EnemyToy.cs" />
+     <Compile Include="Assets\Scripts\EnemyToyPro.cs" />
      <Compile Include="Assets\Scripts\FallFeedback.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\MenuController.cs" />

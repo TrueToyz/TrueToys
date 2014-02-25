@@ -91,10 +91,13 @@ public class ChildBehaviour : MonoBehaviour {
 			toyToChild(); // Launch all callbacks
 
 		// Recreate the hand
+		if(m_ChildHand)
+			Destroy(m_ChildHand);
+
 		m_ChildHand = (GameObject)Instantiate(m_HandPrefab);
 		m_HandAnimator = m_ChildHand.GetComponent<Animator>();
 
-		// Attach the hand to the node
+		// Attach the hand to the nodes
 		GameManager.Instance.AttachNodeToHand(m_ChildHand);
 		
 		// Change the root to the origin
@@ -236,7 +239,7 @@ public class ChildBehaviour : MonoBehaviour {
 	 * */
 	void 	biggerWorld ()
 	{
-		Environment.transform.localScale = new Vector3(5.0f,5.0f, 5.0f);
+		Environment.transform.localScale = Vector3.one * GameManager.Instance.swapScale;
 		GameManager.Instance.ResetScale();
 
 		m_ChildAudio.Pause();
@@ -244,7 +247,7 @@ public class ChildBehaviour : MonoBehaviour {
 
 	void 	smallerWorld ()
 	{
-		Environment.transform.localScale = new Vector3(1.0f,1.0f, 1.0f);
+		Environment.transform.localScale = Vector3.one;
 		GameManager.Instance.ResetScale();
 
 		m_ChildAudio.Play();
