@@ -3,6 +3,13 @@ using System.Collections;
 
 public class GameManager : Singleton<GameManager> {
 
+	/*
+	 * TODO:  what an horrible behavior from this singleton class !
+	 * Members from instance does not have the same value than these listed over here
+	 * Advice: always use the Instance
+	 * But in the future, I shall change that
+	 * */
+
 	// MiddleVR runtime generated nodes
 	public 	GameObject 	vrRootNode; // Root node for all VR nodes
 	public 	GameObject 	vrHandNode; // Node to which the hand is attached
@@ -23,8 +30,6 @@ public class GameManager : Singleton<GameManager> {
 	public	float	parachuteDampingCoef = 2.0f;
 	public 	float 	distanceBeforeParachute = 9f;
 	public	float	graspRadius = 0.35f;
-
-	// TODO: what an horrible behavior from this singleton class !
 
 	// Use this for initialization
 	void Start () 
@@ -96,12 +101,7 @@ public class GameManager : Singleton<GameManager> {
 		handChild.transform.localPosition = t_offset;
 		handChild.transform.localRotation = r_offset;
 	}
-
-	public Vector3 GetHeadTrackingOffset ()
-	{
-		return vrHeadNode.transform.localPosition;
-	}
-
+	
 	public void ResetScale ()
 	{
 		vrRootNode.transform.localScale = Vector3.one;

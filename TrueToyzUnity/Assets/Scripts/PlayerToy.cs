@@ -64,7 +64,6 @@ public class PlayerToy : Toy {
 			m_PlayerAudio = gameObject.GetComponent<AudioSource>();
 		}
 
-		Debug.Log ("Start player");
 		m_PlayerAudio.clip = m_MusicToy;
 		m_PlayerAudio.loop = true;
 		m_PlayerAudio.volume = 0.5f;
@@ -105,12 +104,11 @@ public class PlayerToy : Toy {
 
 		m_PlayerAudio.Play();
 
-		// If it's not the case, the toy must be kinematic
-		//rigidbody.isKinematic = true;
-
 		// Move VR root to child, relink hand with VR node
-		Vector3 offset = -GameManager.Instance.GetHeadTrackingOffset() ;
-		offset.y = 0.2f; // I want to keep the height of the head
+		// This offset allows to move the root in order to have the head exactly where the toy was located
+		Vector3 offset = GameManager.Instance.vrRootNode.transform.position-GameManager.Instance.vrHeadNode.transform.position;
+
+		offset.y = 0.2f; // An offset is necessary to keep the height of the head at a correct position
 
 		// Instantiate weapon
 		if (m_WeaponPrefab)
@@ -124,10 +122,12 @@ public class PlayerToy : Toy {
 		}
 
 		// Rotate to face the front of the toy. This information is given HARD-CODED in static ms_Forward
+		// Beware, it must be used to rotate the translation offset between head and root
+		// TODO: Make sure there is no cleaner alternative
 		Quaternion rotOffset = Quaternion.FromToRotation(GameManager.Instance.vrRootNode.transform.forward, ms_Forward); 
 
 		// Apply offset
-		GameManager.Instance.MoveRootTo(gameObject, offset/GameManager.Instance.swapScale, rotOffset);
+		GameManager.Instance.MoveRootTo(gameObject, rotOffset*offset/GameManager.Instance.swapScale, rotOffset);
 
 		// Hide character
 		showSoldier(false);
@@ -147,10 +147,6 @@ public class PlayerToy : Toy {
 		m_OwnerChild = null;
 
 		m_PlayerAudio.Pause();
-
-		// If it's not the case, the toy must returns to normal state
-		//rigidbody.isKinematic = false;
-		//collider.enabled = true;
 		
 		if (m_Weapon)
 			Destroy(m_Weapon);

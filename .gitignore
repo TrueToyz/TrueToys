@@ -175,3 +175,4 @@ pip-log.txt
 /TrueToyzUnity\TrueToyZ_Data\Managed/*.dll
 *.dll
 *.aspx
+/TrueToyzUnity/*.exe
