@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Torchelight : MonoBehaviour {
+public class Torchelight : TransitionEffect {
 	
 	public GameObject TorchLight;
 	public GameObject MainFlame;
@@ -11,8 +11,6 @@ public class Torchelight : MonoBehaviour {
 	public GameObject Fumee;
 	public float MaxLightIntensity;
 	public float IntensityLight;
-
-	private bool m_IsActive = false;
 
 	/*Audio*/
 	private Dictionary<string,AudioClip> ml_ActionSounds;
@@ -42,7 +40,7 @@ public class Torchelight : MonoBehaviour {
 	
 
 	void Update () {
-		if(m_IsActive)
+		if(m_isActive)
 		{
 			if (IntensityLight<0) IntensityLight=0;
 			if (IntensityLight>MaxLightIntensity) IntensityLight=MaxLightIntensity;		
@@ -57,9 +55,9 @@ public class Torchelight : MonoBehaviour {
 		}
 	}
 
-	void desactivate ()
+	public	override	void desactivate ()
 	{
-		m_IsActive = false;
+		base.desactivate();
 		if(m_TorchAudio)
 			m_TorchAudio.Stop();
 		
@@ -74,8 +72,9 @@ public class Torchelight : MonoBehaviour {
 		Fumee.SetActive(false);
 	}
 
-	void activate () {
-		m_IsActive = true;
+	public	override	void activate () {
+
+		base.activate();
 		if(m_TorchAudio)
 			m_TorchAudio.Play();
 

@@ -85,6 +85,8 @@
      <Compile Include="Assets\Scripts\Toy.cs" />
      <Compile Include="Assets\Scripts\ToySight.cs" />
      <Compile Include="Assets\Scripts\ToyUtilities.cs" />
+     <Compile Include="Assets\Scripts\TransitionEffect.cs" />
+     <Compile Include="Assets\Scripts\WorldLight.cs" />
      <None Include="Assets\MiddleVR\Assets\Materials\OVRLensCorrection.shader" />
      <None Include="Assets\Shaders\aeroplanes.shader" />
      <None Include="Assets\Shaders\SpecialCulling.shader" />

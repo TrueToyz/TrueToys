@@ -2,9 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class RotateBlades : MonoBehaviour {
-
-	private bool m_IsActive;
+public class RotateBlades : TransitionEffect {
 
 	/*Audio*/
 	private Dictionary<string,AudioClip> ml_ActionSounds;
@@ -29,20 +27,20 @@ public class RotateBlades : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(m_IsActive)
+		if(m_isActive)
 			transform.Rotate(Vector3.up * Time.deltaTime * 100);
 	}
 
-	void activate ()
+	public	override	void activate ()
 	{
-		m_IsActive = true;
+		base.activate();
 		if(m_PlaneAudio)
 			m_PlaneAudio.Play();
 	}
 
-	void desactivate ()
+	public	override	void desactivate ()
 	{
-		m_IsActive = false;
+		base.desactivate();
 		if(m_PlaneAudio)
 			m_PlaneAudio.Stop();
 	}

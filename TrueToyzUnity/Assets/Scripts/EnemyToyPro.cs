@@ -7,16 +7,11 @@ public class EnemyToyPro : Toy {
 	
 	public 	float 	m_attackRange = 0.8f;
 	public	float	m_attackSpeed = 1.0f;
-	
+	private float 	m_attackTimer;
+
 	// AI variables
-	private	float	m_chaseWaitTime;
-	private float	m_chaseSpeed;
 	private	int		m_lifePoints;
-	private float 	m_chaseTimer;
-	private Vector3 m_destination;
-	private bool 	m_isBlocked; //Means by a collision
-	private int 	m_radius = 2; // Radius of anticipitation for collisions in patrolling case
-	
+
 	// Sight
 	public	ToySight	m_sight;
 	
@@ -41,9 +36,6 @@ public class EnemyToyPro : Toy {
 		
 		// Randomize characteristics
 		m_lifePoints = Random.Range(1, 5);
-		m_chaseSpeed = Random.Range(0.3f, 0.5f); // Not to slow, not too fast :D
-		m_chaseWaitTime = Random.Range(1.8f, 2.1f);
-		
 		
 		ml_actionSounds = new Dictionary<string, AudioClip>();
 		ml_actionSounds["Hurt1"] = Resources.Load("Audio/scream1") as AudioClip;
@@ -87,15 +79,15 @@ public class EnemyToyPro : Toy {
 			{
 				if(Vector3.Distance(transform.position, GameManager.Instance.playerToy.transform.position) < m_attackRange)
 				{
-					if(Time.time-m_chaseTimer > m_attackSpeed)
+					if(Time.time-m_attackTimer > m_attackSpeed)
 					{
-						m_chaseTimer = 0f;
+						m_attackTimer = 0f;
 						m_enemyAnimator.SetTrigger("Attack");
 						GameManager.Instance.playerToy.SendMessage("malusPower");
 					}
 					else
 					{
-						m_chaseTimer+= Time.deltaTime;
+						m_attackTimer+= Time.deltaTime;
 					}
 				}
 				else

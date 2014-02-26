@@ -19,7 +19,9 @@ public class ChildBehaviour : MonoBehaviour {
 	public	bool		m_canDrop = false; // modified from outside
 
 	/* Environment related variables */
-	public GameObject 	Environment;
+	public 	GameObject 	Environment;
+	private	Vector3		m_originalHandPosition;
+	private	ParticleSystem	m_moveFeedback;
 
 	/* Events when Switch the environment */
 	public delegate void WorldChanger();
@@ -36,7 +38,11 @@ public class ChildBehaviour : MonoBehaviour {
 	private AudioSource m_ChildAudio;
 
 	// Use this for initialization
-	public void Start () {
+	public void Start () 
+	{
+
+		// Particle system for world motion
+		m_moveFeedback = GetComponentInChildren<ParticleSystem>();
 
 		// Wand retrieval
 		m_WandButtons = vrDeviceManager.GetInstance().GetWandButtons();
@@ -70,7 +76,7 @@ public class ChildBehaviour : MonoBehaviour {
 
 		m_ChildAudio.clip = ml_Music["Child"];
 		m_ChildAudio.loop = true;
-		m_ChildAudio.Play();
+		//m_ChildAudio.Play();
 
 	}
 	
@@ -192,6 +198,24 @@ public class ChildBehaviour : MonoBehaviour {
 
 	/* ------------------------------------------ VR interaction ---------------------------------- */
 
+	void	moveWorld ()
+	{
+		// Launch feedback
+		if(m_moveFeedback)
+		{
+			if(!m_moveFeedback.isPlaying)
+				m_moveFeedback.Play();
+		}
+
+		Vector3 worldPosition = transform.position - (GameManager.Instance.vrHandNode.transform.position-m_originalHandPosition);
+
+		// Never change this value
+		worldPosition.y = transform.position.y;
+
+		// Chanbge the world !
+		transform.position = worldPosition;
+	}
+
 	/*
 	 * Monitor VR inputs for grabbing/dropping
 	 * */
@@ -206,12 +230,17 @@ public class ChildBehaviour : MonoBehaviour {
 				{
 					if(this.canGrab())
 						this.grab ();
-					// Move the world
+					else
+						moveWorld();
 				}
 	
 			}
 			else
 			{
+				// When not moving the world around, we monitor the offset between the world and the hand
+				m_originalHandPosition = GameManager.Instance.vrHandNode.transform.position;
+
+				// 
 				if(m_canDrop && m_ToyInHand)
 				{
 					this.drop ();
