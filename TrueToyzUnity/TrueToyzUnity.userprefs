@@ -1,21 +1,22 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\EnemyToyPro.cs">
     <Files>
-      <File FileName="Assets\Scripts\ChildBehaviour.cs" Line="100" Column="33" />
-      <File FileName="Assets\Scripts\EnemyToy.cs" Line="100" Column="1" />
-      <File FileName="Assets\Scripts\ToyUtilities.cs" Line="14" Column="36" />
-      <File FileName="Assets\Scripts\EnemySpawn.cs" Line="48" Column="36" />
-      <File FileName="Assets\Scripts\EffectManager.cs" Line="35" Column="55" />
-      <File FileName="Assets\Scripts\GameManager.cs" Line="25" Column="47" />
+      <File FileName="Assets\Scripts\EnemyToyPro.cs" Line="232" Column="20" />
+      <File FileName="Assets\Scripts\ChildBehaviour.cs" Line="87" Column="13" />
+      <File FileName="Assets\Scripts\EnemyToy.cs" Line="84" Column="111" />
+      <File FileName="Assets\Scripts\ToyUtilities.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\EnemySpawn.cs" Line="93" Column="1" />
+      <File FileName="Assets\Scripts\EffectManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="112" Column="3" />
       <File FileName="Assets\Scripts\Toy.cs" Line="12" Column="44" />
-      <File FileName="Assets\Scripts\MenuController.cs" Line="20" Column="43" />
+      <File FileName="Assets\Scripts\MenuController.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\RotateBlades.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\PlayerToy.cs" Line="30" Column="39" />
+      <File FileName="Assets\Scripts\PlayerToy.cs" Line="233" Column="24" />
       <File FileName="Assets\Scripts\ToySight.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\FallFeedback.cs" Line="26" Column="120" />
-      <File FileName="Assets\Scripts\Singleton.cs" Line="12" Column="5" />
-      <File FileName="Assets\Scripts\EnemyToyPro.cs" Line="110" Column="3" />
+      <File FileName="Assets\Scripts\FallFeedback.cs" Line="61" Column="19" />
+      <File FileName="Assets\Scripts\Singleton.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\EnemyToyPro.cs" Line="247" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

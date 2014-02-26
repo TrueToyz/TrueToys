@@ -34,8 +34,16 @@ public class FallFeedback : MonoBehaviour {
 			m_particleFalls.startSpeed = Vector3.Distance(m_target.transform.position,hit.point);
 
 		// Position under the hand
-		transform.position = new Vector3(m_target.transform.position.x,hit.point.y,m_target.transform.position.z);
+		Vector3 destination = new Vector3(m_target.transform.position.x,hit.point.y,m_target.transform.position.z);
 
+		// Move in a physical manner
+		rigidbody.MovePosition(destination);
+
+	}
+
+	void clear()
+	{
+		ml_obstacles.Clear();
 	}
 
 	void verify()

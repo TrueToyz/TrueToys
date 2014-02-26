@@ -13,6 +13,7 @@ public class EnemySpawn : MonoBehaviour {
 	public 	GameObject 		m_enemyPrefab;
 
 	public	GameObject		m_spawnIndicator;
+	public	GameObject		m_spawnProjection;
 	private float 			spawnTimer;
 	private	int				m_enemyCount;
 
@@ -56,11 +57,13 @@ public class EnemySpawn : MonoBehaviour {
 
 				// Repoint to the first
 				m_spawnIndicator.rigidbody.MovePosition(ml_stackSpawns[0]);
+				m_spawnProjection.SendMessage("clear");
 			}
 
 			else if(spawnTimer >= m_spawnWaitTime && ml_stackSpawns.Count > 1) 
 			{
 				m_spawnIndicator.rigidbody.MovePosition(ml_stackSpawns[1]);
+				m_spawnProjection.SendMessage("clear");
 				ml_stackSpawns.RemoveAt(0);
 				spawnTimer = 0f;
 			}
