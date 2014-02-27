@@ -248,7 +248,7 @@ public class PlayerToy : Toy {
 		if (Time.time > timeBeforeNextIteration + 0.8f)
 		{
 			/* Swap behavior */
-			if (m_WandButtons.IsPressed(1))
+			if (m_WandButtons.IsPressed(vrDeviceManager.GetInstance().GetWandButton1()))
 			{
 				m_OwnerChild.SendMessage("takeControl",gameObject);
 				releaseControl();
@@ -257,7 +257,7 @@ public class PlayerToy : Toy {
 		}
 
 		/* Shoot behavior */
-		if (m_WandButtons.IsPressed(0))
+		if (m_WandButtons.IsPressed(vrDeviceManager.GetInstance().GetWandButton0()))
 		{
 			if(Time.time > timeBeforeNextShot + m_FireRate) 
 			{

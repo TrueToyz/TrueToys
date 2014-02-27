@@ -47,8 +47,8 @@ public class EnemySpawn : MonoBehaviour {
 				int index = Random.Range(0,ml_spawnObjects.Length-1);
 
 				Vector3 newPosition = ml_spawnObjects[index].transform.position;
-				newPosition.x += Random.Range(0f,m_spawnRadius);
-				newPosition.z += Random.Range(0f,m_spawnRadius);
+				newPosition.x += Random.Range(-m_spawnRadius,m_spawnRadius);
+				newPosition.z += Random.Range(-m_spawnRadius,m_spawnRadius);
 
 				spawnTimer = 0f;
 
@@ -127,5 +127,6 @@ public class EnemySpawn : MonoBehaviour {
 	void stopSpawning ()
 	{
 		m_canSpawn = false;
+		ml_stackSpawns.Clear();
 	}
 }

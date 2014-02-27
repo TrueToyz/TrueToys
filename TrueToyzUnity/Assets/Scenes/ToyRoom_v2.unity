@@ -42108,8 +42108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ml_spawnObjects: []
-  m_spawnWaitTime: 2
-  m_maxEnemies: 5
+  m_spawnWaitTime: .5
+  m_maxEnemies: 7
   m_spawnRadius: 3
   m_enemyPrefab: {fileID: 100034, guid: f1a8a14f95853d14ba3620dea7b9d509, type: 2}
   m_spawnIndicator: {fileID: 1353441786}

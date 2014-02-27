@@ -106,7 +106,7 @@ public class ChildBehaviour : MonoBehaviour {
 
 		// Attach the hand to the nodes
 		GameManager.Instance.AttachNodeToHand(m_ChildHand);
-		
+
 		// Change the root to the origin
 		GameManager.Instance.MoveRootTo(gameObject,Vector3.zero,Quaternion.identity);
 
@@ -226,7 +226,7 @@ public class ChildBehaviour : MonoBehaviour {
 		if (Time.time > timeBeforeNextIteration + 0.8f)
 		{
 			/* Grasp or drop */
-			if (m_WandButtons.IsPressed(0))
+			if (m_WandButtons.IsPressed(vrDeviceManager.GetInstance().GetWandButton0()))
 			{
 				if(!m_ToyInHand)
 				{
@@ -251,7 +251,7 @@ public class ChildBehaviour : MonoBehaviour {
 
 
 			/* Can control toy only if child has dropped toy */
-			if (!m_ToyInHand && m_WandButtons.IsPressed(1) && m_CanSwitch)
+			if (!m_ToyInHand && m_WandButtons.IsPressed(vrDeviceManager.GetInstance().GetWandButton1()) && m_CanSwitch)
 			{
 				releaseControl();
 				m_ChildToy.SendMessage("takeControl",gameObject);
