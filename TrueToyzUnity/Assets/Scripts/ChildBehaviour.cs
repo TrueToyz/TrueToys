@@ -76,7 +76,7 @@ public class ChildBehaviour : MonoBehaviour {
 
 		m_ChildAudio.clip = ml_Music["Child"];
 		m_ChildAudio.loop = true;
-		//m_ChildAudio.Play();
+		m_ChildAudio.Play();
 
 	}
 	
@@ -102,6 +102,7 @@ public class ChildBehaviour : MonoBehaviour {
 
 		m_ChildHand = (GameObject)Instantiate(m_HandPrefab);
 		m_HandAnimator = m_ChildHand.GetComponent<Animator>();
+		m_moveFeedback = m_ChildHand.GetComponentInChildren<ParticleSystem>();
 
 		// Attach the hand to the nodes
 		GameManager.Instance.AttachNodeToHand(m_ChildHand);
@@ -164,7 +165,8 @@ public class ChildBehaviour : MonoBehaviour {
 		timeBeforeNextIteration = Time.time;
 		m_ChildToy.transform.parent = Environment.transform; // Toy is not in hierarchy
 
-		// Orient the toy
+		// Orient the toy only on the Y axis
+		// TODO: It might be useful to actually CONTROL this orientation !
 		Vector3 newRot = m_ChildToy.transform.rotation.eulerAngles;
 		newRot.x = 0; 
 		newRot.z = 0;

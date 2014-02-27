@@ -700,7 +700,7 @@ MonoBehaviour:
   m_FireRate: .200000003
   m_FireRange: 300
   m_ShellNumbers: 3
-  m_FireRadius: .5
+  m_FireRadius: .0500000007
   m_OwnerChild: {fileID: 0}
   m_WeaponPrefab: {fileID: 100012, guid: 0413450dfbcb8d14aa36892db1a54e7f, type: 2}
   m_BulletPrefab: {fileID: 100000, guid: 5a95ccb3c52b51a479aa6d4204a70a06, type: 2}

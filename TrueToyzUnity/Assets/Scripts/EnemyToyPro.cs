@@ -92,19 +92,21 @@ public class EnemyToyPro : Toy {
 				}
 				else
 				{
-					transform.LookAt(GameManager.Instance.playerToy.transform.position);
-					transform.Rotate(new Vector3(0f,1f,0f), 90); // Offset because of character wrong orientation
+					transform.LookAt(GameManager.Instance.vrHeadNode.transform.position);
+
+					// Offset because of character wrong orientation
+					// TODO: might need a cleaner modification of the mesh/prefab
+					transform.Rotate(new Vector3(0f,1f,0f), 90); 
 
 					// Special navmesh agent
 					NavMeshAgent navigation = GetComponent<NavMeshAgent>();
 					if(navigation)
 					{
-						navigation.SetDestination(GameManager.Instance.playerToy.transform.position);
+						navigation.SetDestination(GameManager.Instance.vrHeadNode.transform.position);
 					}
-					
 				}
 				
-				// If player disappears
+				// The playerToy collider is used to verify if enemies can see you
 				if(!m_sight.gameObjectsOnSight.Contains(GameManager.Instance.playerToy))
 				{
 					m_enemyBehaviour = EnemyBehaviour.patrolling;
@@ -137,6 +139,7 @@ public class EnemyToyPro : Toy {
 			navigator.speed = 1.5f;
 			navigator.acceleration = 2.5f;
 			navigator.height = 0.12f;
+			navigator.stoppingDistance = m_attackRange;
 		}
 	}
 	

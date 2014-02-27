@@ -684,7 +684,7 @@ MonoBehaviour:
   m_ParachutePrefab: {fileID: 100000, guid: 5f7fd05a1c75783418d6e8b76b345e75, type: 2}
   m_interruptFlag: 0
   m_isFrozen: 0
-  m_attackRange: .800000012
+  m_attackRange: 1
   m_attackSpeed: 1
   m_sight: {fileID: 11400000}
   m_deathPrefab: {fileID: 100022, guid: 09e585e33f5f46c4691266db5e301e62, type: 2}

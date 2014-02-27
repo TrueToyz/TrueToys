@@ -183,8 +183,8 @@ public class PlayerToy : Toy {
 		{
 			// Random direction
 			Vector3 randomAim = m_Aim.transform.forward;
-			randomAim.z += Random.Range(0f,m_FireRadius);
-			randomAim.x += Random.Range(0f,m_FireRadius);
+			randomAim.z += Random.Range(-m_FireRadius,m_FireRadius);
+			randomAim.x += Random.Range(-m_FireRadius,m_FireRadius);
 		
 			Ray myAim = new Ray(m_Aim.transform.position, randomAim);
 			RaycastHit gunHit;
