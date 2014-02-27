@@ -6,6 +6,7 @@ public class FallFeedback : MonoBehaviour {
 
 	public	ParticleSystem	m_particleFalls;
 	public	bool			m_canBeDeployed = true;
+	public	bool			m_overGround = true;
 	public	List<Collider>	ml_obstacles;
 	public	GameObject		m_target;
 	public	GameObject		m_owner;
@@ -29,7 +30,7 @@ public class FallFeedback : MonoBehaviour {
 
 		// Change speed of particles depending on distance
 		RaycastHit hit;
-		ToyUtilities.RayCastToGround(m_target,out hit);
+		m_overGround = ToyUtilities.RayCastToGround(m_target,out hit);
 		if(m_particleFalls)
 			m_particleFalls.startSpeed = Vector3.Distance(m_target.transform.position,hit.point);
 
@@ -48,14 +49,22 @@ public class FallFeedback : MonoBehaviour {
 
 	void verify()
 	{
-		// Clean null
-		ml_obstacles.RemoveAll(item => item == null);
-
-		m_canBeDeployed = true;
-		foreach(Collider potentialObstacle in ml_obstacles)
+		// If not over ground, then no need to verify
+		if(m_overGround)
 		{
-			if(potentialObstacle.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
-				m_canBeDeployed = false;
+			// Clean null
+			ml_obstacles.RemoveAll(item => item == null);
+
+			m_canBeDeployed = true;
+			foreach(Collider potentialObstacle in ml_obstacles)
+			{
+				if(potentialObstacle.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+					m_canBeDeployed = false;
+			}
+		}
+		else
+		{
+			m_canBeDeployed = false;
 		}
 
 		if(m_particleFalls)
