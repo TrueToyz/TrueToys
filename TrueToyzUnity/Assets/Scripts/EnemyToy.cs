@@ -177,8 +177,14 @@ public class EnemyToy : Toy {
 	/* -------------------------------------------- Pause during swapping ---------------------- */
 
 	void freeze () {
+
+		// Don't move !
 		m_isFrozen = true;
 		m_enemyBehaviour = EnemyBehaviour.patrolling;
+
+		// Interrupt any parachute fall
+		interrupt();
+
 		if (m_enemyAnimator)
 		{
 			m_enemyAnimator.SetBool("IsRunning", false);

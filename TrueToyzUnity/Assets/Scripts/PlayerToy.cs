@@ -159,7 +159,7 @@ public class PlayerToy : Toy {
 
 	/*
 	 * Shoot'em while they're on fire !
-	 * Throw a projectile
+	 * Throw multiple projectiles
 	 * */
 	void shoot ()
 	{
@@ -196,7 +196,9 @@ public class PlayerToy : Toy {
 				GameObject myBullet = (GameObject)Instantiate(m_BulletPrefab,myAim.GetPoint(0),bulletRot);
 
 				// Launch bullet
-				StartCoroutine(bulletBehavior(myBullet,myAim,2f,12f));
+				float velocity = Random.Range(1f,3f);
+				float distance = Random.Range(9f,13f);
+				StartCoroutine(bulletBehavior(myBullet,myAim,velocity,distance));
 			}
 
 			// We use raycasting, not the bullets themselves
@@ -211,15 +213,13 @@ public class PlayerToy : Toy {
 		}
 
 	}
-
-	/*
-	 * TODO: change linear interpolation to something else
-	 * */
+	
 	IEnumerator bulletBehavior(GameObject bullet, Ray direction, float distance, float velocity) 
 	{
-		while(Vector3.Distance(bullet.transform.position, direction.GetPoint(distance)) > 0.01f)
+		// As long as the bullet has not travelled enough distance
+		while(Vector3.Distance(direction.origin, bullet.transform.position) < distance)
 		{
-			bullet.transform.position = Vector3.Lerp(bullet.transform.position, direction.GetPoint(distance), velocity * Time.deltaTime);
+			bullet.transform.position += (direction.GetPoint(distance)-bullet.transform.position).normalized * velocity * Time.deltaTime;
 			yield return null;
 		}
 		Destroy(bullet);

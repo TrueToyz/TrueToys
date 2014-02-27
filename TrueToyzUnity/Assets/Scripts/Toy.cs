@@ -41,7 +41,6 @@ public class Toy : MonoBehaviour {
 		{
 			if(m_interruptFlag)
 				yield break;
-			
 
 			soldier.transform.position = Vector3.Lerp(soldier.transform.position, ToGround, GameManager.Instance.fallSpeed * Time.deltaTime);
 			yield return null;
