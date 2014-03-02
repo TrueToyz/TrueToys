@@ -20,7 +20,7 @@ public class ToyUtilities {
 	{
 		Ray myRay = new Ray(rayOrigin, direction);
 		Debug.DrawLine (rayOrigin, rayOrigin+direction, Color.red);
-		return Physics.Raycast (myRay, out hit, 0.3f, mask);
+		return Physics.Raycast (myRay, out hit, 100f, mask);
 	}
 
 	public	static	List<RaycastHit>	BoxRayCastToGround(Collider c, Vector3 rayOrigin, Vector3 direction, int mask)

@@ -18,6 +18,7 @@ public class ChildBehaviour : MonoBehaviour {
 	private bool 		m_ToyInHand = false; // the toy is in hand
 	private bool 		m_CanSwitch = true; // the child cannot switch whiel the toy falls
 	public	bool		m_canDrop = false; // modified from outside
+	private	bool		m_isMoving = false;
 
 	/* Environment related variables */
 	public 	GameObject 	Environment;
@@ -154,14 +155,7 @@ public class ChildBehaviour : MonoBehaviour {
 
 		return false;
 	}
-
-	/*
-	bool 	canGrab2 ()
-	{
-		return Vector3.Distance(m_ChildToy.transform.position, m_ChildHand.transform.position) < GameManager.Instance.graspRadius;
-	}
-	*/
-
+	
 	void 	grab ()
 	{
 		timeBeforeNextIteration = Time.time;
@@ -177,10 +171,10 @@ public class ChildBehaviour : MonoBehaviour {
 		m_ToyInHand = true;
 
 		// The object is hidden
+		m_HandAnimator.SetTrigger("Grasp");
 		if(m_ChildToy.tag == "ChildToy")
 		{
 			m_ChildToy.SetActive(false);
-			m_HandAnimator.SetTrigger("Grasp");
 		}
 		else
 		{
@@ -197,16 +191,13 @@ public class ChildBehaviour : MonoBehaviour {
 		timeBeforeNextIteration = Time.time;
 		m_ToyInHand = false;
 
-		/* Manually move the object above the ground */
-		RaycastHit hit;
-		ToyUtilities.RayCastToGround(m_ChildToy, out hit);
-
 		// Launch PlayerToy parachute fall
 		Toy toyScript = m_ChildToy.GetComponent<Toy>() as Toy;
 
 		m_ChildToy.transform.parent = Environment.transform; // Toy is not in hierarchy
 
 		// Specific behavior for player toy
+		m_HandAnimator.SetTrigger("Drop");
 		if(m_ChildToy.tag == "ChildToy")
 		{
 			// Orient the toy only on the Y axis
@@ -217,7 +208,6 @@ public class ChildBehaviour : MonoBehaviour {
 			
 			m_ChildToy.transform.rotation = Quaternion.Euler(newRot);
 
-			m_HandAnimator.SetTrigger("Drop");
 			m_ChildToy.SetActive(true);
 			m_CanSwitch = false;
 			
@@ -230,15 +220,16 @@ public class ChildBehaviour : MonoBehaviour {
 
 		}
 
+		// Begin fall
+		StartCoroutine(toyScript.ParachuteFall(m_ChildToy,m_dropIndicator.transform.position)); 
 
+		// The indicator has no more target
 		m_dropIndicator.SendMessage("clearTarget");
-		StartCoroutine(toyScript.ParachuteFall(m_ChildToy,hit.point)); 
 
 	}
 
 	public void	landing()
 	{
-
 		m_CanSwitch = true;
 	}
 	
@@ -263,32 +254,22 @@ public class ChildBehaviour : MonoBehaviour {
 		transform.position = worldPosition;
 	}
 
-	/*
-	 * Monitor VR inputs for grabbing/dropping
-	 * */
+
 	void 	monitorInputs ()
 	{
-		if (Time.time > timeBeforeNextIteration + 0.8f)
+
+		if (Time.time > timeBeforeNextIteration + 0.6f)
 		{
 			/* Grasp or drop */
 			if (m_WandButtons.IsPressed(vrDeviceManager.GetInstance().GetWandButton0()))
 			{
-				if(!m_ToyInHand)
+				if(!m_ToyInHand && this.canGrab())
 				{
-					if(this.canGrab())
-						this.grab ();
-					else
-					{
-						moveWorld();
-					}
+					this.grab ();
 				}
-	
 			}
 			else
 			{
-				// When not moving the world around, we monitor the offset between the world and the hand
-				m_originalHandPosition = GameManager.Instance.vrHandNode.transform.position;
-
 				// 
 				if(m_canDrop && m_ToyInHand)
 				{
@@ -307,6 +288,21 @@ public class ChildBehaviour : MonoBehaviour {
 				timeBeforeNextIteration = Time.time;
 			}
 		}
+
+		// Special : MOTION of the world
+		if (m_WandButtons.IsPressed(vrDeviceManager.GetInstance().GetWandButton0()))
+		{
+			if(!m_ToyInHand)
+			{
+				moveWorld();
+				timeBeforeNextIteration = Time.time ;
+			}
+		}
+		else
+		{
+			m_originalHandPosition = GameManager.Instance.vrHandNode.transform.position;
+		}
+
 
 	}
 

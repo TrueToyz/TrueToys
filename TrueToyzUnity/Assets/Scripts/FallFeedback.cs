@@ -65,14 +65,22 @@ public class FallFeedback : MonoBehaviour {
 
 	void	raycastColliderOnGround()
 	{
-		// Send raycasts
-		List<RaycastHit> results = ToyUtilities.BoxRayCastToGround(m_target.collider, m_target.transform.position, Vector3.down, -1);
+		/*
+		 * Note: raycast from the bottom may not work if the object in hand is in interpentration with the environment
+		 * */
+		Vector3 rayOrigin =  new Vector3(m_target.transform.position.x,m_target.transform.position.y + m_target.collider.bounds.extents.y,m_target.transform.position.z);
 
-		// Need five raycast to work
+		// Send raycast toward the ground 
+		List<RaycastHit> results = ToyUtilities.BoxRayCastToGround(m_target.collider, rayOrigin, Vector3.down, -1);
+
+		// All raycasts have suceeded
 		if(results.Count > 4)
 		{
+			// Init
+			m_canBeDeployed = true;
 
 			// Compute mean and standard deviation
+			/*
 			float mean = 0;
 			foreach(RaycastHit r in results)
 				mean += r.point.y;
@@ -83,36 +91,52 @@ public class FallFeedback : MonoBehaviour {
 				std += Mathf.Pow(r.point.y - mean,2);
 			std = Mathf.Sqrt(std/results.Count);
 
+			*/
 
-			Debug.Log (std);
-
-			if(std > 0.001f)
+			// Verify that all objects collided are tabletops
+			foreach(RaycastHit r in results)
 			{
-				m_particleFalls.startColor = Color.red;
-				m_canBeDeployed = false;
-			}
-			else
-			{
-				m_particleFalls.startColor = Color.green;
-				m_canBeDeployed = true;
+				if(!(r.collider.gameObject.layer == LayerMask.NameToLayer("Tabletop")))
+				{
+					m_canBeDeployed = false;
+				}
 			}
 
+			Vector3 higherHit = results[0].point;
+			foreach(RaycastHit r in results)
+			{
+				if(r.point.y > higherHit.y)
+					higherHit = r.point;
+			}
+
+			// Move particles
+			if(m_particleFalls)
+			{
+				// Set color of particles
+				if(m_canBeDeployed)
+					m_particleFalls.startColor = Color.green;
+				else
+					m_particleFalls.startColor = Color.red;
+				m_particleFalls.startSpeed = Mathf.Abs(higherHit.y - m_target.transform.position.y);
+			}
+			
+			// Position at given destination
+			Vector3 destination = new Vector3(m_target.transform.position.x,higherHit.y,m_target.transform.position.z);
+			transform.position = destination;
+
+			
 			// Send this to player
 			m_owner.SendMessage("canDrop",m_canBeDeployed);
 
-			Vector3 higherHit = results[0].point;
-			if(m_particleFalls)
-					m_particleFalls.startSpeed = Vector3.Distance(m_target.transform.position,higherHit);
-			
-			// Position under the hand
-			Vector3 destination = new Vector3(m_target.transform.position.x,higherHit.y,m_target.transform.position.z);
-
-			transform.position = destination;
-
+		}
+		else
+		{
+			Debug.Log("Error");
 		}
 
 	}
 
+	/*
 	void 	verify()
 	{
 		// If not over ground, then no need to verify
@@ -159,6 +183,7 @@ public class FallFeedback : MonoBehaviour {
 		// Send this to player
 		m_owner.SendMessage("canDrop",m_canBeDeployed);
 	}
+	*/
 
 	/*
 	void OnTriggerStay (Collider other)

@@ -55,25 +55,13 @@ public class Block : Toy {
 		int mask_child = 1 << LayerMask.NameToLayer("Untouchable") ;
 		int mask = mask_table | mask_child;
 
-		// Raycast from all extents
-		Vector3[] rays = {
-			new Vector3(rayOrigin.x + extents.x,rayOrigin.y,rayOrigin.z + extents.z),
-			new Vector3(rayOrigin.x + extents.x,rayOrigin.y,rayOrigin.z - extents.z),
-			new Vector3(rayOrigin.x - extents.x,rayOrigin.y,rayOrigin.z + extents.z),
-			new Vector3(rayOrigin.x - extents.x,rayOrigin.y,rayOrigin.z - extents.z)
-		};
+		List<RaycastHit> results = ToyUtilities.BoxRayCastToGround(thisCollider, transform.position, Vector3.up, mask);
 
-		foreach(Vector3 r in rays)
+		if(results.Count > 0)
 		{
-			if(rayCast(r,mask))
-			{
-				thisCollider.enabled = true;
-				return true;
-			}
+			return true;
 		}
 
-		// Else
-		thisCollider.enabled = true;
 		return false;
 	}
 
@@ -208,6 +196,7 @@ public class Block : Toy {
 	public	void	makeKinematic ()
 	{
 		rigidbody.isKinematic = true;
+		m_isFrozen = true;
 	}
 
 

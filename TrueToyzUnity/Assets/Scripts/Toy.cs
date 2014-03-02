@@ -81,12 +81,13 @@ public class Toy : MonoBehaviour {
 		soldier.transform.position = ToGround;
 		closeParachute();
 
-		m_isFrozen = false;
 		if(hasLanded != null)
 		{
 			hasLanded();
 			hasLanded = null;
 		}
+
+		m_isFrozen = false;
 	}
 
 	public void take()
