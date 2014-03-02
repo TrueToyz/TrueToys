@@ -176,7 +176,7 @@ public class EnemyToy : Toy {
 	
 	/* -------------------------------------------- Pause during swapping ---------------------- */
 
-	void freeze () {
+	public void freeze () {
 
 		// Don't move !
 		m_isFrozen = true;
@@ -192,7 +192,7 @@ public class EnemyToy : Toy {
 		}
 	}
 
-	void unfreeze () {
+	public	void unfreeze () {
 		m_isFrozen = false;
 	}
 

@@ -41,6 +41,8 @@ public class PlayerToy : Toy {
 	// Use this for initialization
 	public void Start () 
 	{
+		// Player toy can always be taken
+		m_canBeTaken = true;
 
 		// Wand retrieval
 		m_WandButtons = vrDeviceManager.GetInstance().GetWandButtons();

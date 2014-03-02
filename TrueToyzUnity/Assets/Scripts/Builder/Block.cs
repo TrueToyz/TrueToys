@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Block : MonoBehaviour {
+public class Block : Toy {
 
 	// Numbers of gravity checks to be done
 	public	int	m_gravityChecks 	= 0;
@@ -17,6 +17,74 @@ public class Block : MonoBehaviour {
 
 	// Raycast sent toward the ground
 	RaycastHit groundHit = new RaycastHit();
+	RaycastHit skyHit = new RaycastHit();
+
+	void Start()
+	{
+		m_canBeTaken = true;
+		hasBeenTaken += propagatePhysicalAwakening;
+	}
+
+	void	FixedUpdate()
+	{
+		if(!m_isFrozen)
+			verifyGravity();
+		m_canBeTaken = !hasObjectOverIt();
+	}
+
+	public	override	void	addSpecificCallbacks()
+	{
+		// addCallback(becomeDynamic);
+	}
+
+	// Necessary to know if the block can be taken
+	public	bool	hasObjectOverIt()
+	{
+		// Disable collider temporarily 
+		Collider thisCollider = this.GetComponent<Collider>();
+
+		// Extents cannot be accessed after diabling collider
+		Vector3 extents = thisCollider.bounds.extents;
+		thisCollider.enabled = false;
+
+		// Construct ray
+		Vector3 rayOrigin = transform.position;
+
+		// Only tabletop elements or player toy
+		int mask_table = 1 << LayerMask.NameToLayer("Tabletop") ;
+		int mask_child = 1 << LayerMask.NameToLayer("Untouchable") ;
+		int mask = mask_table | mask_child;
+
+		// Raycast from all extents
+		Vector3[] rays = {
+			new Vector3(rayOrigin.x + extents.x,rayOrigin.y,rayOrigin.z + extents.z),
+			new Vector3(rayOrigin.x + extents.x,rayOrigin.y,rayOrigin.z - extents.z),
+			new Vector3(rayOrigin.x - extents.x,rayOrigin.y,rayOrigin.z + extents.z),
+			new Vector3(rayOrigin.x - extents.x,rayOrigin.y,rayOrigin.z - extents.z)
+		};
+
+		foreach(Vector3 r in rays)
+		{
+			if(rayCast(r,mask))
+			{
+				thisCollider.enabled = true;
+				return true;
+			}
+		}
+
+		// Else
+		thisCollider.enabled = true;
+		return false;
+	}
+
+	public bool	rayCast(Vector3 rayOrigin, int mask)
+	{
+		Ray myRay = new Ray(rayOrigin, Vector3.up);
+		Debug.DrawLine (rayOrigin, rayOrigin+Vector3.up, Color.green);
+
+		return Physics.Raycast (myRay, out skyHit, 0.3f, mask);
+
+	}
 
 	// Necessary to know if the block will fall or not
 	public	bool	hasSupport()
@@ -54,11 +122,6 @@ public class Block : MonoBehaviour {
 		return false;
 	}
 
-	void	Update()
-	{
-		verifyGravity();
-	}
-
 	/*
 	 * Check if gravity must be turned on again
 	 * */
@@ -77,8 +140,7 @@ public class Block : MonoBehaviour {
 					m_gravityChecks = 0;
 
 					// Reestablish gravity
-					rigidbody.isKinematic = false;
-					rigidbody.WakeUp();
+					becomeDynamic();
 
 					// Propagate the physicalization
 					propagatePhysicalAwakening();
@@ -109,7 +171,7 @@ public class Block : MonoBehaviour {
 				{
 					if(!c.Equals(null))
 					{
-						c.SendMessage("checkForGravity");
+						c.SendMessage("checkForGravity",SendMessageOptions.DontRequireReceiver);
 					}
 				}
 				m_friendlyColliders.Clear();
@@ -121,11 +183,21 @@ public class Block : MonoBehaviour {
 
 	public	void	propagatePhysicalAwakening()
 	{
-		Collider[] neighbors = Physics.OverlapSphere(transform.position, 3, 1 << LayerMask.NameToLayer("Tabletop"));
+		Collider[] neighbors = Physics.OverlapSphere(transform.position, 0.3f, 1 << LayerMask.NameToLayer("Tabletop"));
 		foreach(Collider c in neighbors)
 		{
-			c.SendMessage("checkForGravity");
+			if(!c.Equals(collider))
+			{
+				Debug.Log(c.name);
+				c.SendMessage("checkForGravity",SendMessageOptions.DontRequireReceiver);
+			}
 		}
+	}
+
+	public	void	becomeDynamic ()
+	{
+		rigidbody.isKinematic = false;
+		rigidbody.WakeUp();
 	}
 
 	public	void	checkForGravity()
@@ -133,12 +205,26 @@ public class Block : MonoBehaviour {
 		m_gravityChecks = 50;
 	}
 
+	public	void	makeKinematic ()
+	{
+		rigidbody.isKinematic = true;
+	}
+
+
 	/* -------------------------------------------------- Collision checks ---------------------------- */
 
 	public	void	OnCollisionEnter(Collision c)
 	{
 		if(c.gameObject.layer == gameObject.layer)
 			m_friendlyColliders.Add(c.collider);
+
+		// Too strong a collision can move the others
+		if(rigidbody.isKinematic && c.relativeVelocity.sqrMagnitude > 20)
+		{
+			becomeDynamic();
+			rigidbody.velocity = c.relativeVelocity / 2;
+		}
+
 	}
 
 	public	void	OnCollisionExit(Collision c)

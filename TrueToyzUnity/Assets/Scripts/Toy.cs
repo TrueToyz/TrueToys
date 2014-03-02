@@ -7,9 +7,11 @@ public class Toy : MonoBehaviour {
 	public 		GameObject 	m_ParachutePrefab;
 	public		bool		m_interruptFlag = false;
 	public 		bool 		m_isFrozen = false;
+	public		bool		m_canBeTaken = false;
 
 	public 	delegate void 	LandingCallback();
 	public 	event 			LandingCallback hasLanded;
+	public 	event 			LandingCallback hasBeenTaken;
 	
 	public void openParachute ()
 	{
@@ -34,6 +36,9 @@ public class Toy : MonoBehaviour {
 		m_interruptFlag = false;
 		m_isFrozen = true;
 
+		// For derived classes
+		addSpecificCallbacks();
+
 		// Ground
 		Vector3 ToGround = new Vector3(soldier.transform.position.x, targetPos.y, soldier.transform.position.z);
 		
@@ -42,7 +47,8 @@ public class Toy : MonoBehaviour {
 			if(m_interruptFlag)
 				yield break;
 
-			soldier.transform.position = Vector3.Lerp(soldier.transform.position, ToGround, GameManager.Instance.fallSpeed * Time.deltaTime);
+			soldier.transform.position += (ToGround - soldier.transform.position) * GameManager.Instance.fallSpeed * Time.deltaTime;
+
 			yield return null;
 		}
 
@@ -51,22 +57,28 @@ public class Toy : MonoBehaviour {
 
 		// Now the deceleration
 		openParachute();
-		
-		while(soldier != null && Vector3.Distance(soldier.transform.position, ToGround) > 0.01f)
+
+		while(soldier != null && (ToGround - soldier.transform.position).y < 0.01f && Vector3.Distance(ToGround, soldier.transform.position) > 0.01f)
 		{
+
+			// Grab again // destroy
 			if(m_interruptFlag)
 			{
 				closeParachute();
 				yield break;
 			}
 
-
-			soldier.transform.position = Vector3.Lerp(soldier.transform.position, ToGround, GameManager.Instance.fallSpeed * Time.deltaTime / GameManager.Instance.parachuteDampingCoef);
+			soldier.transform.position += (ToGround - soldier.transform.position) * GameManager.Instance.fallSpeed * Time.deltaTime / GameManager.Instance.parachuteDampingCoef;
 			yield return null;
 		}
 
 		if(soldier == null)
+		{
 			yield break;
+		}
+
+		// Correct y 
+		soldier.transform.position = ToGround;
 		closeParachute();
 
 		m_isFrozen = false;
@@ -75,6 +87,14 @@ public class Toy : MonoBehaviour {
 			hasLanded();
 			hasLanded = null;
 		}
+	}
+
+	public void take()
+	{
+		if(hasBeenTaken != null)
+			hasBeenTaken();
+
+		interrupt();
 	}
 
 	public void	interrupt()
@@ -87,5 +107,7 @@ public class Toy : MonoBehaviour {
 		this.hasLanded += cbk;
 	}
 
+	/*For derived class only */
+	public	virtual	void	addSpecificCallbacks() {}
 
 }
