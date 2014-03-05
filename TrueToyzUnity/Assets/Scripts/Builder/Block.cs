@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class Block : Toy {
 
+	public	static	float	m_minDistanceSupport = 0.03f;
+
 	// Numbers of gravity checks to be done
 	public	int	m_gravityChecks 	= 0;
 	public	int	m_timeImmobile 		= 0;
@@ -16,19 +18,20 @@ public class Block : Toy {
 	public List<Collider>	m_friendlyColliders = new List<Collider>();
 
 	// Raycast sent toward the ground
-	RaycastHit groundHit = new RaycastHit();
-	RaycastHit skyHit = new RaycastHit();
+	private	Vector3	m_support;	
 
 	void Start()
 	{
 		m_canBeTaken = true;
-		hasBeenTaken += propagatePhysicalAwakening;
+		//hasBeenTaken += propagatePhysicalAwakening;
 	}
 
 	void	FixedUpdate()
 	{
 		if(!m_isFrozen)
-			verifyGravity();
+			verifySupport();
+
+		// Verify if object can be taken
 		m_canBeTaken = !hasObjectOverIt();
 	}
 
@@ -40,59 +43,39 @@ public class Block : Toy {
 	// Necessary to know if the block can be taken
 	public	bool	hasObjectOverIt()
 	{
-		// Disable collider temporarily 
-		Collider thisCollider = this.GetComponent<Collider>();
-
-		// Extents cannot be accessed after diabling collider
-		Vector3 extents = thisCollider.bounds.extents;
-		thisCollider.enabled = false;
-
-		// Construct ray
+		//We cast a ray touching only tabletop elements and other toy layers (such as untouchable including the player toy)
+		int mask = (1 << LayerMask.NameToLayer("Untouchable")) | (1 << LayerMask.NameToLayer("Tabletop"));
+		RaycastHit hit;
 		Vector3 rayOrigin = transform.position;
 
-		// Only tabletop elements or player toy
-		int mask_table = 1 << LayerMask.NameToLayer("Tabletop") ;
-		int mask_child = 1 << LayerMask.NameToLayer("Untouchable") ;
-		int mask = mask_table | mask_child;
-
-		List<RaycastHit> results = ToyUtilities.BoxRayCastToGround(thisCollider, transform.position, Vector3.up, mask);
-
-		if(results.Count > 0)
+		if(ToyUtilities.RayCastToward(collider,rayOrigin,Vector3.up,out hit,mask,Color.gray))
 		{
 			return true;
 		}
-
 		return false;
 	}
 
-	public bool	rayCast(Vector3 rayOrigin, int mask)
-	{
-		Ray myRay = new Ray(rayOrigin, Vector3.up);
-		Debug.DrawLine (rayOrigin, rayOrigin+Vector3.up, Color.green);
-
-		return Physics.Raycast (myRay, out skyHit, 0.3f, mask);
-
-	}
-
-	// Necessary to know if the block will fall or not
 	public	bool	hasSupport()
 	{
-		if (Physics.Raycast (transform.position, Vector3.down, out groundHit, 2, 1 << LayerMask.NameToLayer("Tabletop"))) {
-			Debug.DrawLine (transform.position, groundHit.point, Color.cyan);
+		// We cast a ray from the higher point in the object toward the ground
+		Vector3 rayOrigin =  new Vector3(transform.position.x,transform.position.y + collider.bounds.extents.y, transform.position.z);
+		RaycastHit hit;
+		int mask = 1 << LayerMask.NameToLayer("Tabletop");
 
-			// Verify if support is directly under the block
-			if(Vector3.Distance(collider.ClosestPointOnBounds(groundHit.point), groundHit.point) < 0.03){
+		if(ToyUtilities.RayCastToward(collider,rayOrigin,Vector3.down,out hit,mask,Color.gray))
+		{
+			m_support = hit.point;
+			if(Vector3.Distance(collider.ClosestPointOnBounds(hit.point),hit.point) < m_minDistanceSupport)
 				return true;
-				
-			}
+			else
+				return false;
 		}
-		return false;
-
+		else{
+			return false;
+		}
 	}
 
 	/*
-	 * TODO: verify behavior
-	 * */
 	public	bool	isMoving()
 	{
 		if(!rigidbody.isKinematic)
@@ -109,10 +92,22 @@ public class Block : Toy {
 
 		return false;
 	}
+	*/
+
+
+	// Manual contro lof fall
+	public	void	verifySupport()
+	{
+		if(!this.hasSupport())
+		{
+			fall ();
+		}
+	}
 
 	/*
 	 * Check if gravity must be turned on again
 	 * */
+	/*
 	public	void	verifyGravity ()
 	{
 		// Can be awakened
@@ -168,7 +163,18 @@ public class Block : Toy {
 		}
 
 	}
+	*/
 
+	public	void	fall()
+	{
+		// Launch PlayerToy parachute fall
+		Toy toyScript = GetComponent<Toy>() as Toy;
+		
+		// Don't forget to specify the callbacks
+		StartCoroutine(toyScript.ParachuteFall(gameObject,m_support)); 
+	}
+
+	/*
 	public	void	propagatePhysicalAwakening()
 	{
 		Collider[] neighbors = Physics.OverlapSphere(transform.position, 0.3f, 1 << LayerMask.NameToLayer("Tabletop"));
@@ -198,10 +204,12 @@ public class Block : Toy {
 		rigidbody.isKinematic = true;
 		m_isFrozen = true;
 	}
+	*/
 
 
 	/* -------------------------------------------------- Collision checks ---------------------------- */
 
+	/*
 	public	void	OnCollisionEnter(Collision c)
 	{
 		if(c.gameObject.layer == gameObject.layer)
@@ -221,4 +229,5 @@ public class Block : Toy {
 		if(m_friendlyColliders.Contains(c.collider))
 			m_friendlyColliders.Remove(c.collider);
 	}
+	*/
 }

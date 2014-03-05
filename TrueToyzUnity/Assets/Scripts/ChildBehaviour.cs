@@ -176,11 +176,6 @@ public class ChildBehaviour : MonoBehaviour {
 		{
 			m_ChildToy.SetActive(false);
 		}
-		else
-		{
-			m_ChildToy.SendMessage("makeKinematic");
-		}
-		
 	}
 	
 	/*

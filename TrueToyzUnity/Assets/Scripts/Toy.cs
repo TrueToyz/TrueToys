@@ -8,6 +8,7 @@ public class Toy : MonoBehaviour {
 	public		bool		m_interruptFlag = false;
 	public 		bool 		m_isFrozen = false;
 	public		bool		m_canBeTaken = false;
+	public		bool		m_canServeAsSupport = false;
 
 	public 	delegate void 	LandingCallback();
 	public 	event 			LandingCallback hasLanded;
@@ -31,6 +32,9 @@ public class Toy : MonoBehaviour {
 			Destroy(m_Parachute);
 	}
 
+	/*
+	 * Only take targetPots.y into account
+	 * */
 	public IEnumerator ParachuteFall (GameObject soldier, Vector3 targetPos)
 	{
 		m_interruptFlag = false;
@@ -40,7 +44,7 @@ public class Toy : MonoBehaviour {
 		addSpecificCallbacks();
 
 		// Ground
-		Vector3 ToGround = new Vector3(soldier.transform.position.x, targetPos.y, soldier.transform.position.z);
+		Vector3 ToGround = targetPos;
 		
 		while(soldier != null && Vector3.Distance(soldier.transform.position, ToGround) > GameManager.Instance.distanceBeforeParachute)
 		{
@@ -90,7 +94,7 @@ public class Toy : MonoBehaviour {
 		m_isFrozen = false;
 	}
 
-	public void take()
+	public virtual	void take()
 	{
 		if(hasBeenTaken != null)
 			hasBeenTaken();

@@ -113,6 +113,10 @@ Prefab:
       propertyPath: m_Name
       value: BuildingBlock1
       objectReference: {fileID: 0}
+    - target: {fileID: 5400000, guid: 4bdf01646acad4b43a096a17b779aa4d, type: 2}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4bdf01646acad4b43a096a17b779aa4d, type: 2}
   m_RootGameObject: {fileID: 1449040799}
@@ -343,7 +347,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 51788207}
   - 33: {fileID: 51788210}
-  - 65: {fileID: 51788209}
   - 23: {fileID: 51788208}
   m_Layer: 0
   m_Name: Cube
@@ -384,18 +387,6 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!65 &51788209
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 51788206}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &51788210
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -526,6 +517,10 @@ Prefab:
     - target: {fileID: 100000, guid: 4bdf01646acad4b43a096a17b779aa4d, type: 2}
       propertyPath: m_Name
       value: BuildingBlock2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400000, guid: 4bdf01646acad4b43a096a17b779aa4d, type: 2}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4bdf01646acad4b43a096a17b779aa4d, type: 2}
@@ -810,6 +805,14 @@ Prefab:
       propertyPath: m_Name
       value: BuildingBlock5
       objectReference: {fileID: 0}
+    - target: {fileID: 5400000, guid: 4bdf01646acad4b43a096a17b779aa4d, type: 2}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400000, guid: 4bdf01646acad4b43a096a17b779aa4d, type: 2}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4bdf01646acad4b43a096a17b779aa4d, type: 2}
   m_RootGameObject: {fileID: 2122288655}
@@ -1039,7 +1042,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 4bdf01646acad4b43a096a17b779aa4d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: .850860119
+      value: .850860178
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4bdf01646acad4b43a096a17b779aa4d, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1047,7 +1050,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4bdf01646acad4b43a096a17b779aa4d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: .409878969
+      value: -.165328726
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4bdf01646acad4b43a096a17b779aa4d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -1068,6 +1071,10 @@ Prefab:
     - target: {fileID: 100000, guid: 4bdf01646acad4b43a096a17b779aa4d, type: 2}
       propertyPath: m_Name
       value: BuildingBlock4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400000, guid: 4bdf01646acad4b43a096a17b779aa4d, type: 2}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4bdf01646acad4b43a096a17b779aa4d, type: 2}
@@ -2987,6 +2994,10 @@ Prefab:
       propertyPath: m_Name
       value: BuildingBlock3
       objectReference: {fileID: 0}
+    - target: {fileID: 5400000, guid: 4bdf01646acad4b43a096a17b779aa4d, type: 2}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4bdf01646acad4b43a096a17b779aa4d, type: 2}
   m_RootGameObject: {fileID: 748462316}
@@ -3088,7 +3099,7 @@ Transform:
   m_PrefabInternal: {fileID: 1599788732}
   m_GameObject: {fileID: 630269969}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: -4.37113883e-08}
-  m_LocalPosition: {x: -.143427059, y: -.15101397, z: -.0518830232}
+  m_LocalPosition: {x: -1.14714754, y: -.15101397, z: .141413912}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2134443312}
@@ -3152,6 +3163,7 @@ MonoBehaviour:
   m_interruptFlag: 0
   m_isFrozen: 0
   m_canBeTaken: 0
+  m_canServeAsSupport: 0
   m_IsControlled: 0
   m_FireRate: .200000003
   m_FireRange: 300
@@ -3557,8 +3569,8 @@ GameObject:
   - 33: {fileID: 748462320}
   - 23: {fileID: 748462319}
   - 54: {fileID: 748462318}
-  - 114: {fileID: 748462317}
   - 65: {fileID: 748462322}
+  - 114: {fileID: 748462317}
   m_Layer: 11
   m_Name: BuildingBlock3
   m_TagString: BuildingBlock
@@ -3569,23 +3581,20 @@ GameObject:
 --- !u!114 &748462317
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: 4bdf01646acad4b43a096a17b779aa4d,
+  m_PrefabParentObject: {fileID: 11400002, guid: 4bdf01646acad4b43a096a17b779aa4d,
     type: 2}
   m_PrefabInternal: {fileID: 592469561}
   m_GameObject: {fileID: 748462316}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53a8941fbaeb3df45b340cea07292fcd, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ea06da6dbe47a945914b99a8f066918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ParachutePrefab: {fileID: 0}
   m_interruptFlag: 0
   m_isFrozen: 0
   m_canBeTaken: 0
-  m_gravityChecks: 0
-  m_timeImmobile: 0
-  m_timeToBeKinematic: 4
-  m_friendlyColliders: []
+  m_canServeAsSupport: 0
 --- !u!54 &748462318
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3598,7 +3607,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: .0500000007
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -5470,76 +5479,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
---- !u!1 &1053553086
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1053553090}
-  - 33: {fileID: 1053553089}
-  - 64: {fileID: 1053553088}
-  - 23: {fileID: 1053553087}
-  m_Layer: 11
-  m_Name: Ground
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!23 &1053553087
-Renderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1053553086}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_SortingLayerID: 0
---- !u!64 &1053553088
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1053553086}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!33 &1053553089
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1053553086}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &1053553090
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1053553086}
-  m_LocalRotation: {x: 0, y: -1, z: 0, w: -4.37113883e-08}
-  m_LocalPosition: {x: -.203657761, y: -.156676143, z: -1.00546694}
-  m_LocalScale: {x: .334796786, y: .334796786, z: .334796786}
-  m_Children: []
-  m_Father: {fileID: 1962114484}
 --- !u!1 &1081877805
 GameObject:
   m_ObjectHideFlags: 0
@@ -7185,8 +7124,8 @@ GameObject:
   - 33: {fileID: 1449040805}
   - 23: {fileID: 1449040804}
   - 54: {fileID: 1449040803}
-  - 114: {fileID: 1449040802}
   - 65: {fileID: 1449040801}
+  - 114: {fileID: 1449040802}
   m_Layer: 11
   m_Name: BuildingBlock1
   m_TagString: BuildingBlock
@@ -7221,23 +7160,20 @@ BoxCollider:
 --- !u!114 &1449040802
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: 4bdf01646acad4b43a096a17b779aa4d,
+  m_PrefabParentObject: {fileID: 11400002, guid: 4bdf01646acad4b43a096a17b779aa4d,
     type: 2}
   m_PrefabInternal: {fileID: 36013557}
   m_GameObject: {fileID: 1449040799}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53a8941fbaeb3df45b340cea07292fcd, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ea06da6dbe47a945914b99a8f066918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ParachutePrefab: {fileID: 0}
   m_interruptFlag: 0
   m_isFrozen: 0
   m_canBeTaken: 0
-  m_gravityChecks: 0
-  m_timeImmobile: 0
-  m_timeToBeKinematic: 4
-  m_friendlyColliders: []
+  m_canServeAsSupport: 0
 --- !u!54 &1449040803
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7250,7 +7186,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: .0500000007
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -7498,7 +7434,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400020, guid: cbbedf5b733c2a24e9fedecfb40d544a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.143427059
+      value: -1.14714754
       objectReference: {fileID: 0}
     - target: {fileID: 400020, guid: cbbedf5b733c2a24e9fedecfb40d544a, type: 2}
       propertyPath: m_LocalPosition.y
@@ -7506,7 +7442,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400020, guid: cbbedf5b733c2a24e9fedecfb40d544a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -.0518830232
+      value: .141413912
       objectReference: {fileID: 0}
     - target: {fileID: 400020, guid: cbbedf5b733c2a24e9fedecfb40d544a, type: 2}
       propertyPath: m_LocalRotation.x
@@ -7593,8 +7529,8 @@ GameObject:
   - 33: {fileID: 1610588773}
   - 23: {fileID: 1610588772}
   - 54: {fileID: 1610588771}
-  - 114: {fileID: 1610588770}
   - 65: {fileID: 1610588769}
+  - 114: {fileID: 1610588770}
   m_Layer: 11
   m_Name: BuildingBlock4
   m_TagString: BuildingBlock
@@ -7609,7 +7545,7 @@ Transform:
   m_PrefabInternal: {fileID: 355212006}
   m_GameObject: {fileID: 1610588767}
   m_LocalRotation: {x: 0, y: -4.37113883e-08, z: 0, w: 1}
-  m_LocalPosition: {x: .850860119, y: .0175839998, z: .409878969}
+  m_LocalPosition: {x: .850860178, y: .0175839998, z: -.165328726}
   m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children: []
   m_Father: {fileID: 1962114484}
@@ -7629,23 +7565,20 @@ BoxCollider:
 --- !u!114 &1610588770
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: 4bdf01646acad4b43a096a17b779aa4d,
+  m_PrefabParentObject: {fileID: 11400002, guid: 4bdf01646acad4b43a096a17b779aa4d,
     type: 2}
   m_PrefabInternal: {fileID: 355212006}
   m_GameObject: {fileID: 1610588767}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53a8941fbaeb3df45b340cea07292fcd, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ea06da6dbe47a945914b99a8f066918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ParachutePrefab: {fileID: 0}
   m_interruptFlag: 0
   m_isFrozen: 0
   m_canBeTaken: 0
-  m_gravityChecks: 0
-  m_timeImmobile: 0
-  m_timeToBeKinematic: 4
-  m_friendlyColliders: []
+  m_canServeAsSupport: 0
 --- !u!54 &1610588771
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7658,7 +7591,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: .0500000007
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -8194,8 +8127,8 @@ GameObject:
   - 33: {fileID: 1902582450}
   - 23: {fileID: 1902582449}
   - 54: {fileID: 1902582448}
-  - 114: {fileID: 1902582447}
   - 65: {fileID: 1902582446}
+  - 114: {fileID: 1902582447}
   m_Layer: 11
   m_Name: BuildingBlock2
   m_TagString: BuildingBlock
@@ -8230,23 +8163,20 @@ BoxCollider:
 --- !u!114 &1902582447
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: 4bdf01646acad4b43a096a17b779aa4d,
+  m_PrefabParentObject: {fileID: 11400002, guid: 4bdf01646acad4b43a096a17b779aa4d,
     type: 2}
   m_PrefabInternal: {fileID: 150338925}
   m_GameObject: {fileID: 1902582444}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53a8941fbaeb3df45b340cea07292fcd, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ea06da6dbe47a945914b99a8f066918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ParachutePrefab: {fileID: 0}
   m_interruptFlag: 0
   m_isFrozen: 0
   m_canBeTaken: 0
-  m_gravityChecks: 0
-  m_timeImmobile: 0
-  m_timeToBeKinematic: 4
-  m_friendlyColliders: []
+  m_canServeAsSupport: 0
 --- !u!54 &1902582448
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8259,7 +8189,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: .0500000007
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -9676,7 +9606,6 @@ Transform:
   - {fileID: 1118103769}
   - {fileID: 905377244}
   - {fileID: 618097297}
-  - {fileID: 1053553090}
   - {fileID: 1878470794}
   - {fileID: 630269970}
   - {fileID: 1865285835}
@@ -10006,8 +9935,8 @@ GameObject:
   - 33: {fileID: 2122288661}
   - 23: {fileID: 2122288660}
   - 54: {fileID: 2122288659}
-  - 114: {fileID: 2122288658}
   - 65: {fileID: 2122288657}
+  - 114: {fileID: 2122288658}
   m_Layer: 11
   m_Name: BuildingBlock5
   m_TagString: BuildingBlock
@@ -10042,23 +9971,20 @@ BoxCollider:
 --- !u!114 &2122288658
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: 4bdf01646acad4b43a096a17b779aa4d,
+  m_PrefabParentObject: {fileID: 11400002, guid: 4bdf01646acad4b43a096a17b779aa4d,
     type: 2}
   m_PrefabInternal: {fileID: 234125407}
   m_GameObject: {fileID: 2122288655}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53a8941fbaeb3df45b340cea07292fcd, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ea06da6dbe47a945914b99a8f066918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ParachutePrefab: {fileID: 0}
   m_interruptFlag: 0
   m_isFrozen: 0
   m_canBeTaken: 0
-  m_gravityChecks: 0
-  m_timeImmobile: 0
-  m_timeToBeKinematic: 4
-  m_friendlyColliders: []
+  m_canServeAsSupport: 0
 --- !u!54 &2122288659
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10071,7 +9997,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: .0500000007
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0

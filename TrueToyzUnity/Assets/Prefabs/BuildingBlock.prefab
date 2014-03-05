@@ -11,8 +11,8 @@ GameObject:
   - 33: {fileID: 3300000}
   - 23: {fileID: 2300000}
   - 54: {fileID: 5400000}
-  - 114: {fileID: 11400000}
   - 65: {fileID: 6500000}
+  - 114: {fileID: 11400002}
   m_Layer: 11
   m_Name: BuildingBlock
   m_TagString: BuildingBlock
@@ -86,7 +86,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .200000092, y: .200000092, z: .200000092}
   m_Center: {x: -3.72528897e-09, y: .100000083, z: -2.38418618e-08}
---- !u!114 &11400000
+--- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -94,17 +94,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53a8941fbaeb3df45b340cea07292fcd, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ea06da6dbe47a945914b99a8f066918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ParachutePrefab: {fileID: 0}
   m_interruptFlag: 0
   m_isFrozen: 0
   m_canBeTaken: 0
-  m_gravityChecks: 0
-  m_timeImmobile: 0
-  m_timeToBeKinematic: 4
-  m_friendlyColliders: []
+  m_canServeAsSupport: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
