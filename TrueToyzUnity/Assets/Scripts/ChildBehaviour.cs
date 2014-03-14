@@ -172,10 +172,8 @@ public class ChildBehaviour : MonoBehaviour {
 
 		// The object is hidden
 		m_HandAnimator.SetTrigger("Grasp");
-		if(m_ChildToy.tag == "ChildToy")
-		{
-			m_ChildToy.SetActive(false);
-		}
+		m_ChildToy.SetActive(false);
+
 	}
 	
 	/*
@@ -212,6 +210,7 @@ public class ChildBehaviour : MonoBehaviour {
 		else if(m_ChildToy.tag == "BuildingBlock")
 		{
 			m_ChildToy.transform.rotation = Quaternion.identity;
+			m_ChildToy.SetActive(true);
 
 		}
 

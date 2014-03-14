@@ -47,6 +47,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Editor\VRCustomEditor.cs" />
+     <None Include="Assets\Standard Assets\Projectors\Guidelines.txt" />
+     <None Include="Assets\Standard Assets\Projectors\Sources\Shaders\Projector Multiply.shader" />
+     <None Include="Assets\Standard Assets\Projectors\Sources\Shaders\Projector Light.shader" />
      <None Include="Assets\MiddleVR\Assets\Materials\OVRLensCorrection.shader" />
      <None Include="Assets\Shaders\aeroplanes.shader" />
      <None Include="Assets\Shaders\SpecialCulling.shader" />

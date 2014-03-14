@@ -7,15 +7,23 @@ public class FallFeedback : MonoBehaviour {
 	public	ParticleSystem	m_particleFalls;
 	public	bool			m_canBeDeployed = true;
 	public	bool			m_overGround = true;
-	public	List<Collider>	ml_obstacles;
 	public	GameObject		m_target;
 	public	GameObject		m_owner;
+
+	public	GameObject		m_templatePrefab;
+	public	GameObject		m_templateInstance;
 
 
 	// Use this for initialization
 	void Start () {
 		m_particleFalls = gameObject.GetComponent<ParticleSystem>();
-		ml_obstacles = new List<Collider> ();
+
+		// We build a new copy of the template used to displace objects in the world
+		if(m_templatePrefab)
+		{
+			m_templateInstance = Instantiate(m_templatePrefab,transform.position,transform.rotation) as GameObject;
+			m_templateInstance.transform.parent = transform;
+		}
 	}
 	
 	// Update is called once per frame
@@ -29,42 +37,20 @@ public class FallFeedback : MonoBehaviour {
 	{
 		m_target = newTarget;
 		m_particleFalls.Play();
-		clear ();
 	}
 
 	public	void	clearTarget()
 	{
 		m_target = null;
 		m_particleFalls.Stop();
-		clear ();
-	}
-
-	void clear()
-	{
-		ml_obstacles.Clear();
-	}
-
-	void	keepOnGround ()
-	{
-		// Change speed of particles depending on distance
-		RaycastHit hit;
-		m_overGround = ToyUtilities.RayCastToGround(m_target,out hit);
-		if(m_particleFalls)
-			m_particleFalls.startSpeed = Vector3.Distance(m_target.transform.position,hit.point);
-		
-		// Position under the hand
-		Vector3 destination = new Vector3(m_target.transform.position.x,hit.point.y,m_target.transform.position.z);
-		
-		// Move in a physical manner
-		rigidbody.MovePosition(destination);
 	}
 
 	Vector3	raycastEntireColliderOnGRound()
 	{
-		Vector3 rayOrigin =  new Vector3(m_target.transform.position.x,m_target.transform.position.y + m_target.collider.bounds.extents.y,m_target.transform.position.z);
+		Vector3 rayOrigin =  new Vector3(m_target.transform.position.x,m_target.transform.position.y + m_templateInstance.collider.bounds.extents.y,m_target.transform.position.z);
 
 		// Send raycast toward the ground 
-		List<RaycastHit> results = ToyUtilities.BoxRayCastToGround(m_target.collider, rayOrigin, Vector3.down, -1);
+		List<RaycastHit> results = ToyUtilities.BoxRayCastToGround(m_templateInstance.collider, rayOrigin, Vector3.down, -1);
 		
 		// Init
 		m_canBeDeployed = true;
@@ -96,12 +82,12 @@ public class FallFeedback : MonoBehaviour {
 		 * */
 		Vector3 rayOrigin =  new Vector3(
 			m_target.transform.position.x,
-			m_target.transform.position.y+2f,
+			m_target.transform.position.y + 2f, // Safe distance over the hand
 			m_target.transform.position.z
 			);
 
 		RaycastHit hit;
-		ToyUtilities.RayCastToGround(m_target.collider,rayOrigin,out hit,-1);
+		ToyUtilities.RayCastToGround(m_templateInstance.collider,rayOrigin,out hit,-1);
 
 		if(!(hit.collider.gameObject.layer == LayerMask.NameToLayer("Tabletop")))
 		{
@@ -149,7 +135,7 @@ public class FallFeedback : MonoBehaviour {
 		m_target.transform.rotation = Quaternion.identity;
 
 		// clamp motion in relation to extents
-		Vector3 extents = m_target.GetComponent<Collider>().bounds.max - m_target.GetComponent<Collider>().bounds.center;
+		Vector3 extents = m_templateInstance.GetComponent<Collider>().bounds.max - m_templateInstance.GetComponent<Collider>().bounds.center;
 
 		// Retrieve old rotation
 		m_target.transform.rotation = oldRot;
