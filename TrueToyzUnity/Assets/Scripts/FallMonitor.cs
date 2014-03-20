@@ -126,10 +126,19 @@ public class FallMonitor : MonoBehaviour {
 			Vector3 groundHit = hit.point;
 
 			// Now launches reflect raycast
-			if(ToyUtilities.RayCastToward(m_templateInstance.collider,groundHit,Vector3.up,out hit,mask,Color.blue,1f))
+			float distance = 1f;
+			Vector3 reflectOrigin = new Vector3(
+				groundHit.x,
+				groundHit.y - 0.05f, // just a little offset to be inside the object
+				groundHit.z
+				);
+			m_touchedObject.collider.enabled = false;
+			if(ToyUtilities.RayCastToward(m_templateInstance.collider,reflectOrigin,Vector3.up,out hit,mask,Color.blue,distance))
 			{
 				m_obstacle = hit.collider.gameObject;
+				m_canBeDeployed = false;
 			}
+			m_touchedObject.collider.enabled = true; 
 
 			// Move particles
 			if(m_particleFalls)

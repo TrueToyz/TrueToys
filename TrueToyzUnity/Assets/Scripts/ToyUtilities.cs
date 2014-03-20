@@ -44,7 +44,7 @@ public class ToyUtilities {
 	{
 		c.enabled = false;
 		Ray myRay = new Ray(rayOrigin, direction);
-		Debug.DrawLine (rayOrigin, rayOrigin+direction, col);
+		Debug.DrawLine (rayOrigin, rayOrigin+direction*distance, col);
 
 		bool result = Physics.Raycast (myRay, out hit, distance, mask);
 		c.enabled = true;

@@ -788,7 +788,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_canSpawn: 0
-  m_isFrozen: 0
+  m_isFrozen: 1
   ml_spawnObjects:
   - {fileID: 1468567493}
   - {fileID: 1304237544}
@@ -2683,7 +2683,7 @@ Transform:
   m_PrefabInternal: {fileID: 1599788732}
   m_GameObject: {fileID: 630269969}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: -4.37113883e-08}
-  m_LocalPosition: {x: -1.14714754, y: -.15101397, z: .141413912}
+  m_LocalPosition: {x: -.133967772, y: -.15101397, z: -.254043609}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2134443312}
@@ -7743,7 +7743,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400020, guid: cbbedf5b733c2a24e9fedecfb40d544a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -1.14714754
+      value: -.133967772
       objectReference: {fileID: 0}
     - target: {fileID: 400020, guid: cbbedf5b733c2a24e9fedecfb40d544a, type: 2}
       propertyPath: m_LocalPosition.y
@@ -7751,7 +7751,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400020, guid: cbbedf5b733c2a24e9fedecfb40d544a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: .141413912
+      value: -.254043609
       objectReference: {fileID: 0}
     - target: {fileID: 400020, guid: cbbedf5b733c2a24e9fedecfb40d544a, type: 2}
       propertyPath: m_LocalRotation.x
@@ -7959,7 +7959,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_canSpawn: 0
-  m_isFrozen: 0
+  m_isFrozen: 1
   ml_spawnObjects:
   - {fileID: 1468567493}
   - {fileID: 1304237544}
@@ -9857,7 +9857,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1962114483}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -4.37113883e-08}
-  m_LocalPosition: {x: 2.03519946e-07, y: 0, z: -.176453114}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 359388536}

@@ -18,6 +18,7 @@ public class Toy : MonoBehaviour {
 	public	static	float	m_minDistanceSupport = 0.03f;
 	private 	GameObject 	m_Parachute;
 	private		Vector3		m_groundHit;
+	private		Vector3		m_scaledGroundHit; // Debug purpose
 	public 		GameObject 	m_ParachutePrefab;
 	public		bool		m_canBeTaken = false;
 	public		bool		m_canServeAsSupport = false;
@@ -60,15 +61,21 @@ public class Toy : MonoBehaviour {
 		// For derived classes
 		addSpecificCallbacks();
 
-		// Ground
-		Vector3 ToGround = targetPos;
+		// Scale ground at 1,1,1
+		Vector3 invScale = new Vector3(
+			1f / GameManager.Instance.level.transform.localScale.x,
+			1f / GameManager.Instance.level.transform.localScale.y,
+			1f / GameManager.Instance.level.transform.localScale.z
+			);
+		Vector3 ToGround = Vector3.Scale (targetPos,invScale);
+		Debug.Log (ToGround);
 		
-		while(soldier != null && Vector3.Distance(soldier.transform.position, ToGround) > GameManager.Instance.distanceBeforeParachute)
+		while(soldier != null && Vector3.Distance(soldier.transform.position, Vector3.Scale(ToGround,GameManager.Instance.level.transform.localScale)) > GameManager.Instance.distanceBeforeParachute)
 		{
 			if(m_interruptFlag)
 				yield break;
 
-			soldier.transform.position += (ToGround - soldier.transform.position) * GameManager.Instance.fallSpeed * Time.deltaTime;
+			soldier.transform.position += (Vector3.Scale (ToGround,GameManager.Instance.level.transform.localScale) - soldier.transform.position) * GameManager.Instance.fallSpeed * Time.deltaTime;
 
 			yield return null;
 		}
@@ -79,7 +86,7 @@ public class Toy : MonoBehaviour {
 		// Now the deceleration
 		openParachute();
 
-		while(soldier != null && (ToGround - soldier.transform.position).y < 0.01f && Vector3.Distance(ToGround, soldier.transform.position) > 0.01f)
+		while(soldier != null && (Vector3.Scale (ToGround,GameManager.Instance.level.transform.localScale) - soldier.transform.position).y < 0.01f && Vector3.Distance(Vector3.Scale (ToGround,GameManager.Instance.level.transform.localScale), soldier.transform.position) > 0.01f)
 		{
 
 			// Grab again // destroy
@@ -89,7 +96,7 @@ public class Toy : MonoBehaviour {
 				yield break;
 			}
 
-			soldier.transform.position += (ToGround - soldier.transform.position) * GameManager.Instance.fallSpeed * Time.deltaTime / GameManager.Instance.parachuteDampingCoef;
+			soldier.transform.position += (Vector3.Scale (ToGround,GameManager.Instance.level.transform.localScale) - soldier.transform.position) * GameManager.Instance.fallSpeed * Time.deltaTime / GameManager.Instance.parachuteDampingCoef;
 			yield return null;
 		}
 
@@ -99,7 +106,7 @@ public class Toy : MonoBehaviour {
 		}
 
 		// Correct y 
-		soldier.transform.position = ToGround;
+		soldier.transform.position = Vector3.Scale (ToGround,GameManager.Instance.level.transform.localScale);
 		closeParachute();
 
 		if(hasLanded != null)
@@ -211,10 +218,16 @@ public class Toy : MonoBehaviour {
 		Toy toyScript = GetComponent<Toy>() as Toy;
 		
 		// Don't forget to specify the callbacks
-		if(!m_support)
+		if(m_support == null)
+		{
+			if(m_owner)
+				m_owner.SendMessage("toyIsDestroyed",gameObject);
 			Destroy(gameObject);
+		}
 		else
+		{
 			StartCoroutine(toyScript.ParachuteFall(gameObject,m_groundHit)); 
+		}
 	}
 
 }
