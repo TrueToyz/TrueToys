@@ -74,7 +74,12 @@ public class PlayerToy : Toy {
 	}
 	
 	// Update is called once per frame
-	public void Update () {
+	public override void Update () {
+
+		// Behavior
+		base.Update();
+
+		// Controls
 		if(m_IsControlled)
 			monitorInputs();
 	}

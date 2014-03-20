@@ -70,14 +70,11 @@
      <Compile Include="Assets\MiddleVR\Scripts\Samples\VRShareFloat.cs" />
      <Compile Include="Assets\MiddleVR\Scripts\Samples\VRVirtualTrackerMapping.cs" />
      <Compile Include="Assets\MiddleVR\Scripts\Samples\VRVirtualTrackerSimulation.cs" />
-     <Compile Include="Assets\Scripts\Builder\Block.cs" />
      <Compile Include="Assets\Scripts\Builder\ToyBlock.cs" />
      <Compile Include="Assets\Scripts\ChildBehaviour.cs" />
      <Compile Include="Assets\Scripts\EffectManager.cs" />
-     <Compile Include="Assets\Scripts\EnemySpawn.cs" />
      <Compile Include="Assets\Scripts\EnemyToy.cs" />
-     <Compile Include="Assets\Scripts\EnemyToyPro.cs" />
-     <Compile Include="Assets\Scripts\FallFeedback.cs" />
+     <Compile Include="Assets\Scripts\FallMonitor.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\MenuController.cs" />
      <Compile Include="Assets\Scripts\PlayerToy.cs" />
@@ -86,6 +83,7 @@
      <Compile Include="Assets\Scripts\Torchelight.cs" />
      <Compile Include="Assets\Scripts\Toy.cs" />
      <Compile Include="Assets\Scripts\ToySight.cs" />
+     <Compile Include="Assets\Scripts\ToySpawn.cs" />
      <Compile Include="Assets\Scripts\ToyUtilities.cs" />
      <Compile Include="Assets\Scripts\TransitionEffect.cs" />
      <Compile Include="Assets\Scripts\WorldLight.cs" />

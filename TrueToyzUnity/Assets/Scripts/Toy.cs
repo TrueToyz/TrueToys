@@ -3,16 +3,33 @@ using System.Collections;
 
 public class Toy : MonoBehaviour {
 
-	private 	GameObject 	m_Parachute;
-	public 		GameObject 	m_ParachutePrefab;
+	// Spawn
+	public		GameObject	m_owner;
+	private		GameObject	m_support;
+	private		GameObject	m_overObject;
+	
 	public		bool		m_interruptFlag = false;
 	public 		bool 		m_isFrozen = false;
+
+	// Lifetime
+	public		int			m_lifePoints;
+
+	// Physical behavior
+	public	static	float	m_minDistanceSupport = 0.03f;
+	private 	GameObject 	m_Parachute;
+	private		Vector3		m_groundHit;
+	public 		GameObject 	m_ParachutePrefab;
 	public		bool		m_canBeTaken = false;
 	public		bool		m_canServeAsSupport = false;
 
 	public 	delegate void 	LandingCallback();
 	public 	event 			LandingCallback hasLanded;
 	public 	event 			LandingCallback hasBeenTaken;
+
+	public virtual	void receiveDamage ()
+	{
+		m_lifePoints--;
+	}
 	
 	public void openParachute ()
 	{
@@ -99,7 +116,25 @@ public class Toy : MonoBehaviour {
 		if(hasBeenTaken != null)
 			hasBeenTaken();
 
+		// All actual behaviros must be shut down !
 		interrupt();
+		m_isFrozen = true;
+
+		// Collider is deactivated
+		if(collider)
+			collider.enabled = false;
+		else
+			gameObject.GetComponentInChildren<Collider>().enabled = false;
+
+	}
+
+	public	virtual	void	drop()
+	{
+		// Collider is deactivated
+		if(collider)
+			collider.enabled = true;
+		else
+			gameObject.GetComponentInChildren<Collider>().enabled = true;
 	}
 
 	public void	interrupt()
@@ -114,5 +149,72 @@ public class Toy : MonoBehaviour {
 
 	/*For derived class only */
 	public	virtual	void	addSpecificCallbacks() {}
+
+	/* -------------------------------- Physical behavior ---------------------- */
+	
+	public	virtual	void	Update()
+	{
+		if(!m_isFrozen)
+		{
+			verifySupport();
+			m_canBeTaken = !hasObjectOverIt();
+		}
+	}
+	
+	// We cast a ray touching only tabletop elements and other toy layers (such as untouchable including the player toy)
+	public	bool	hasObjectOverIt()
+	{
+		int mask = (1 << LayerMask.NameToLayer("Character")) | (1 << LayerMask.NameToLayer("Tabletop"))| (1 << LayerMask.NameToLayer("Ennemies"));
+		RaycastHit hit;
+		Vector3 rayOrigin = transform.position;
+		
+		if(ToyUtilities.RayCastToward(collider,rayOrigin,Vector3.up,out hit,mask,Color.gray,1f))
+		{
+			m_overObject = hit.collider.gameObject;
+			return true;
+		}
+		return false;
+	}
+	
+	// We cast a ray from the higher point in the object toward the ground
+	public	bool	hasSupport()
+	{
+		Vector3 rayOrigin =  new Vector3(transform.position.x,transform.position.y + collider.bounds.extents.y, transform.position.z);
+		RaycastHit hit;
+		int mask = 1 << LayerMask.NameToLayer("Tabletop");
+		
+		if(ToyUtilities.RayCastToward(collider,rayOrigin,Vector3.down,out hit,mask,Color.gray))
+		{
+			m_support = hit.collider.gameObject;
+			m_groundHit = hit.point;
+			if(Vector3.Distance(collider.ClosestPointOnBounds(hit.point),hit.point) < m_minDistanceSupport)
+				return true;
+			else
+				return false;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	public	void	verifySupport()
+	{
+		if(!this.hasSupport())
+		{
+			fall ();
+		}
+	}
+	
+	public	void	fall()
+	{
+		// Launch PlayerToy parachute fall
+		Toy toyScript = GetComponent<Toy>() as Toy;
+		
+		// Don't forget to specify the callbacks
+		if(!m_support)
+			Destroy(gameObject);
+		else
+			StartCoroutine(toyScript.ParachuteFall(gameObject,m_groundHit)); 
+	}
 
 }

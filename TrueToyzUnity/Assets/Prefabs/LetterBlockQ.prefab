@@ -28,6 +28,7 @@ GameObject:
   - 54: {fileID: 5400000}
   - 114: {fileID: 11400000}
   - 65: {fileID: 6500000}
+  - 208: {fileID: 20800000}
   m_Layer: 11
   m_Name: LetterBlockQ
   m_TagString: BuildingBlock
@@ -124,11 +125,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ea06da6dbe47a945914b99a8f066918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_owner: {fileID: 0}
+  m_lifePoints: 2
   m_ParachutePrefab: {fileID: 0}
   m_interruptFlag: 0
   m_isFrozen: 0
   m_canBeTaken: 0
   m_canServeAsSupport: 0
+--- !u!208 &20800000
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_Radius: .0500000007
+  m_Height: .100000001
+  m_MoveThreshold: 0
+  m_Carve: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

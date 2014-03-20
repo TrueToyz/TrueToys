@@ -3,14 +3,15 @@ using System.Collections;
 
 public class ToyBlock : Toy {
 
-	public	static	float	m_minDistanceSupport = 0.03f;
-	private			Vector3	m_support;	
+	// Lifetime
+	//public	static	float	m_minDistanceSupport = 0.03f;
+	//private			Vector3	m_support;	
 
 	void Start()
 	{
 		m_canBeTaken = true;
 	}
-
+	/*
 	void	FixedUpdate()
 	{
 		if(!m_isFrozen)
@@ -74,5 +75,22 @@ public class ToyBlock : Toy {
 		base.take();
 		m_isFrozen = true;
 	}
+
+	*/
+
+	public override	void receiveDamage ()
+	{
+		if (--m_lifePoints < 1)
+		{
+			// Notify the level
+			m_owner.SendMessage("toyIsDestroyed",gameObject);
+
+			// Decrease number of blocks
+			GameManager.Instance.blockSpawn.SendMessage("decrease");
+
+			Destroy(gameObject);
+		}
+	}
+
 
 }

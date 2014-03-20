@@ -8,7 +8,7 @@ public class ChildBehaviour : MonoBehaviour {
 	/* Child-related Variables */
 	public 	GameObject 	m_ChildToy; // Toy actually hold in hand
 	private GameObject 	m_ChildHand; // The child left hand, recognizable by his tag
-	private	GameObject	m_dropIndicator;
+	public	GameObject	m_dropIndicator;
 	private Animator 	m_HandAnimator;
 	private GameObject 	cameraVR;
 
@@ -52,7 +52,6 @@ public class ChildBehaviour : MonoBehaviour {
 		// Hand config
 		m_ChildHand = GameObject.FindGameObjectWithTag("ChildHand");
 		//
-		m_dropIndicator =  GameObject.FindGameObjectWithTag("DropIndicator");
 
 		Quaternion myRotation = Quaternion.Euler(0f,90f,0f);
 		GameManager.Instance.AttachNodeToHand(m_ChildHand, Vector3.zero, myRotation); // Initialize hand by atatching to vr node
@@ -164,15 +163,17 @@ public class ChildBehaviour : MonoBehaviour {
 		m_ChildToy.SendMessage("take");
 
 		// Acgtivate drop projector
+		m_dropIndicator.SetActive(true);
 		m_dropIndicator.SendMessage("assignTarget",m_ChildToy);
 
 		m_ChildToy.transform.parent = m_ChildHand.transform; // Change toy parent in hierarchy by the hand transform
 		m_ChildToy.transform.localPosition = Vector3.zero; // Optional : put the object in hand
 		m_ToyInHand = true;
 
+		/* Note: animation onyl concerned the player toy */
 		// The object is hidden
-		m_HandAnimator.SetTrigger("Grasp");
-		m_ChildToy.SetActive(false);
+		//m_HandAnimator.SetTrigger("Grasp");
+		//m_ChildToy.SetActive(false);
 
 	}
 	
@@ -198,10 +199,9 @@ public class ChildBehaviour : MonoBehaviour {
 			Vector3 newRot = m_ChildToy.transform.rotation.eulerAngles;
 			newRot.x = 0; 
 			newRot.z = 0;
-			
 			m_ChildToy.transform.rotation = Quaternion.Euler(newRot);
 
-			m_ChildToy.SetActive(true);
+			// While the player toy is descending, we can't control it
 			m_CanSwitch = false;
 			
 			// Don't forget to specify the callbacks
@@ -210,15 +210,17 @@ public class ChildBehaviour : MonoBehaviour {
 		else if(m_ChildToy.tag == "BuildingBlock")
 		{
 			m_ChildToy.transform.rotation = Quaternion.identity;
-			m_ChildToy.SetActive(true);
-
 		}
+
+		// Reenable the collider
+		m_ChildToy.SendMessage("drop");
 
 		// Begin fall
 		StartCoroutine(toyScript.ParachuteFall(m_ChildToy,m_dropIndicator.transform.position)); 
 
 		// The indicator has no more target
 		m_dropIndicator.SendMessage("clearTarget");
+		m_dropIndicator.SetActive(false);
 
 	}
 
@@ -226,7 +228,6 @@ public class ChildBehaviour : MonoBehaviour {
 	{
 		m_CanSwitch = true;
 	}
-	
 
 	/* ------------------------------------------ VR interaction ---------------------------------- */
 

@@ -18,11 +18,10 @@ public class GameManager : Singleton<GameManager> {
 	// Game elements
 	public	GameObject	playerToy;
 	public	GameObject	playerAvatar;
-	public	GameObject	spawnIndicator;
 	public	GameObject	level;
 
-	// Runtime elements
-	public	int		enemyCount = 0;
+	public	GameObject	enemySpawn;
+	public	GameObject	blockSpawn;
 
 	// Game rules
 	public 	float 	swapScale = 5.0f;
@@ -34,12 +33,16 @@ public class GameManager : Singleton<GameManager> {
 	// Use this for initialization
 	void Start () 
 	{
-		Instance.spawnIndicator = spawnIndicator;
 		Instance.distanceBeforeParachute = distanceBeforeParachute;
 		Instance.graspRadius = graspRadius;
 		Instance.parachuteDampingCoef = parachuteDampingCoef;
 		Instance.fallSpeed = fallSpeed;
 		Instance.swapScale = swapScale;
+
+		// Assign what was given on the inspector
+		Instance.enemySpawn = enemySpawn;
+		Instance.blockSpawn = blockSpawn;
+		Instance.level = level;
 
 		if(!level)
 			level = GameObject.Find("Level");
@@ -60,7 +63,7 @@ public class GameManager : Singleton<GameManager> {
 	 * */
 	void Update ()
 	{
-		enemyCount = Instance.enemyCount;
+
 	}
 	
 	public void MoveRootTo (GameObject avatar)
@@ -106,9 +109,5 @@ public class GameManager : Singleton<GameManager> {
 	{
 		vrRootNode.transform.localScale = Vector3.one;
 	}
-
-	public void enemyDies(GameObject toy)
-	{
-		playerToy.SendMessage("bonusPower");
-	}
+	
 }
