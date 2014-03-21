@@ -77,8 +77,8 @@
      <Compile Include="Assets\Scripts\FallMonitor.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\MenuController.cs" />
+     <Compile Include="Assets\Scripts\Plane.cs" />
      <Compile Include="Assets\Scripts\PlayerToy.cs" />
-     <Compile Include="Assets\Scripts\RotateBlades.cs" />
      <Compile Include="Assets\Scripts\Singleton.cs" />
      <Compile Include="Assets\Scripts\Torchelight.cs" />
      <Compile Include="Assets\Scripts\Toy.cs" />

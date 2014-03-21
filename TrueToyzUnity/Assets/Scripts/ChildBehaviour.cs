@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 public class ChildBehaviour : MonoBehaviour {
 
+	// Navigation
+	public	Vector3		m_NavigationScale;
+
 	/* Child-related Variables */
 	public 	GameObject 	m_ChildToy; // Toy actually hold in hand
 	private GameObject 	m_ChildHand; // The child left hand, recognizable by his tag

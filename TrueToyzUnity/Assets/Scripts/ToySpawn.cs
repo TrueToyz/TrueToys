@@ -16,6 +16,7 @@ public class ToySpawn : MonoBehaviour {
 	public 	GameObject 		m_toyPrefab;
 
 	public	GameObject		m_spawnIndicator;
+	public	GameObject		m_spawnProjector;
 	private float 			spawnTimer;
 
 	/* Generated enemies */
@@ -73,10 +74,6 @@ public class ToySpawn : MonoBehaviour {
 		toy.transform.localScale = new Vector3(1f,1f,1f);
 	
 		ml_toys.Add (toy);
-
-		// Make them fall !
-		RaycastHit hit;
-		ToyUtilities.RayCastToGround(toy, out hit);
 		
 		// Specify to which object the toy must be linked with
 		Toy toyScript = toy.GetComponent<Toy>() as Toy;
@@ -84,7 +81,7 @@ public class ToySpawn : MonoBehaviour {
 
 		// Launch PlayerToy parachute fall
 		// Don't forget to specify the callbacks
-		StartCoroutine(toyScript.ParachuteFall(toy,hit.point)); 
+		StartCoroutine(toyScript.ParachuteFall(toy,ToyUtilities.NormalizeToWorld(m_spawnProjector.transform.position))); 
 		
 		spawnTimer = 0f;
 	}

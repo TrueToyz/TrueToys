@@ -91,4 +91,30 @@ public class ToyUtilities {
 
 		return results;
 	}
+
+	public	static	Vector3		NormalizeToWorld(Vector3 v)
+	{
+		Vector3 invScale = new Vector3(
+			1f / GameManager.Instance.level.transform.localScale.x,
+			1f / GameManager.Instance.level.transform.localScale.y,
+			1f / GameManager.Instance.level.transform.localScale.z
+			);
+
+		return Vector3.Scale (v,invScale);
+	}
+
+	public	static	float		NormalizeToWorld(float distance)
+	{
+		return distance / GameManager.Instance.level.transform.localScale.x;
+	}
+
+	public	static	Vector3		ProjectToWorld(Vector3 v)
+	{
+		return Vector3.Scale (v,GameManager.Instance.level.transform.localScale);
+	}
+
+	public	static	float		ProjectToWorld(float distance)
+	{
+		return distance * GameManager.Instance.level.transform.localScale.x;
+	}
 }
