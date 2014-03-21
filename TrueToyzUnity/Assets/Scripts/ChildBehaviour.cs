@@ -243,10 +243,10 @@ public class ChildBehaviour : MonoBehaviour {
 				m_moveFeedback.Play();
 		}
 
-		Vector3 worldPosition = transform.position - (GameManager.Instance.vrHandNode.transform.position-m_originalHandPosition);
+		Vector3 worldPosition = transform.position - (GameManager.Instance.vrHandNode.transform.position-m_originalHandPosition) ;
 
 		// Never change this value
-		worldPosition.y = transform.position.y;
+		//worldPosition.y = transform.position.y;
 
 		// Chanbge the world !
 		transform.position = worldPosition;

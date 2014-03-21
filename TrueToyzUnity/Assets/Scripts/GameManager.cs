@@ -29,6 +29,7 @@ public class GameManager : Singleton<GameManager> {
 	public	float	parachuteDampingCoef = 2.0f;
 	public 	float 	distanceBeforeParachute = 9f;
 	public	float	graspRadius = 0.35f;
+	public	float	moveScale	=	1.0f;
 
 	// Use this for initialization
 	void Start () 
@@ -38,6 +39,7 @@ public class GameManager : Singleton<GameManager> {
 		Instance.parachuteDampingCoef = parachuteDampingCoef;
 		Instance.fallSpeed = fallSpeed;
 		Instance.swapScale = swapScale;
+		Instance.moveScale = moveScale;
 
 		// Assign what was given on the inspector
 		Instance.enemySpawn = enemySpawn;

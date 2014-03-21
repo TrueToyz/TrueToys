@@ -556,6 +556,7 @@ MonoBehaviour:
   parachuteDampingCoef: 2
   distanceBeforeParachute: 9
   graspRadius: .349999994
+  moveScale: 1
 --- !u!114 &195775179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9464,6 +9465,7 @@ MonoBehaviour:
   parachuteDampingCoef: 2
   distanceBeforeParachute: 10
   graspRadius: .100000001
+  moveScale: 1
 --- !u!114 &1962114489
 MonoBehaviour:
   m_ObjectHideFlags: 0

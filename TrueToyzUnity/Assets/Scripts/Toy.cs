@@ -16,9 +16,10 @@ public class Toy : MonoBehaviour {
 
 	// Physical behavior
 	public	static	float	m_minDistanceSupport = 0.03f;
+
+	private		int			m_verifications = 20;
 	private 	GameObject 	m_Parachute;
 	private		Vector3		m_groundHit;
-	private		Vector3		m_scaledGroundHit; // Debug purpose
 	public 		GameObject 	m_ParachutePrefab;
 	public		bool		m_canBeTaken = false;
 	public		bool		m_canServeAsSupport = false;
@@ -155,7 +156,12 @@ public class Toy : MonoBehaviour {
 	{
 		if(!m_isFrozen)
 		{
-			verifySupport();
+			if(m_verifications >0)
+			{
+				m_verifications--;
+				verifySupport();
+			}
+
 			m_canBeTaken = !hasObjectOverIt();
 		}
 	}
@@ -178,26 +184,45 @@ public class Toy : MonoBehaviour {
 	// We cast a ray from the higher point in the object toward the ground
 	public	bool	hasSupport()
 	{
+
+		// Be sure to have an enabled collider to retrieve bounds
+		bool originalValue = collider.enabled;
+		collider.enabled = true;
+
+		// Compue ray origin
 		Vector3 rayOrigin =  new Vector3(transform.position.x,transform.position.y + collider.bounds.extents.y, transform.position.z);
+
+		// Go back to precedent situation
+		collider.enabled = originalValue;
+
+
 		RaycastHit hit;
 		int mask = 1 << LayerMask.NameToLayer("Tabletop");
 		
 		if(ToyUtilities.RayCastToward(collider,rayOrigin,Vector3.down,out hit,mask,Color.green))
 		{
-			// Supposed support
-			m_support = hit.collider.gameObject;
-			m_groundHit = ToyUtilities.NormalizeToWorld(hit.point);
 
 			if(Vector3.Distance(collider.ClosestPointOnBounds(hit.point),hit.point) < ToyUtilities.ProjectToWorld(m_minDistanceSupport))
+			{
+				// Supposed support
+				m_support = hit.collider.gameObject;
+				m_groundHit = ToyUtilities.NormalizeToWorld(hit.point);
 				return true;
+			}
 			else
+			{
+				//Debug.Log ("Raycast too far !");
+				//Debug.Break();
+				m_support = hit.collider.gameObject;
+				m_groundHit = ToyUtilities.NormalizeToWorld(hit.point);
 				return false;
+			}
 		}
 		else
 		{
-			Debug.Log ("Weird");
 			return false;
 		}
+
 	}
 	
 	public	void	verifySupport()
@@ -207,23 +232,30 @@ public class Toy : MonoBehaviour {
 			fall ();
 		}
 	}
-	
+
+	public	void	propagateFall()
+	{
+		m_support = null;
+		m_verifications = 50;
+	}
+
+	public	void	destroyed ()
+	{
+		if(m_overObject != null)
+			m_overObject.SendMessage("propagateFall");
+	}
+
 	public	void	fall()
 	{
 		// Launch PlayerToy parachute fall
 		Toy toyScript = GetComponent<Toy>() as Toy;
+
+		// Propagate
+		if(m_overObject != null)
+			m_overObject.SendMessage("propagateFall");
 		
 		// Don't forget to specify the callbacks
-		if(m_support == null)
-		{
-			if(m_owner)
-				m_owner.SendMessage("toyIsDestroyed",gameObject);
-			Destroy(gameObject);
-		}
-		else
-		{
-			StartCoroutine(toyScript.ParachuteFall(gameObject,m_groundHit)); 
-		}
+		StartCoroutine(toyScript.ParachuteFall(gameObject,m_groundHit)); 
 	}
 
 }

@@ -88,6 +88,7 @@ public class ToyBlock : Toy {
 			// Decrease number of blocks
 			GameManager.Instance.blockSpawn.SendMessage("decrease");
 
+			destroyed();
 			Destroy(gameObject);
 		}
 	}
