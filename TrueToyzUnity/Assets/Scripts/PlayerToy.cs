@@ -109,13 +109,16 @@ public class PlayerToy : Toy {
 		m_IsControlled = true;
 		m_OwnerChild = child;
 
+		// Launch music
 		m_PlayerAudio.Play();
 
 		// Move VR root to child, relink hand with VR node
 		// This offset allows to move the root in order to have the head exactly where the toy was located
 		Vector3 offset = GameManager.Instance.vrRootNode.transform.position-GameManager.Instance.vrHeadNode.transform.position;
+		offset = Quaternion.Inverse(child.transform.rotation) * offset;
 
 		offset.y = 0.2f; // An offset is necessary to keep the height of the head at a correct position
+		// Might be a little too much if player is standing
 
 		// Instantiate weapon
 		if (m_WeaponPrefab)
@@ -131,10 +134,15 @@ public class PlayerToy : Toy {
 		// Rotate to face the front of the toy. This information is given HARD-CODED in static ms_Forward
 		// Beware, it must be used to rotate the translation offset between head and root
 		// TODO: Make sure there is no cleaner alternative
-		Quaternion rotOffset = Quaternion.FromToRotation(GameManager.Instance.vrRootNode.transform.forward, ms_Forward); 
+		Quaternion rotOffset = Quaternion.FromToRotation(
+			GameManager.Instance.vrRootNode.transform.forward,
+			ms_Forward
+			); 
 
 		// Apply offset
-		GameManager.Instance.MoveRootTo(gameObject, rotOffset*offset/GameManager.Instance.swapScale, rotOffset);
+		Vector3 scaledRotatedPos = rotOffset*offset/GameManager.Instance.swapScale; 
+		Quaternion scaledRotatedOrientation = child.transform.rotation * rotOffset;
+		GameManager.Instance.MoveRootTo(gameObject,scaledRotatedPos, scaledRotatedOrientation);
 
 		// Hide character
 		showSoldier(false);
@@ -167,6 +175,7 @@ public class PlayerToy : Toy {
 	/*
 	 * Shoot'em while they're on fire !
 	 * Throw multiple projectiles
+	 * TODO: Object pooling ! So many instantiation/destruction hurts my eyes
 	 * */
 	void shoot ()
 	{
