@@ -247,7 +247,7 @@ public class ChildBehaviour : MonoBehaviour {
 
 		// Orientation
 		float fRotationAngle = Quaternion.Angle(m_originalHandOrientation, GameManager.Instance.vrHandNode.transform.rotation);
-		if(fRotationAngle > 0.1f)
+		if(fRotationAngle > 0.5f) // TODO: Might find a way to find a pertinent value for this
 		{
 			Quaternion newOrientation = m_originalHandOrientation * Quaternion.Inverse (GameManager.Instance.vrHandNode.transform.rotation);
 

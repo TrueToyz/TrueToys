@@ -12,8 +12,8 @@ public class ToySpawn : MonoBehaviour {
 	public 	float 			m_spawnRadius = 5f;
 
 	// toys
-	public 	int 			m_maxToys = 5;
-	public 	GameObject 		m_toyPrefab;
+	public 	int 				m_maxToys = 5;
+	public 	List<GameObject>	m_toyPrefabs;
 
 	public	GameObject		m_spawnIndicator;
 	public	GameObject		m_spawnProjector;
@@ -31,6 +31,12 @@ public class ToySpawn : MonoBehaviour {
 		// Transition
 		ChildBehaviour.childToToy += startSpawning;
 		ChildBehaviour.toyToChild += stopSpawning;
+	}
+
+	GameObject	randomPrefab ()
+	{
+		int i = Random.Range(0,m_toyPrefabs.Count);
+		return m_toyPrefabs[i];
 	}
 
 	void Update () {
@@ -69,7 +75,7 @@ public class ToySpawn : MonoBehaviour {
 	{
 
 		// Instantiate them
-		GameObject toy = (GameObject)Instantiate(m_toyPrefab, position, Quaternion.identity);
+		GameObject toy = (GameObject)Instantiate(randomPrefab(), position, Quaternion.identity);
 		toy.transform.parent = transform;
 		toy.transform.localScale = new Vector3(1f,1f,1f);
 	

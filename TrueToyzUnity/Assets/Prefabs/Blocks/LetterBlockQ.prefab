@@ -126,10 +126,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_owner: {fileID: 0}
-  m_lifePoints: 2
-  m_ParachutePrefab: {fileID: 0}
   m_interruptFlag: 0
   m_isFrozen: 0
+  m_lifePoints: 2
+  m_ParachutePrefab: {fileID: 0}
   m_canBeTaken: 0
   m_canServeAsSupport: 0
 --- !u!208 &20800000
