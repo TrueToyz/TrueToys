@@ -26,6 +26,7 @@ public class ChildBehaviour : MonoBehaviour {
 	/* Environment related variables */
 	public 	GameObject 	Environment;
 	private	Vector3		m_originalHandPosition;
+	private Quaternion	m_originalHandOrientation;
 	private	ParticleSystem	m_moveFeedback;
 
 	/* Events when Switch the environment */
@@ -236,6 +237,7 @@ public class ChildBehaviour : MonoBehaviour {
 
 	void	moveWorld ()
 	{
+
 		// Launch feedback
 		if(m_moveFeedback)
 		{
@@ -243,13 +245,29 @@ public class ChildBehaviour : MonoBehaviour {
 				m_moveFeedback.Play();
 		}
 
-		Vector3 worldPosition = transform.position - (GameManager.Instance.vrHandNode.transform.position-m_originalHandPosition) ;
+		// Orientation
+		float fRotationAngle = Quaternion.Angle(m_originalHandOrientation, GameManager.Instance.vrHandNode.transform.rotation);
+		if(fRotationAngle > 0.1f)
+		{
+			Quaternion newOrientation = m_originalHandOrientation * Quaternion.Inverse (GameManager.Instance.vrHandNode.transform.rotation);
 
-		// Never change this value
-		//worldPosition.y = transform.position.y;
+			// KEep only Y axis
+			Vector3 angles = newOrientation.eulerAngles;
+			angles.x = 0.0f;
+			angles.z = 0.0f;
+			newOrientation.eulerAngles = angles;
 
-		// Chanbge the world !
-		transform.position = worldPosition;
+			// Memorize original rotation
+			m_originalHandOrientation = GameManager.Instance.vrHandNode.transform.rotation;
+
+			// Turn the world around
+			transform.rotation = transform.rotation * newOrientation;
+			//transform.RotateAround(GameManager.Instance.vrHandNode.transform.position,Vector3.Normalize(angles),Mathf.Abs(fRotationAngle));
+		}
+
+		// Position
+		Vector3 worldPosition = transform.position - (GameManager.Instance.vrHandNode.transform.position-m_originalHandPosition);
+		transform.position = Vector3.Scale(worldPosition,m_NavigationScale);
 	}
 
 
@@ -299,6 +317,7 @@ public class ChildBehaviour : MonoBehaviour {
 		else
 		{
 			m_originalHandPosition = GameManager.Instance.vrHandNode.transform.position;
+			m_originalHandOrientation = GameManager.Instance.vrHandNode.transform.rotation;
 		}
 
 

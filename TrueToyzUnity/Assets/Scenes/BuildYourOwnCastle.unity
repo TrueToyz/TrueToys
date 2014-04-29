@@ -6458,7 +6458,7 @@ MonoBehaviour:
   WandButton4: 0
   WandButton5: 0
   DeltaTime: 0
-  ConfigFile: E:/Perso/GlobalGameJam/TrueToyz/TrueToyzUnity/Assets/MiddleVR/Config/config_ggj.vrx
+  ConfigFile: E:/Perso/GlobalGameJam/TrueToyz/TrueToyzUnity/Assets/MiddleVR/Config/newHead.vrx
   RootNode: {fileID: 1997705283}
   TemplateCamera: {fileID: 0}
   ShowWand: 0
@@ -9565,7 +9565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e18b34f85e074a14989055eb3de0fb81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NavigationScale: {x: 0, y: 0, z: 0}
+  m_NavigationScale: {x: 2, y: 1, z: 1}
   m_ChildToy: {fileID: 0}
   m_dropIndicator: {fileID: 802657487}
   m_HandPrefab: {fileID: 100018, guid: cdb29e3486c5f704f805331d8ea9ec09, type: 2}
@@ -9591,7 +9591,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1997705283}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!1 &2039209134
 GameObject:
   m_ObjectHideFlags: 0

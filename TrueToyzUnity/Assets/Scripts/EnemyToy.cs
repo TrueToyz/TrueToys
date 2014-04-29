@@ -60,10 +60,13 @@ public class EnemyToy : Toy {
 		GameObject target = null;
 
 		// Player is seen
+		// Update: Do not target the player
+		/*
 		if(m_sight.gameObjectsOnSight.Contains(GameManager.Instance.playerToy))
 		{
 			target = GameManager.Instance.playerToy;
 		}
+		*/
 
 		// Else, the enemy attacks building blocks
 		foreach(GameObject potentialTarget in m_sight.gameObjectsOnSight)
@@ -96,7 +99,7 @@ public class EnemyToy : Toy {
 		}
 	}
 	
-	// Note: Necessary to include any physicaly related behavior in fixed update
+	// 
 	void FixedUpdate () {
 
 		//
@@ -160,10 +163,10 @@ public class EnemyToy : Toy {
 		}
 		
 	}
-
-	// Special PRO-feature
+	
 	/*
 	 * Note: Navmesh agent MUST BE created over a navmesh.
+	 * Or you could change its position to adhere to the navmesh
 	 * */
 	public	void	landing()
 	{
